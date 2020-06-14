@@ -139,33 +139,24 @@ numpy.save('numpy_training_datasets/late_microexpfuseneteyelabels.npy', eye_trai
 etraining_set = numpy.load('numpy_training_datasets/late_microexpfuseneteyeimages.npy')
 eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfusenetnoselabels.npy')
 
-
+image_rows, image_columns, image_depth = 64, 64, 18
 # Late MicroExpFuseNet Model
-eye_input = Input(shape = (1, 32, 32, 18))
-eye_conv = Convolution3D(32, (3, 3, 15))(eye_input)
-ract_1 = Activation('relu')(eye_conv)
-maxpool_1 = MaxPooling3D(pool_size=(3, 3, 3))(ract_1)
-ract_2 = Activation('relu')(maxpool_1)
-dropout_1 = Dropout(0.5)(ract_2)
-flatten_1 = Flatten()(dropout_1)
-dense_1 = Dense(1024, )(flatten_1)
-dropout_2 = Dropout(0.5)(dense_1)
-dense_2= Dense(128, )(dropout_2)
-dropout_3 = Dropout(0.5)(dense_2)
-
-
-
-dense_5 = Dense(3, )(dropout_3)
-activation = Activation('softmax')(dense_5)
-
-model = Model(inputs = [eye_input], outputs = activation)
+model = Sequential()
+model.add(Convolution3D(32, (3, 3, 15), input_shape=(1, image_rows, image_columns, image_depth), activation='relu'))
+model.add(MaxPooling3D(pool_size=(3, 3, 3)))
+model.add(Dropout(0.5))
+model.add(Flatten())
+model.add(Dense(128, init='normal', activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(3, init='normal'))
+model.add(Activation('softmax'))
 model.compile(loss = 'categorical_crossentropy', optimizer = 'SGD', metrics = ['accuracy'])
 
-filepath="weights_late_microexpfusenet/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
+model.summary()
+
+filepath="weights_microexpstcnn/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 callbacks_list = [checkpoint]
-
-model.summary()
 
 
 
@@ -177,7 +168,7 @@ numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_images.npy', eva
 numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_labels.npy', evalidation_labels)
 
 # Training the model
-history = model.fit([etrain_images], etrain_labels, validation_data = ([etraining_set], eye_traininglabels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 100, shuffle=True)
+history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 100, shuffle=True)
 
 # Loading Load validation set from numpy array
 
