@@ -48,7 +48,7 @@ def annotate_landmarks(img, landmarks, font_scale = 0.4):
 negativepath = '../../../Datasets/SIMC_E_categorical/Negative/'
 positivepath = '../../../Datasets/SIMC_E_categorical/Positive/'
 surprisepath = '../../../Datasets/SIMC_E_categorical/Surprise/'
-
+"""
 eye_training_list = []
 nose_training_list = []
 
@@ -182,11 +182,9 @@ numpy.save('numpy_training_datasets/late_microexpfuseneteyelabels.npy', eye_trai
 
 # Load training images and labels that are stored in numpy array
 """
-ntraining_set = numpy.load('numpy_training_datasets/late_microexpfusenetnoseimages.npy')
 etraining_set = numpy.load('numpy_training_datasets/late_microexpfuseneteyeimages.npy')
 eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfusenetnoselabels.npy')
-nose_traininglabels = numpy.load('numpy_training_datasets/late_microexpfuseneteyelabels.npy')
-"""
+
 
 # Late MicroExpFuseNet Model
 eye_input = Input(shape = (1, 32, 32, 18))
@@ -238,7 +236,7 @@ labels = numpy.load('numpy_validation_datasets/late_microexpfusenet_eval_labels.
 
 # Finding Confusion Matrix using pretrained weights
 
-predictions = model.predict([eimg, nimg])
+predictions = model.predict([eimg])
 predictions_labels = numpy.argmax(predictions, axis=1)
 validation_labels = numpy.argmax(labels, axis=1)
 cfm = confusion_matrix(validation_labels, predictions_labels)
