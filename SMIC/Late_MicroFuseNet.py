@@ -24,31 +24,31 @@ predictor = dlib.shape_predictor(predictor_path)
 detector = dlib.get_frontal_face_detector()
 
 class TooManyFaces(Exception):
-	pass
+    pass
 
 class NoFaces(Exception):
-	pass
+    pass
 
 def get_landmark(img):
-	rects = detector(img, 1)
-	if len(rects) > 1:
-		pass
-	if len(rects) == 0:
-		pass
-	ans = numpy.matrix([[p.x, p.y] for p in predictor(img, rects[0]).parts()])
-	return ans
+    rects = detector(img, 1)
+    if len(rects) > 1:
+        pass
+    if len(rects) == 0:
+        pass
+    ans = numpy.matrix([[p.x, p.y] for p in predictor(img, rects[0]).parts()])
+    return ans
 
 def annotate_landmarks(img, landmarks, font_scale = 0.4):
-	for idx, point in enumerate(landmarks):
-		pos = (point[0, 0], point[0, 1])
-		cv2.putText(img, str(idx), pos, fontFace=cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, fontScale=font_scale, color=(0, 0, 255))
-		cv2.circle(img, pos, 3, color=(0, 255, 255))
-	return img
+    for idx, point in enumerate(landmarks):
+        pos = (point[0, 0], point[0, 1])
+        cv2.putText(img, str(idx), pos, fontFace=cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, fontScale=font_scale, color=(0, 0, 255))
+        cv2.circle(img, pos, 3, color=(0, 255, 255))
+    return img
 
 negativepath = '../../../Datasets/SIMC_E_categorical/Negative/'
 positivepath = '../../../Datasets/SIMC_E_categorical/Positive/'
 surprisepath = '../../../Datasets/SIMC_E_categorical/Surprise/'
-"""
+
 eye_training_list = []
 nose_training_list = []
 
@@ -64,7 +64,12 @@ for video in directorylisting:
            image = cv2.imread(imagepath)
            landmarks = get_landmark(image)
            numpylandmarks = numpy.asarray(landmarks)
-           eye_image = image[numpylandmarks[19][1]:numpylandmarks[1][1], numpylandmarks[1][0]:numpylandmarks[15][0]]
+           up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
+           down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
+                      numpylandmarks[35][1]) + 5
+           left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
+           right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
+           eye_image = image[up:down, left:right]
            eye_image = cv2.resize(eye_image, (32, 32), interpolation = cv2.INTER_AREA)
            eye_image = cv2.cvtColor(eye_image, cv2.COLOR_BGR2GRAY)
            nose_mouth_image = image[numpylandmarks[2][1]:numpylandmarks[6][1], numpylandmarks[2][0]:numpylandmarks[14][0]]
@@ -91,7 +96,12 @@ for video in directorylisting:
            image = cv2.imread(imagepath)
            landmarks = get_landmark(image)
            numpylandmarks = numpy.asarray(landmarks)
-           eye_image = image[numpylandmarks[19][1]:numpylandmarks[1][1], numpylandmarks[1][0]:numpylandmarks[15][0]]
+           up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
+           down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
+                      numpylandmarks[35][1]) + 5
+           left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
+           right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
+           eye_image = image[up:down, left:right]
            eye_image = cv2.resize(eye_image, (32, 32), interpolation = cv2.INTER_AREA)
            eye_image = cv2.cvtColor(eye_image, cv2.COLOR_BGR2GRAY)
            nose_mouth_image = image[numpylandmarks[2][1]:numpylandmarks[6][1], numpylandmarks[2][0]:numpylandmarks[14][0]]
@@ -118,7 +128,12 @@ for video in directorylisting:
            image = cv2.imread(imagepath)
            landmarks = get_landmark(image)
            numpylandmarks = numpy.asarray(landmarks)
-           eye_image = image[numpylandmarks[19][1]:numpylandmarks[1][1], numpylandmarks[1][0]:numpylandmarks[15][0]]
+           up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
+           down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
+                      numpylandmarks[35][1]) + 5
+           left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
+           right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
+           eye_image = image[up:down, left:right]
            eye_image = cv2.resize(eye_image, (32, 32), interpolation = cv2.INTER_AREA)
            eye_image = cv2.cvtColor(eye_image, cv2.COLOR_BGR2GRAY)
            nose_mouth_image = image[numpylandmarks[2][1]:numpylandmarks[6][1], numpylandmarks[2][0]:numpylandmarks[14][0]]
@@ -159,7 +174,7 @@ etraining_data = [eye_training_list, eye_traininglabels]
 (etrainingframes, etraininglabels) = (etraining_data[0], etraining_data[1])
 etraining_set = numpy.zeros((eye_trainingsamples, 1, 32, 32, 18))
 for h in range(eye_trainingsamples):
-	etraining_set[h][0][:][:][:] = etrainingframes[h,:,:,:]
+    etraining_set[h][0][:][:][:] = etrainingframes[h,:,:,:]
 
 etraining_set = etraining_set.astype('float32')
 etraining_set -= numpy.mean(etraining_set)
@@ -184,7 +199,7 @@ numpy.save('numpy_training_datasets/late_microexpfuseneteyelabels.npy', eye_trai
 """
 etraining_set = numpy.load('numpy_training_datasets/late_microexpfuseneteyeimages.npy')
 eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfusenetnoselabels.npy')
-
+"""
 
 # Late MicroExpFuseNet Model
 eye_input = Input(shape = (1, 32, 32, 18))
