@@ -52,103 +52,39 @@ surprisepath = '../../../Datasets/SIMC_E_categorical/Surprise/'
 eye_training_list = []
 nose_training_list = []
 
-directorylisting = os.listdir(negativepath)
-for video in directorylisting:
-    videopath = negativepath + video
-    eye_frames = []
-    nose_mouth_frames = []
-    framelisting = os.listdir(videopath)
-    framerange = [x for x in range(18)]
-    for frame in framerange:
-           imagepath = videopath + "/" + framelisting[frame]
-           image = cv2.imread(imagepath)
-           landmarks = get_landmark(image)
-           numpylandmarks = numpy.asarray(landmarks)
-           up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
-           down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
-                      numpylandmarks[35][1]) + 5
-           left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
-           right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
-           eye_image = image[up:down, left:right]
-           eye_image = cv2.resize(eye_image, (32, 32), interpolation = cv2.INTER_AREA)
-           eye_image = cv2.cvtColor(eye_image, cv2.COLOR_BGR2GRAY)
-           nose_mouth_image = image[numpylandmarks[2][1]:numpylandmarks[6][1], numpylandmarks[2][0]:numpylandmarks[14][0]]
-           nose_mouth_image = cv2.resize(nose_mouth_image, (32, 32), interpolation = cv2.INTER_AREA)
-           nose_mouth_image = cv2.cvtColor(nose_mouth_image, cv2.COLOR_BGR2GRAY)
-           eye_frames.append(eye_image)
-           nose_mouth_frames.append(nose_mouth_image)
-    eye_frames = numpy.asarray(eye_frames)
-    nose_mouth_frames = numpy.asarray(nose_mouth_frames)
-    eye_videoarray = numpy.rollaxis(numpy.rollaxis(eye_frames, 2, 0), 2, 0)
-    nose_mouth_videoarray = numpy.rollaxis(numpy.rollaxis(nose_mouth_frames, 2, 0), 2, 0)
-    eye_training_list.append(eye_videoarray)
-    nose_training_list.append(nose_mouth_videoarray)
-
-directorylisting = os.listdir(positivepath)
-for video in directorylisting:
-    videopath = positivepath + video
-    eye_frames = []
-    nose_mouth_frames = []
-    framelisting = os.listdir(videopath)
-    framerange = [x for x in range(18)]
-    for frame in framerange:
-           imagepath = videopath + "/" + framelisting[frame]
-           image = cv2.imread(imagepath)
-           landmarks = get_landmark(image)
-           numpylandmarks = numpy.asarray(landmarks)
-           up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
-           down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
-                      numpylandmarks[35][1]) + 5
-           left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
-           right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
-           eye_image = image[up:down, left:right]
-           eye_image = cv2.resize(eye_image, (32, 32), interpolation = cv2.INTER_AREA)
-           eye_image = cv2.cvtColor(eye_image, cv2.COLOR_BGR2GRAY)
-           nose_mouth_image = image[numpylandmarks[2][1]:numpylandmarks[6][1], numpylandmarks[2][0]:numpylandmarks[14][0]]
-           nose_mouth_image = cv2.resize(nose_mouth_image, (32, 32), interpolation = cv2.INTER_AREA)
-           nose_mouth_image = cv2.cvtColor(nose_mouth_image, cv2.COLOR_BGR2GRAY)
-           eye_frames.append(eye_image)
-           nose_mouth_frames.append(nose_mouth_image)
-    eye_frames = numpy.asarray(eye_frames)
-    nose_mouth_frames = numpy.asarray(nose_mouth_frames)
-    eye_videoarray = numpy.rollaxis(numpy.rollaxis(eye_frames, 2, 0), 2, 0)
-    nose_mouth_videoarray = numpy.rollaxis(numpy.rollaxis(nose_mouth_frames, 2, 0), 2, 0)
-    eye_training_list.append(eye_videoarray)
-    nose_training_list.append(nose_mouth_videoarray)
-
-directorylisting = os.listdir(surprisepath)
-for video in directorylisting:
-    videopath = surprisepath + video
-    eye_frames = []
-    nose_mouth_frames = []
-    framelisting = os.listdir(videopath)
-    framerange = [x for x in range(18)]
-    for frame in framerange:
-           imagepath = videopath + "/" + framelisting[frame]
-           image = cv2.imread(imagepath)
-           landmarks = get_landmark(image)
-           numpylandmarks = numpy.asarray(landmarks)
-           up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
-           down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
-                      numpylandmarks[35][1]) + 5
-           left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
-           right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
-           eye_image = image[up:down, left:right]
-           eye_image = cv2.resize(eye_image, (32, 32), interpolation = cv2.INTER_AREA)
-           eye_image = cv2.cvtColor(eye_image, cv2.COLOR_BGR2GRAY)
-           nose_mouth_image = image[numpylandmarks[2][1]:numpylandmarks[6][1], numpylandmarks[2][0]:numpylandmarks[14][0]]
-           nose_mouth_image = cv2.resize(nose_mouth_image, (32, 32), interpolation = cv2.INTER_AREA)
-           nose_mouth_image = cv2.cvtColor(nose_mouth_image, cv2.COLOR_BGR2GRAY)
-           eye_frames.append(eye_image)
-           nose_mouth_frames.append(nose_mouth_image)
-    eye_frames = numpy.asarray(eye_frames)
-    nose_mouth_frames = numpy.asarray(nose_mouth_frames)
-    eye_videoarray = numpy.rollaxis(numpy.rollaxis(eye_frames, 2, 0), 2, 0)
-    nose_mouth_videoarray = numpy.rollaxis(numpy.rollaxis(nose_mouth_frames, 2, 0), 2, 0)
-    eye_training_list.append(eye_videoarray)
-    nose_training_list.append(nose_mouth_videoarray)
-    eye_training_list.append(eye_videoarray)
-    nose_training_list.append(nose_mouth_videoarray)
+for typepath in (negativepath,positivepath,surprisepath):
+    directorylisting = os.listdir(typepath)
+    print(typepath)
+    for video in directorylisting:
+        videopath = negativepath + video
+        eye_frames = []
+        nose_mouth_frames = []
+        framelisting = os.listdir(videopath)
+        framerange = [x for x in range(18)]
+        for frame in framerange:
+               imagepath = videopath + "/" + framelisting[frame]
+               image = cv2.imread(imagepath)
+               landmarks = get_landmark(image)
+               numpylandmarks = numpy.asarray(landmarks)
+               up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
+               down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
+                          numpylandmarks[35][1]) + 5
+               left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
+               right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
+               eye_image = image[up:down, left:right]
+               eye_image = cv2.resize(eye_image, (32, 32), interpolation = cv2.INTER_AREA)
+               eye_image = cv2.cvtColor(eye_image, cv2.COLOR_BGR2GRAY)
+               nose_mouth_image = image[numpylandmarks[2][1]:numpylandmarks[6][1], numpylandmarks[2][0]:numpylandmarks[14][0]]
+               nose_mouth_image = cv2.resize(nose_mouth_image, (32, 32), interpolation = cv2.INTER_AREA)
+               nose_mouth_image = cv2.cvtColor(nose_mouth_image, cv2.COLOR_BGR2GRAY)
+               eye_frames.append(eye_image)
+               nose_mouth_frames.append(nose_mouth_image)
+        eye_frames = numpy.asarray(eye_frames)
+        nose_mouth_frames = numpy.asarray(nose_mouth_frames)
+        eye_videoarray = numpy.rollaxis(numpy.rollaxis(eye_frames, 2, 0), 2, 0)
+        nose_mouth_videoarray = numpy.rollaxis(numpy.rollaxis(nose_mouth_frames, 2, 0), 2, 0)
+        eye_training_list.append(eye_videoarray)
+        nose_training_list.append(nose_mouth_videoarray)
 
 eye_training_list = numpy.asarray(eye_training_list)
 nose_training_list = numpy.asarray(nose_training_list)
