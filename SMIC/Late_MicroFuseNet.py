@@ -56,7 +56,7 @@ for typepath in (negativepath,positivepath,surprisepath):
     directorylisting = os.listdir(typepath)
     print(typepath)
     for video in directorylisting:
-        videopath = negativepath + video
+        videopath = typepath + video
         eye_frames = []
         nose_mouth_frames = []
         framelisting = os.listdir(videopath)
