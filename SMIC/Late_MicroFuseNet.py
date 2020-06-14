@@ -22,7 +22,7 @@ K.set_image_dim_ordering('th')
 predictor_path = "shape_predictor_68_face_landmarks.dat"
 predictor = dlib.shape_predictor(predictor_path)
 detector = dlib.get_frontal_face_detector()
-"""
+
 class TooManyFaces(Exception):
     pass
 
@@ -72,7 +72,7 @@ for typepath in (negativepath,positivepath,surprisepath):
                left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
                right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
                eye_image = image[up:down, left:right]
-               eye_image = cv2.resize(eye_image, (32, 32), interpolation = cv2.INTER_AREA)
+               eye_image = cv2.resize(eye_image, (64, 64), interpolation = cv2.INTER_AREA)
                eye_image = cv2.cvtColor(eye_image, cv2.COLOR_BGR2GRAY)
                nose_mouth_image = image[numpylandmarks[2][1]:numpylandmarks[6][1], numpylandmarks[2][0]:numpylandmarks[14][0]]
                nose_mouth_image = cv2.resize(nose_mouth_image, (32, 32), interpolation = cv2.INTER_AREA)
@@ -138,7 +138,7 @@ numpy.save('numpy_training_datasets/late_microexpfuseneteyelabels.npy', eye_trai
 """
 etraining_set = numpy.load('numpy_training_datasets/late_microexpfuseneteyeimages.npy')
 eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfusenetnoselabels.npy')
-
+"""
 image_rows, image_columns, image_depth = 32, 32, 18
 # Late MicroExpFuseNet Model
 model = Sequential()
@@ -154,7 +154,7 @@ model.compile(loss = 'categorical_crossentropy', optimizer = 'SGD', metrics = ['
 
 model.summary()
 
-filepath="weights_microexpstcnn/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
+filepath="weights_late_microexpfusenet/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 callbacks_list = [checkpoint]
 
