@@ -22,7 +22,7 @@ K.set_image_dim_ordering('th')
 predictor_path = "shape_predictor_68_face_landmarks.dat"
 predictor = dlib.shape_predictor(predictor_path)
 detector = dlib.get_frontal_face_detector()
-
+"""
 class TooManyFaces(Exception):
     pass
 
@@ -138,7 +138,7 @@ numpy.save('numpy_training_datasets/late_microexpfuseneteyelabels.npy', eye_trai
 """
 etraining_set = numpy.load('numpy_training_datasets/late_microexpfuseneteyeimages.npy')
 eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfusenetnoselabels.npy')
-"""
+
 
 # Late MicroExpFuseNet Model
 eye_input = Input(shape = (1, 32, 32, 18))
@@ -173,7 +173,7 @@ model.load_weights('weights_late_microexpfusenet/weights-improvement-22-0.83.hdf
 """
 
 # Spliting the dataset into training and validation sets
-etrain_images, evalidation_images, etrain_labels, evalidation_labels =  train_test_split(etraining_set, eye_traininglabels, test_size=0.2, shuffle=False)
+etrain_images, evalidation_images, etrain_labels, evalidation_labels =  train_test_split(etraining_set, eye_traininglabels, test_size=0.2, shuffle=True)
 
 # Save validation set in a numpy array
 numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_images.npy', evalidation_images)
