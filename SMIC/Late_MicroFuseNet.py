@@ -22,7 +22,7 @@ K.set_image_dim_ordering('th')
 predictor_path = "shape_predictor_68_face_landmarks.dat"
 predictor = dlib.shape_predictor(predictor_path)
 detector = dlib.get_frontal_face_detector()
-
+"""
 class TooManyFaces(Exception):
     pass
 
@@ -138,13 +138,13 @@ numpy.save('numpy_training_datasets/late_microexpfuseneteyelabels.npy', eye_trai
 """
 etraining_set = numpy.load('numpy_training_datasets/late_microexpfuseneteyeimages.npy')
 eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfusenetnoselabels.npy')
-"""
+
 image_rows, image_columns, image_depth = 64, 64, 18
 # Late MicroExpFuseNet Model
 model = Sequential()
 model.add(Convolution3D(32, (3, 3, 15), input_shape=(1, image_rows, image_columns, image_depth), activation='relu'))
 model.add(MaxPooling3D(pool_size=(3, 3, 3)))
-model.add(Dropout(0.5))
+#model.add(Dropout(0.5))
 model.add(Flatten())
 model.add(Dense(128, init='normal', activation='relu'))
 model.add(Dropout(0.5))
