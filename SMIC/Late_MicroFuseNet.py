@@ -85,7 +85,10 @@ for typepath in (negativepath,positivepath,surprisepath):
         nose_mouth_videoarray = numpy.rollaxis(numpy.rollaxis(nose_mouth_frames, 2, 0), 2, 0)
         eye_training_list.append(eye_videoarray)
         nose_training_list.append(nose_mouth_videoarray)
-
+        if typepath==surprisepath:
+            eye_training_list.append(eye_videoarray)
+            nose_training_list.append(nose_mouth_videoarray)
+print(len(eye_videoarray))
 eye_training_list = numpy.asarray(eye_training_list)
 nose_training_list = numpy.asarray(nose_training_list)
 
