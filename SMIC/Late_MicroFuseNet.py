@@ -111,7 +111,7 @@ nose_traininglabels = np_utils.to_categorical(nose_traininglabels, 3)
 
 etraining_data = [eye_training_list, eye_traininglabels]
 (etrainingframes, etraininglabels) = (etraining_data[0], etraining_data[1])
-etraining_set = numpy.zeros((eye_trainingsamples, 1, 32, 32, 18))
+etraining_set = numpy.zeros((eye_trainingsamples, 1, 64, 64, 18))
 for h in range(eye_trainingsamples):
     etraining_set[h][0][:][:][:] = etrainingframes[h,:,:,:]
 
