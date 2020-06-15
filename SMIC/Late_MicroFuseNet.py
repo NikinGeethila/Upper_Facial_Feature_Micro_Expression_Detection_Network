@@ -143,8 +143,12 @@ image_rows, image_columns, image_depth = 64, 64, 18
 # Late MicroExpFuseNet Model
 model = Sequential()
 model.add(Convolution3D(32, (3, 3, 15), input_shape=(1, image_rows, image_columns, image_depth), activation='relu'))
-model.add(Flatten())
+model.add(Activation('relu'))
 model.add(MaxPooling3D(pool_size=(3, 3, 3)))
+model.add(Activation('relu'))
+model.add(Dropout(0.5))
+model.add(Flatten())
+model.add(Dense(1024, init='normal', activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(128, init='normal', activation='relu'))
 model.add(Dropout(0.5))
