@@ -15,6 +15,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -68,6 +69,7 @@
       <option name="presentableId" value="Default" />
       <updated>1592095630827</updated>
       <workItem from="1592095632096" duration="4289000" />
+      <workItem from="1592260111692" duration="305000" />
     </task>
     <servers />
   </component>
@@ -79,13 +81,15 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$Late_MicroFuseNet.coverage" NAME="Late_MicroFuseNet Coverage Results" MODIFIED="1592124765869" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$Late_MicroFuseNet.coverage" NAME="Late_MicroFuseNet Coverage Results" MODIFIED="1592260416588" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
   </component>
 </project>
