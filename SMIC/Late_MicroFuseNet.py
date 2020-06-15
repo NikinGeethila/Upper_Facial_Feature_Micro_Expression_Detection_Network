@@ -10,6 +10,7 @@ from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Convolution3D, MaxPooling3D
 from keras.utils import multi_gpu_model
 from keras.optimizers import SGD, RMSprop
+from keras.layers import LeakyReLU
 from keras.layers import Concatenate, Input, concatenate, add, multiply, maximum
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils, generic_utils
@@ -143,9 +144,9 @@ image_rows, image_columns, image_depth = 64, 64, 18
 # Late MicroExpFuseNet Model
 model = Sequential()
 model.add(Convolution3D(32, (3, 3, 15), input_shape=(1, image_rows, image_columns, image_depth)))
-model.add(Activation('LeakyReLU'))
+model.add(LeakyReLU())
 model.add(MaxPooling3D(pool_size=(3, 3, 3)))
-model.add(Activation('LeakyReLU'))
+model.add(LeakyReLU())
 model.add(Dropout(0.5))
 model.add(Flatten())
 model.add(Dense(1024, init='normal'))
