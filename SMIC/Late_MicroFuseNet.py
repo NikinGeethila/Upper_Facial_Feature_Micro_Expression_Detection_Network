@@ -5,6 +5,7 @@ import dlib
 import numpy
 import imageio
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
 from keras.models import Sequential, Model
 from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Convolution3D, MaxPooling3D
@@ -17,13 +18,14 @@ from keras.utils import np_utils, generic_utils
 from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
 from keras import backend as K
+import timeit
 K.set_image_dim_ordering('th')
 
 # DLib Face Detection
 predictor_path = "shape_predictor_68_face_landmarks.dat"
 predictor = dlib.shape_predictor(predictor_path)
 detector = dlib.get_frontal_face_detector()
-
+"""
 class TooManyFaces(Exception):
     pass
 
@@ -114,14 +116,14 @@ numpy.save('numpy_training_datasets/late_microexpfuseneteyelabels.npy', eye_trai
 """
 etraining_set = numpy.load('numpy_training_datasets/late_microexpfuseneteyeimages.npy')
 eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfuseneteyelabels.npy')
-"""
+
 image_rows, image_columns, image_depth = 32, 32, 18
 # Late MicroExpFuseNet Model
 model = Sequential()
 model.add(Convolution3D(32, (3, 3, 15), input_shape=(1, image_rows, image_columns, image_depth)))
-model.add(LeakyReLU())
+model.add(LeakyReLU(a=0.3))
 model.add(MaxPooling3D(pool_size=(3, 3, 3)))
-model.add(LeakyReLU())
+model.add(LeakyReLU(a=0.3))
 model.add(Dropout(0.5))
 model.add(Flatten())
 model.add(Dense(1024, init='normal'))
@@ -148,8 +150,9 @@ numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_images.npy', eva
 numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_labels.npy', evalidation_labels)
 
 # Training the model
+start = timeit.timeit()
 history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 100, shuffle=True)
-
+end = timeit.timeit()
 # Loading Load validation set from numpy array
 
 eimg = numpy.load('numpy_validation_datasets/late_microexpfusenet_eval_images.npy')
@@ -163,4 +166,6 @@ predictions_labels = numpy.argmax(predictions, axis=1)
 validation_labels = numpy.argmax(labels, axis=1)
 cfm = confusion_matrix(validation_labels, predictions_labels)
 print (cfm)
-
+print("accuracy: ",accuracy_score(validation_labels, predictions_labels))
+print("time: ")
+print(end-start)
