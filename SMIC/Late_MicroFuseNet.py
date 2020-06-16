@@ -8,7 +8,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 from keras.models import Sequential, Model
 from keras.layers.core import Dense, Dropout, Activation, Flatten
-from keras.layers.convolutional import Convolution3D, MaxPooling3D
+from keras.layers.convolutional import Convolution3D, MaxPooling3D, ZeroPadding3D
 from keras.utils import multi_gpu_model
 from keras.optimizers import SGD, RMSprop
 from keras.layers import LeakyReLU ,PReLU
@@ -17,6 +17,9 @@ from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils, generic_utils
 from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
+from sklearn.model_selection import cross_val_score,LeaveOneOut
+from sklearn.metrics import mean_squared_error, make_scorer
+
 from keras import backend as K
 import timeit
 K.set_image_dim_ordering('th')
@@ -129,10 +132,11 @@ eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfuseneteye
 image_rows, image_columns, image_depth =32, 32, 18
 # Late MicroExpFuseNet Model
 model = Sequential()
-model.add(Convolution3D(32, (3, 3, 15), input_shape=(1, image_rows, image_columns, image_depth)))
-model.add( LeakyReLU(alpha=0.3))
+model.add(ZeroPadding3D((2,2,0), input_shape=(1, image_rows, image_columns, image_depth)))
+model.add(Convolution3D(32, (4, 4, 15)))
+model.add( PReLU(alpha_initializer="zeros"))
 model.add(MaxPooling3D(pool_size=(3, 3, 3)))
-model.add(LeakyReLU(alpha=0.3))
+model.add(PReLU(alpha_initializer="zeros"))
 model.add(Dropout(0.5))
 model.add(Flatten())
 model.add(Dense(1024, init='normal'))
@@ -178,3 +182,5 @@ print (cfm)
 print("accuracy: ",accuracy_score(validation_labels, predictions_labels))
 print("time: ")
 print(end-start)
+# _, val_acc = model.evaluate(validation_labels, predictions_labels, verbose = 1)
+# print(val_acc)
