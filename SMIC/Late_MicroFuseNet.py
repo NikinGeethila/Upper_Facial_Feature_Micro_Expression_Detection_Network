@@ -164,7 +164,7 @@ numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_labels.npy', eva
 
 # Training the model
 start = timeit.timeit()
-history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 100, shuffle=True)
+history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 8, nb_epoch = 100, shuffle=True)
 end = timeit.timeit()
 # Loading Load validation set from numpy array
 
