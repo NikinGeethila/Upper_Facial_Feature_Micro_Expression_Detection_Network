@@ -42,10 +42,11 @@ surprisepath = '../../../Datasets/SIMC_E_categorical/Surprise/'
 segmentName='UpperFace'
 
 segment_training_list = []
+counting=0
 for typepath in (negativepath,positivepath,surprisepath):
     directorylisting = os.listdir(typepath)
     print(typepath)
-    counting=0
+
     for video in directorylisting:
         videopath = typepath + video
         segment_frames = []
@@ -54,6 +55,11 @@ for typepath in (negativepath,positivepath,surprisepath):
         for frame in framerange:
                imagepath = videopath + "/" + framelisting[frame]
                image = cv2.imread(imagepath)
+               if counting<1:
+                   img=annotate_landmarks(image, landmarks)
+                   imgplot = plt.imshow(img)
+                   plt.show()
+                   counting+=1
                landmarks = get_landmark(image)
                numpylandmarks = numpy.asarray(landmarks)
                up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
@@ -63,7 +69,7 @@ for typepath in (negativepath,positivepath,surprisepath):
                right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
                segment_image = image[up:down, left:right]
                if counting<1:
-                   img=annotate_landmarks(image, landmarks)
+                   img=annotate_landmarks(segment_image, landmarks)
                    imgplot = plt.imshow(img)
                    plt.show()
                    counting+=1
@@ -75,8 +81,7 @@ for typepath in (negativepath,positivepath,surprisepath):
         segment_frames = numpy.asarray(segment_frames)
         segment_videoarray = numpy.rollaxis(numpy.rollaxis(segment_frames, 2, 0), 2, 0)
         segment_training_list.append(segment_videoarray)
-        # if typepath==surprisepath:
-        #     segment_training_list.append(segment_videoarray)
+
 print(len(segment_videoarray))
 segment_training_list = numpy.asarray(segment_training_list)
 
