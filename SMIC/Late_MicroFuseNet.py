@@ -132,8 +132,7 @@ eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfuseneteye
 image_rows, image_columns, image_depth =32, 32, 18
 # Late MicroExpFuseNet Model
 model = Sequential()
-model.add(ZeroPadding3D((1,1,0), input_shape=(1, image_rows, image_columns, image_depth)))
-model.add(Convolution3D(32, (3, 3, 15)))
+model.add(Convolution3D(32, (3, 3, 15), input_shape=(1, image_rows, image_columns, image_depth)))
 model.add( PReLU(alpha_initializer="zeros"))
 model.add(MaxPooling3D(pool_size=(3, 3, 3)))
 model.add(PReLU(alpha_initializer="zeros"))
@@ -164,7 +163,7 @@ numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_labels.npy', eva
 
 # Training the model
 start = timeit.timeit()
-history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 8, nb_epoch = 100, shuffle=True)
+history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 100, shuffle=True)
 end = timeit.timeit()
 # Loading Load validation set from numpy array
 
