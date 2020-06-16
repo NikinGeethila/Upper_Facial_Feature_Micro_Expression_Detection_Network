@@ -39,7 +39,7 @@ negativepath = '../../../Datasets/SIMC_E_categorical/Negative/'
 positivepath = '../../../Datasets/SIMC_E_categorical/Positive/'
 surprisepath = '../../../Datasets/SIMC_E_categorical/Surprise/'
 
-segmentName='UpperFace'
+segmentName='Eyes'
 
 segment_training_list = []
 counting=0
@@ -62,8 +62,7 @@ for typepath in (negativepath,positivepath,surprisepath):
                    plt.show()
                numpylandmarks = numpy.asarray(landmarks)
                up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
-               down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
-                          numpylandmarks[35][1]) + 5
+               down = max(numpylandmarks[36][1], numpylandmarks[39][1], numpylandmarks[40][1], numpylandmarks[41][1],numpylandmarks[42][1], numpylandmarks[47][1], numpylandmarks[46][1], numpylandmarks[45][1]) +10
                left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
                right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
                segment_image = image[up:down, left:right]
@@ -116,3 +115,52 @@ segment_training_set /= numpy.max(segment_training_set)
 
 numpy.save('numpy_training_datasets/{0}_images.npy'.format(segmentName), segment_training_set)
 numpy.save('numpy_training_datasets/{0}_labels.npy'.format(segmentName), segment_traininglabels)
+
+
+"""
+----------------------------
+segments:
+----------------------------
+
+
+UpperFace
+----------------------------
+up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
+down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
+          numpylandmarks[35][1]) + 5
+left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
+right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
+             
+             
+Eyes
+----------------------------  
+up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
+down = max(numpylandmarks[36][1], numpylandmarks[39][1], numpylandmarks[40][1], numpylandmarks[41][1],numpylandmarks[42][1], numpylandmarks[47][1], numpylandmarks[46][1], numpylandmarks[45][1]) +10
+left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
+right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])        
+
+
+LeftEye
+----------------------------  
+up=min(numpylandmarks[17][1],numpylandmarks[18][1],numpylandmarks[19][1],numpylandmarks[20][1],numpylandmarks[21][1])-20
+down = max(numpylandmarks[36][1], numpylandmarks[39][1], numpylandmarks[40][1], numpylandmarks[41][1]) +10
+left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
+right = max(numpylandmarks[39][0], numpylandmarks[21][0])+10
+               
+               
+RightEye
+----------------------------   
+up = min(numpylandmarks[22][1], numpylandmarks[23][1], numpylandmarks[24][1], numpylandmarks[25][1],
+        numpylandmarks[26][1]) - 20
+down = max(numpylandmarks[42][1], numpylandmarks[47][1], numpylandmarks[46][1], numpylandmarks[45][1]) + 10
+right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
+left = min(numpylandmarks[22][0], numpylandmarks[42][0])-10
+  
+
+Nose
+----------------------------     
+up = numpylandmarks[27][1] - 5
+down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1], numpylandmarks[35][1]) + 5
+left = numpylandmarks[31][0]
+right = numpylandmarks[35][0] 
+"""
