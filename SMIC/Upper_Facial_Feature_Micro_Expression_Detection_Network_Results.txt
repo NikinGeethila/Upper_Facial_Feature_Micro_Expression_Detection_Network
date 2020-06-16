@@ -15,3 +15,5 @@ model.add(Activation('softmax'))
 -(32*32)(eye to nose)(100)(16)
 	-relu
 		acc=25
+	-LeakyRelu(0.3)
+		acc=27
