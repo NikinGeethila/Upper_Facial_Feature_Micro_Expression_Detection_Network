@@ -12,6 +12,8 @@ model.add(Dropout(0.5))
 model.add(Dense(3, init='normal'))
 model.add(Activation('softmax'))
 
+
+(out of 38)
 -(32*32)(eye to nose)(100)(16)
 	-relu
 		acc=25
@@ -19,3 +21,5 @@ model.add(Activation('softmax'))
 		acc=27
 	-LeakyRelu(0.01)
 		acc=27
+	-LeakyRelu(0.3)-relu
+		acc=23
