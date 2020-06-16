@@ -17,3 +17,5 @@ model.add(Activation('softmax'))
 		acc=25
 	-LeakyRelu(0.3)
 		acc=27
+	-LeakyRelu(0.01)
+		acc=27

@@ -121,9 +121,9 @@ image_rows, image_columns, image_depth = 32, 32, 18
 # Late MicroExpFuseNet Model
 model = Sequential()
 model.add(Convolution3D(32, (3, 3, 15), input_shape=(1, image_rows, image_columns, image_depth)))
-model.add(LeakyReLU(alpha=0.01))
+model.add(LeakyReLU(alpha=0.3))
 model.add(MaxPooling3D(pool_size=(3, 3, 3)))
-model.add(LeakyReLU(alpha=0.01))
+model.add(Activation("relu"))
 model.add(Dropout(0.5))
 model.add(Flatten())
 model.add(Dense(1024, init='normal'))
