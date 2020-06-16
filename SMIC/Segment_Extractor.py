@@ -39,8 +39,9 @@ negativepath = '../../../Datasets/SIMC_E_categorical/Negative/'
 positivepath = '../../../Datasets/SIMC_E_categorical/Positive/'
 surprisepath = '../../../Datasets/SIMC_E_categorical/Surprise/'
 
-segment_training_list = []
+segmentName='UpperFace'
 
+segment_training_list = []
 for typepath in (negativepath,positivepath,surprisepath):
     directorylisting = os.listdir(typepath)
     print(typepath)
@@ -98,16 +99,16 @@ for typepath in (negativepath,positivepath,surprisepath):
 
 segment_traininglabels = np_utils.to_categorical(segment_traininglabels, 3)
 
-etraining_data = [segment_training_list, segment_traininglabels]
-(etrainingframes, etraininglabels) = (etraining_data[0], etraining_data[1])
-etraining_set = numpy.zeros((segment_trainingsamples, 1,32, 32, 18))
+segment_training_data = [segment_training_list, segment_traininglabels]
+(segment_trainingframes, segment_traininglabels) = (segment_training_data[0], segment_training_data[1])
+segment_training_set = numpy.zeros((segment_trainingsamples, 1,32, 32, 18))
 for h in range(segment_trainingsamples):
-    etraining_set[h][0][:][:][:] = etrainingframes[h,:,:,:]
+    segment_training_set[h][0][:][:][:] = segment_trainingframes[h,:,:,:]
 
-etraining_set = etraining_set.astype('float32')
-etraining_set -= numpy.mean(etraining_set)
-etraining_set /= numpy.max(etraining_set)
+segment_training_set = segment_training_set.astype('float32')
+segment_training_set -= numpy.mean(segment_training_set)
+segment_training_set /= numpy.max(segment_training_set)
 
 
-numpy.save('numpy_training_datasets/late_microexpfusenetsegmentimages.npy', etraining_set)
-numpy.save('numpy_training_datasets/late_microexpfusenetsegmentlabels.npy', segment_traininglabels)
+numpy.save('numpy_training_datasets/{0}_images.npy'.format(segmentName), segment_training_set)
+numpy.save('numpy_training_datasets/{0}_labels.npy'.format(segmentName), segment_traininglabels)
