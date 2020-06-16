@@ -29,3 +29,5 @@ model.add(Activation('softmax'))
 		acc=27
 	-Prelu-relu
 		acc=26
+	-relu-Prelu
+		acc=25
