@@ -20,7 +20,7 @@ from sklearn import preprocessing
 from keras import backend as K
 import timeit
 K.set_image_dim_ordering('th')
-
+"""
 # DLib Face Detection
 predictor_path = "shape_predictor_68_face_landmarks.dat"
 predictor = dlib.shape_predictor(predictor_path)
@@ -73,7 +73,7 @@ for typepath in (negativepath,positivepath,surprisepath):
                left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
                right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
                eye_image = image[up:down, left:right]
-               eye_image = cv2.resize(eye_image, (32, 32), interpolation = cv2.INTER_AREA)
+               eye_image = cv2.resize(eye_image, (64, 64), interpolation = cv2.INTER_AREA)
                eye_image = cv2.cvtColor(eye_image, cv2.COLOR_BGR2GRAY)
 
                eye_frames.append(eye_image)
@@ -109,7 +109,7 @@ eye_traininglabels = np_utils.to_categorical(eye_traininglabels, 3)
 
 etraining_data = [eye_training_list, eye_traininglabels]
 (etrainingframes, etraininglabels) = (etraining_data[0], etraining_data[1])
-etraining_set = numpy.zeros((eye_trainingsamples, 1, 32, 32, 18))
+etraining_set = numpy.zeros((eye_trainingsamples, 1, 64, 64, 18))
 for h in range(eye_trainingsamples):
     etraining_set[h][0][:][:][:] = etrainingframes[h,:,:,:]
 
@@ -125,8 +125,8 @@ numpy.save('numpy_training_datasets/late_microexpfuseneteyelabels.npy', eye_trai
 """
 etraining_set = numpy.load('numpy_training_datasets/late_microexpfuseneteyeimages.npy')
 eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfuseneteyelabels.npy')
-"""
-image_rows, image_columns, image_depth = 32, 32, 18
+
+image_rows, image_columns, image_depth =64, 64, 18
 # Late MicroExpFuseNet Model
 model = Sequential()
 model.add(Convolution3D(32, (3, 3, 15), input_shape=(1, image_rows, image_columns, image_depth)))
@@ -160,7 +160,7 @@ numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_labels.npy', eva
 
 # Training the model
 start = timeit.timeit()
-history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 30, shuffle=True)
+history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 100, shuffle=True)
 end = timeit.timeit()
 # Loading Load validation set from numpy array
 
