@@ -132,8 +132,8 @@ eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfuseneteye
 image_rows, image_columns, image_depth =32, 32, 18
 # Late MicroExpFuseNet Model
 model = Sequential()
-model.add(ZeroPadding3D((2,2,0), input_shape=(1, image_rows, image_columns, image_depth)))
-model.add(Convolution3D(32, (4, 4, 15)))
+model.add(ZeroPadding3D((1,1,0), input_shape=(1, image_rows, image_columns, image_depth)))
+model.add(Convolution3D(32, (3, 3, 15)))
 model.add( PReLU(alpha_initializer="zeros"))
 model.add(MaxPooling3D(pool_size=(3, 3, 3)))
 model.add(PReLU(alpha_initializer="zeros"))
