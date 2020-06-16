@@ -25,7 +25,7 @@ K.set_image_dim_ordering('th')
 predictor_path = "shape_predictor_68_face_landmarks.dat"
 predictor = dlib.shape_predictor(predictor_path)
 detector = dlib.get_frontal_face_detector()
-"""
+
 class TooManyFaces(Exception):
     pass
 
@@ -81,8 +81,8 @@ for typepath in (negativepath,positivepath,surprisepath):
         eye_frames = numpy.asarray(eye_frames)
         eye_videoarray = numpy.rollaxis(numpy.rollaxis(eye_frames, 2, 0), 2, 0)
         eye_training_list.append(eye_videoarray)
-        if typepath==surprisepath:
-            eye_training_list.append(eye_videoarray)
+        # if typepath==surprisepath:
+        #     eye_training_list.append(eye_videoarray)
 print(len(eye_videoarray))
 eye_training_list = numpy.asarray(eye_training_list)
 
@@ -90,10 +90,19 @@ eye_trainingsamples = len(eye_training_list)
 
 eye_traininglabels = numpy.zeros((eye_trainingsamples, ), dtype = int)
 
-eye_traininglabels[0:66] = 0
-eye_traininglabels[66:113] = 1
-eye_traininglabels[113:156] = 2
-
+# eye_traininglabels[0:66] = 0
+# eye_traininglabels[66:113] = 1
+# eye_traininglabels[113:156] = 2
+for typepath in (negativepath,positivepath,surprisepath):
+    directorylisting = os.listdir(typepath)
+    print(typepath)
+    for video in range(len(directorylisting)):
+        if typepath==negativepath:
+            eye_traininglabels[video]=0
+        if typepath==positivepath:
+            eye_traininglabels[video]=1
+        if typepath==surprisepath:
+            eye_traininglabels[video]=2
 
 
 eye_traininglabels = np_utils.to_categorical(eye_traininglabels, 3)
@@ -116,14 +125,14 @@ numpy.save('numpy_training_datasets/late_microexpfuseneteyelabels.npy', eye_trai
 """
 etraining_set = numpy.load('numpy_training_datasets/late_microexpfuseneteyeimages.npy')
 eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfuseneteyelabels.npy')
-
+"""
 image_rows, image_columns, image_depth = 32, 32, 18
 # Late MicroExpFuseNet Model
 model = Sequential()
 model.add(Convolution3D(32, (3, 3, 15), input_shape=(1, image_rows, image_columns, image_depth)))
-model.add( Activation("relu"))
+model.add( LeakyReLU(alpha=0.3))
 model.add(MaxPooling3D(pool_size=(3, 3, 3)))
-model.add(PReLU(alpha_initializer="zeros"))
+model.add(LeakyReLU(alpha=0.3))
 model.add(Dropout(0.5))
 model.add(Flatten())
 model.add(Dense(1024, init='normal'))
@@ -151,7 +160,7 @@ numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_labels.npy', eva
 
 # Training the model
 start = timeit.timeit()
-history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 100, shuffle=True)
+history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 30, shuffle=True)
 end = timeit.timeit()
 # Loading Load validation set from numpy array
 
