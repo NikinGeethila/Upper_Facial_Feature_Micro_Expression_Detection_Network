@@ -11,7 +11,7 @@ from keras import backend as K
 
 
 
-def evaluate(etrain_images, evalidation_images, etrain_labels, evalidation_labels,test_index ):
+def evaluate(segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels,test_index ):
 
     model = Sequential()
     model.add(ZeroPadding3D((1,1,0),input_shape=(1, 32, 32, 18)))
@@ -42,11 +42,9 @@ def evaluate(etrain_images, evalidation_images, etrain_labels, evalidation_label
 
     # Training the model
 
-    history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 8, nb_epoch = 3, shuffle=True)
+    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 8, nb_epoch = 3, shuffle=True)
 
-    predictions = model.predict([evalidation_images])
-    predictions_labels = numpy.argmax(predictions, axis=1)
-    validation_labels = numpy.argmax(evalidation_labels, axis=1)
+
 
 
 
@@ -55,9 +53,9 @@ def evaluate(etrain_images, evalidation_images, etrain_labels, evalidation_label
 
     # Finding Confusion Matrix using pretrained weights
 
-    predictions = model.predict([evalidation_images])
+    predictions = model.predict([segment_validation_images])
     predictions_labels = numpy.argmax(predictions, axis=1)
-    validation_labels = numpy.argmax(evalidation_labels, axis=1)
+    validation_labels = numpy.argmax(segment_validation_labels, axis=1)
     cfm = confusion_matrix(validation_labels, predictions_labels)
     print (cfm)
     print("accuracy: ",accuracy_score(validation_labels, predictions_labels))
@@ -73,22 +71,22 @@ segmentName='UpperFace'
 
 # Load training images and labels that are stored in numpy array
 
-etraining_set = numpy.load('numpy_training_datasets/{0}_images.npy'.format(segmentName))
-eye_traininglabels = numpy.load('numpy_training_datasets/{0}_labels.npy'.format(segmentName))
+segment_training_set = numpy.load('numpy_training_datasets/{0}_images.npy'.format(segmentName))
+segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels.npy'.format(segmentName))
 
 '''
 #-----------------------------------------------------------------------------------------------------------------
 #LOOCV
 loo = LeaveOneOut()
-loo.get_n_splits(etraining_set)
+loo.get_n_splits(segment_training_set)
 tot=0
 count=0
-for train_index, test_index in loo.split(etraining_set):
+for train_index, test_index in loo.split(segment_training_set):
 
-    print(eye_traininglabels[train_index])
-    print(eye_traininglabels[test_index])
+    print(segment_traininglabels[train_index])
+    print(segment_traininglabels[test_index])
 
-    val_acc = evaluate(etraining_set[train_index], etraining_set[test_index],eye_traininglabels[train_index], eye_traininglabels[test_index] ,test_index)
+    val_acc = evaluate(segment_training_set[train_index], segment_training_set[test_index],segment_traininglabels[train_index], segment_traininglabels[test_index] ,test_index)
     tot+=val_acc
     count+=1
     print("------------------------------------------------------------------------")
@@ -102,17 +100,17 @@ print(tot/count)
 
 
 # Spliting the dataset into training and validation sets
-etrain_images, evalidation_images, etrain_labels, evalidation_labels = train_test_split(etraining_set,
-                                                                                            eye_traininglabels,
+segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels = train_test_split(segment_training_set,
+                                                                                            segment_traininglabels,
                                                                                             test_size=0.2, random_state=42)
 
 # Save validation set in a numpy array
-numpy.save('numpy_validation_datasets/{0}_images.npy'.format(segmentName), evalidation_images)
-numpy.save('numpy_validation_datasets/{0}_images.npy'.format(segmentName), evalidation_labels)
+numpy.save('numpy_validation_datasets/{0}_images.npy'.format(segmentName), segment_validation_images)
+numpy.save('numpy_validation_datasets/{0}_images.npy'.format(segmentName), segment_validation_labels)
 
 # Loading Load validation set from numpy array
 #
 # eimg = numpy.load('numpy_validation_datasets/{0}_images.npy'.format(segmentName))
 # labels = numpy.load('numpy_validation_datasets/{0}_images.npy'.format(segmentName))
 
-evaluate(etrain_images, evalidation_images,etrain_labels, evalidation_labels ,0)
+evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
