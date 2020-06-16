@@ -55,12 +55,11 @@ for typepath in (negativepath,positivepath,surprisepath):
         for frame in framerange:
                imagepath = videopath + "/" + framelisting[frame]
                image = cv2.imread(imagepath)
+               landmarks = get_landmark(image)
                if counting<1:
                    img=annotate_landmarks(image, landmarks)
                    imgplot = plt.imshow(img)
                    plt.show()
-                   counting+=1
-               landmarks = get_landmark(image)
                numpylandmarks = numpy.asarray(landmarks)
                up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
                down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
