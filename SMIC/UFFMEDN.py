@@ -14,9 +14,10 @@ from keras import backend as K
 def evaluate(segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels,test_index ):
 
     model = Sequential()
-    model.add(ZeroPadding3D((1,1,0),input_shape=(1, 32, 32, 18)))
-    model.add(Convolution3D(32, (3, 3, 15)))
+    #model.add(ZeroPadding3D((1,1,0),input_shape=(1, 32, 32, 18)))
+    model.add(Convolution3D(32, (3, 3, 15),input_shape=(1, 32, 32, 18)))
     model.add( PReLU(alpha_initializer="zeros"))
+    model.add(Dropout(0.5))
     model.add(MaxPooling3D(pool_size=(3, 3, 3)))
     model.add(PReLU(alpha_initializer="zeros"))
     model.add(Dropout(0.5))
@@ -42,7 +43,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     # Training the model
 
-    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 8, nb_epoch = 3, shuffle=True)
+    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 100, shuffle=True)
 
 
 
