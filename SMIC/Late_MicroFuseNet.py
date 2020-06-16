@@ -157,9 +157,7 @@ def evaluate(etrain_images, evalidation_images, etrain_labels, evalidation_label
 
 
 
-    # Save validation set in a numpy array
-    # numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_images.npy', evalidation_images)
-    # numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_labels.npy', evalidation_labels)
+
 
     # Training the model
 
@@ -169,36 +167,36 @@ def evaluate(etrain_images, evalidation_images, etrain_labels, evalidation_label
     predictions_labels = numpy.argmax(predictions, axis=1)
     validation_labels = numpy.argmax(evalidation_labels, axis=1)
 
+
+
+
+
+
+    # Finding Confusion Matrix using pretrained weights
+
+    predictions = model.predict([evalidation_images])
+    predictions_labels = numpy.argmax(predictions, axis=1)
+    validation_labels = numpy.argmax(evalidation_labels, axis=1)
+    cfm = confusion_matrix(validation_labels, predictions_labels)
+    print (cfm)
+    print("accuracy: ",accuracy_score(validation_labels, predictions_labels))
+
     return accuracy_score(validation_labels, predictions_labels)
-
-# Loading Load validation set from numpy array
-
-eimg = numpy.load('numpy_validation_datasets/late_microexpfusenet_eval_images.npy')
-labels = numpy.load('numpy_validation_datasets/late_microexpfusenet_eval_labels.npy')
-
-
-# Finding Confusion Matrix using pretrained weights
-
-# predictions = model.predict([eimg])
-# predictions_labels = numpy.argmax(predictions, axis=1)
-# validation_labels = numpy.argmax(labels, axis=1)
-# cfm = confusion_matrix(validation_labels, predictions_labels)
-# print (cfm)
-# print("accuracy: ",accuracy_score(validation_labels, predictions_labels))
-# print("time: ")
-#print(end-start)
 
 
 # Spliting the dataset into training and validation sets
-print(etraining_set)
+
+
+
+
+#-----------------------------------------------------------------------------------------------------------------
+#LOOCV
 loo = LeaveOneOut()
 loo.get_n_splits(etraining_set)
 tot=0
 count=0
 for train_index, test_index in loo.split(etraining_set):
-    # etrain_images, evalidation_images, etrain_labels, evalidation_labels = train_test_split(etraining_set,
-    #                                                                                         eye_traininglabels,
-    #                                                                                         test_size=0.2, random_state=42)
+
     print(eye_traininglabels[train_index])
     print(eye_traininglabels[test_index])
 
@@ -209,3 +207,24 @@ for train_index, test_index in loo.split(etraining_set):
     print("validation acc:",val_acc)
     print("------------------------------------------------------------------------")
 print(tot/count)
+
+
+#-----------------------------------------------------------------------------------------------------------------
+#Test train split
+
+
+
+etrain_images, evalidation_images, etrain_labels, evalidation_labels = train_test_split(etraining_set,
+                                                                                            eye_traininglabels,
+                                                                                            test_size=0.2, random_state=42)
+
+# Save validation set in a numpy array
+numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_images.npy', evalidation_images)
+numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_labels.npy', evalidation_labels)
+
+# Loading Load validation set from numpy array
+#
+# eimg = numpy.load('numpy_validation_datasets/late_microexpfusenet_eval_images.npy')
+# labels = numpy.load('numpy_validation_datasets/late_microexpfusenet_eval_labels.npy')
+
+evaluate(etrain_images, evalidation_images,etrain_labels, evalidation_labels )
