@@ -129,43 +129,48 @@ numpy.save('numpy_training_datasets/late_microexpfuseneteyelabels.npy', eye_trai
 etraining_set = numpy.load('numpy_training_datasets/late_microexpfuseneteyeimages.npy')
 eye_traininglabels = numpy.load('numpy_training_datasets/late_microexpfuseneteyelabels.npy')
 
-image_rows, image_columns, image_depth =32, 32, 18
-# Late MicroExpFuseNet Model
-model = Sequential()
-model.add(Convolution3D(32, (3, 3, 15),padding='same', input_shape=(1, image_rows, image_columns, image_depth)))
-model.add( PReLU(alpha_initializer="zeros"))
-model.add(Dropout(0.5))
-model.add(MaxPooling3D(pool_size=(3, 3, 3)))
-model.add(PReLU(alpha_initializer="zeros"))
-model.add(Dropout(0.5))
-model.add(Flatten())
-model.add(Dense(1024, init='normal'))
-model.add(Dropout(0.5))
-model.add(Dense(128, init='normal'))
-model.add(Dropout(0.5))
-model.add(Dense(3, init='normal'))
-model.add(Activation('softmax'))
-model.compile(loss = 'categorical_crossentropy', optimizer = 'SGD', metrics = ['accuracy'])
+def evaluate(etrain_images, evalidation_images, etrain_labels, evalidation_labels ):
+    image_rows, image_columns, image_depth =32, 32, 18
+    # Late MicroExpFuseNet Model
+    model = Sequential()
+    model.add(ZeroPadding3D((1,1,0),input_shape=(1, image_rows, image_columns, image_depth)))
+    model.add(Convolution3D(32, (3, 3, 15)))
+    model.add( PReLU(alpha_initializer="zeros"))
+    model.add(MaxPooling3D(pool_size=(3, 3, 3)))
+    model.add(PReLU(alpha_initializer="zeros"))
+    model.add(Dropout(0.5))
+    model.add(Flatten())
+    model.add(Dense(1024, init='normal'))
+    model.add(Dropout(0.5))
+    model.add(Dense(128, init='normal'))
+    model.add(Dropout(0.5))
+    model.add(Dense(3, init='normal'))
+    model.add(Activation('softmax'))
+    model.compile(loss = 'categorical_crossentropy', optimizer = 'SGD', metrics = ['accuracy'])
 
-model.summary()
+    model.summary()
 
-filepath="weights_late_microexpfusenet/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
-checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-callbacks_list = [checkpoint]
+    filepath="weights_late_microexpfusenet/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
+    checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+    callbacks_list = [checkpoint]
 
 
 
-# Spliting the dataset into training and validation sets
-etrain_images, evalidation_images, etrain_labels, evalidation_labels =  train_test_split(etraining_set, eye_traininglabels, test_size=0.2, random_state=42)
 
-# Save validation set in a numpy array
-numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_images.npy', evalidation_images)
-numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_labels.npy', evalidation_labels)
+    # Save validation set in a numpy array
+    # numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_images.npy', evalidation_images)
+    # numpy.save('numpy_validation_datasets/late_microexpfusenet_eval_labels.npy', evalidation_labels)
 
-# Training the model
-start = timeit.timeit()
-history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 100, shuffle=True)
-end = timeit.timeit()
+    # Training the model
+
+    history = model.fit(etrain_images, etrain_labels, validation_data = (evalidation_images, evalidation_labels), callbacks=callbacks_list, batch_size = 8, nb_epoch = 3, shuffle=True)
+
+    predictions = model.predict([evalidation_images])
+    predictions_labels = numpy.argmax(predictions, axis=1)
+    validation_labels = numpy.argmax(evalidation_labels, axis=1)
+
+    return accuracy_score(validation_labels, predictions_labels)
+
 # Loading Load validation set from numpy array
 
 eimg = numpy.load('numpy_validation_datasets/late_microexpfusenet_eval_images.npy')
@@ -174,13 +179,33 @@ labels = numpy.load('numpy_validation_datasets/late_microexpfusenet_eval_labels.
 
 # Finding Confusion Matrix using pretrained weights
 
-predictions = model.predict([eimg])
-predictions_labels = numpy.argmax(predictions, axis=1)
-validation_labels = numpy.argmax(labels, axis=1)
-cfm = confusion_matrix(validation_labels, predictions_labels)
-print (cfm)
-print("accuracy: ",accuracy_score(validation_labels, predictions_labels))
-print("time: ")
-print(end-start)
-# _, val_acc = model.evaluate(validation_labels, predictions_labels, verbose = 1)
-# print(val_acc)
+# predictions = model.predict([eimg])
+# predictions_labels = numpy.argmax(predictions, axis=1)
+# validation_labels = numpy.argmax(labels, axis=1)
+# cfm = confusion_matrix(validation_labels, predictions_labels)
+# print (cfm)
+# print("accuracy: ",accuracy_score(validation_labels, predictions_labels))
+# print("time: ")
+#print(end-start)
+
+
+# Spliting the dataset into training and validation sets
+print(etraining_set)
+loo = LeaveOneOut()
+loo.get_n_splits(etraining_set)
+tot=0
+count=0
+for train_index, test_index in loo.split(etraining_set):
+    # etrain_images, evalidation_images, etrain_labels, evalidation_labels = train_test_split(etraining_set,
+    #                                                                                         eye_traininglabels,
+    #                                                                                         test_size=0.2, random_state=42)
+    print(eye_traininglabels[train_index])
+    print(eye_traininglabels[test_index])
+
+    val_acc = evaluate(etraining_set[train_index], etraining_set[test_index],eye_traininglabels[train_index], eye_traininglabels[test_index] )
+    tot+=val_acc
+    count+=1
+    print("------------------------------------------------------------------------")
+    print("validation acc:",val_acc)
+    print("------------------------------------------------------------------------")
+print(tot/count)
