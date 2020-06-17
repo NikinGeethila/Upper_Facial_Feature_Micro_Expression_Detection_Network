@@ -15,7 +15,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     model = Sequential()
     #model.add(ZeroPadding3D((2,2,0)))
-    model.add(Convolution3D(32, (4, 4, 15),input_shape=(1, 32, 32, 18)))
+    model.add(Convolution3D(32, (4, 4, 15),input_shape=(1, sizeH, sizeV, 18)))
     model.add( LeakyReLU(alpha=(0.3)))
     model.add(Dropout(0.5))
     model.add(MaxPooling3D(pool_size=(3, 3, 3)))
