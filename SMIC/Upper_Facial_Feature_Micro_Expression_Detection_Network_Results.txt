@@ -54,4 +54,16 @@ test with 2 reduced layers:
 
 test with 64x64 (undo previous)
 	-adam -
-	-SGD -
+	-SGD -21-
+
+test with 3x3x15 conv (undo previous)
+	-adam -
+	-SGD -26
+
+test with 6x3x15 conv (undo previous)
+	-adam -
+	-SGD -24,24,23,26
+
+test with 3x6x15 conv (undo previous)
+	-adam -
+	-SGD -24
