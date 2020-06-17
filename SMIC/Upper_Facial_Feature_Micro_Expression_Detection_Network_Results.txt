@@ -49,5 +49,9 @@ optimizers
 test with 2 reduced layers:
     # model.add(Dense(1024, init='normal'))
     # model.add(Dropout(0.5))
+	-adam -24,25,23,26
+	-SGD -28,27,25,25,24,26
+
+test with 64x64 (undo previous)
 	-adam -
-	-SGD -28,27,25,25
+	-SGD -
