@@ -29,7 +29,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     model.add(Dense(3, init='normal'))
     #model.add(Dropout(0.5))
     model.add(Activation('softmax'))
-    model.compile(loss = 'categorical_crossentropy', optimizer = 'Adam', metrics = ['accuracy'])
+    model.compile(loss = 'categorical_crossentropy', optimizer = 'SGD', metrics = ['accuracy'])
 
     model.summary()
 
