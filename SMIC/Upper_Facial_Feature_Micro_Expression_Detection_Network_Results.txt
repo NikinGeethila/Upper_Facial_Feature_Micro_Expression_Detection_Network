@@ -31,3 +31,12 @@ model.add(Activation('softmax'))
 		acc=26
 	-relu-Prelu
 		acc=25
+optimizers
+-31
+	-SGD-21
+	-adam-22
+	-RMSprop-23
+-32
+	-adam -24
+	-SGD -25
+	-RMSprop -
