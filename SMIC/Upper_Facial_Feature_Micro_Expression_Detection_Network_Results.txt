@@ -41,4 +41,6 @@ optimizers
 	-SGD -25
 	-RMSprop -21
 	-Adadelta -21
-	-Adagrad -
+	-Adagrad -22
+	-Adamax -24
+	-Nadam -22
