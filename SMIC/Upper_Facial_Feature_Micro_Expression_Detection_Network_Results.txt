@@ -44,3 +44,10 @@ optimizers
 	-Adagrad -22
 	-Adamax -24,22,23
 	-Nadam -22
+
+
+test with 2 reduced layers:
+    # model.add(Dense(1024, init='normal'))
+    # model.add(Dropout(0.5))
+	-adam -
+	-SGD -28,27,25,25
