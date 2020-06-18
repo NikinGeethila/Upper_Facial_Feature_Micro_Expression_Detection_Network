@@ -41,19 +41,24 @@ def annotate_landmarks(img, landmarks, font_scale=0.4):
     return img
 
 
-negativepath = '../../../Datasets/SIMC_E_categorical/Negative/'
-positivepath = '../../../Datasets/SIMC_E_categorical/Positive/'
-surprisepath = '../../../Datasets/SIMC_E_categorical/Surprise/'
+angerpath = '../../../Datasets/SAMM_categorical/Anger/'
+sadnesspath = '../../../Datasets/SAMM_categorical/Sadness/'
+happinesspath = '../../../Datasets/SAMM_categorical/Happiness/'
+disgustpath = '../../../Datasets/SAMM_categorical/Disgust/'
+fearpath = '../../../Datasets/SAMM_categorical/Fear/'
+surprisepath = '../../../Datasets/SAMM_categorical/Surprise/'
+contemptpath = '../../../Datasets/SAMM_categorical/Contempt/'
+otherpath = '../../../Datasets/SAMM_categorical/Other/'
 
 segmentName = 'UpperFace'
 sizeH=16
 sizeV=16
 
-
+paths=[angerpath, sadnesspath, happinesspath,disgustpath,fearpath,surprisepath,contemptpath,otherpath]
 
 segment_training_list = []
 counting = 0
-for typepath in (negativepath, positivepath, surprisepath):
+for typepath in (paths):
     directorylisting = os.listdir(typepath)
     print(typepath)
 
@@ -61,7 +66,7 @@ for typepath in (negativepath, positivepath, surprisepath):
         videopath = typepath + video
         segment_frames = []
         framelisting = os.listdir(videopath)
-        framerange = [x for x in range(18)]
+        framerange = [x for x in range(30)]
         for frame in framerange:
             imagepath = videopath + "/" + framelisting[frame]
             image = cv2.imread(imagepath)
@@ -97,22 +102,20 @@ segment_trainingsamples = len(segment_training_list)
 
 segment_traininglabels = numpy.zeros((segment_trainingsamples,), dtype=int)
 
-for typepath in (negativepath, positivepath, surprisepath):
-    directorylisting = os.listdir(typepath)
+count=0
+for pi in range(len(paths)):
+    directorylisting = os.listdir(paths[pi])
     print(typepath)
     for video in range(len(directorylisting)):
-        if typepath == negativepath:
-            segment_traininglabels[video] = 0
-        if typepath == positivepath:
-            segment_traininglabels[video] = 1
-        if typepath == surprisepath:
-            segment_traininglabels[video] = 2
+        segment_traininglabels[count] = pi
+        count+=1
 
-segment_traininglabels = np_utils.to_categorical(segment_traininglabels, 3)
+
+segment_traininglabels = np_utils.to_categorical(segment_traininglabels, 8)
 
 segment_training_data = [segment_training_list, segment_traininglabels]
 (segment_trainingframes, segment_traininglabels) = (segment_training_data[0], segment_training_data[1])
-segment_training_set = numpy.zeros((segment_trainingsamples, 1,sizeH, sizeV, 18))
+segment_training_set = numpy.zeros((segment_trainingsamples, 1,sizeH, sizeV, 30))
 for h in range(segment_trainingsamples):
     segment_training_set[h][0][:][:][:] = segment_trainingframes[h, :, :, :]
 
