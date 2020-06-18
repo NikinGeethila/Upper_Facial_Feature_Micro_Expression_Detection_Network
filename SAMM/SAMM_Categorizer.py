@@ -12,14 +12,7 @@ catdata = np.array(catdatafile)
 
 # print(catdata)
 
-angerpath = '../../../Datasets/SAMM_categorical/Anger/'
-sadnesspath = '../../../Datasets/SAMM_categorical/Sadness/'
-happinesspath = '../../../Datasets/SAMM_categorical/Happiness/'
-disgustpath = '../../../Datasets/SAMM_categorical/Disgust/'
-fearpath = '../../../Datasets/SAMM_categorical/Fear/'
-surprisepath = '../../../Datasets/SAMM_categorical/Surprise/'
-contemptpath = '../../../Datasets/SAMM_categorical/Contempt/'
-otherpath = '../../../Datasets/SAMM_categorical/Other/'
+
 targetpath= '../../../Datasets/SAMM_categorical/'
 
 directorylisting = os.listdir(path)
