@@ -15,7 +15,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     model = Sequential()
     #model.add(ZeroPadding3D((2,2,0)))
-    model.add(Convolution3D(32, (4, 4, 15),input_shape=(1, sizeH, sizeV, 18)))
+    model.add(Convolution3D(32, (4, 4, 15),input_shape=(1, sizeH, sizeV, 30)))
     model.add( LeakyReLU(alpha=(0.3)))
     model.add(Dropout(0.5))
     model.add(MaxPooling3D(pool_size=(3, 3, 3)))
@@ -26,7 +26,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     # model.add(Dropout(0.5))
     model.add(Dense(128, init='normal'))
     model.add(Dropout(0.5))
-    model.add(Dense(3, init='normal'))
+    model.add(Dense(8, init='normal'))
     #model.add(Dropout(0.5))
     model.add(Activation('softmax'))
     model.compile(loss = 'categorical_crossentropy', optimizer = 'SGD', metrics = ['accuracy'])
@@ -79,7 +79,7 @@ sizeV=16
 segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
-
+'''
 #-----------------------------------------------------------------------------------------------------------------
 #LOOCV
 loo = LeaveOneOut()
@@ -107,7 +107,7 @@ print(tot/count)
 # Spliting the dataset into training and validation sets
 segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels = train_test_split(segment_training_set,
                                                                                             segment_traininglabels,
-                                                                                            test_size=0.2, random_state=3)
+                                                                                            test_size=0.2, random_state=42)
 
 # Save validation set in a numpy array
 numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
@@ -119,4 +119,3 @@ numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName
 # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
 evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
-'''
