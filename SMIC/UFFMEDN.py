@@ -6,7 +6,7 @@ from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Convolution3D, MaxPooling3D, ZeroPadding3D
 from keras.layers import LeakyReLU ,PReLU
 from keras.callbacks import ModelCheckpoint
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split,LeaveOneOut
 from keras import backend as K
 
 
@@ -70,8 +70,8 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 K.set_image_dim_ordering('th')
 
 segmentName='UpperFace'
-sizeH=32
-sizeV=32
+sizeH=16
+sizeV=16
 
 
 # Load training images and labels that are stored in numpy array
@@ -79,7 +79,7 @@ sizeV=32
 segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
-'''
+
 #-----------------------------------------------------------------------------------------------------------------
 #LOOCV
 loo = LeaveOneOut()
@@ -103,21 +103,20 @@ print(tot/count)
 #-----------------------------------------------------------------------------------------------------------------
 #Test train split
 
-acc=0
-for i in range (1,11):
-    # Spliting the dataset into training and validation sets
-    segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels = train_test_split(segment_training_set,
-                                                                                                segment_traininglabels,
-                                                                                                test_size=0.2, random_state=i)
 
-    # Save validation set in a numpy array
-    numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
-    numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_labels)
+# Spliting the dataset into training and validation sets
+segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels = train_test_split(segment_training_set,
+                                                                                            segment_traininglabels,
+                                                                                            test_size=0.2, random_state=3)
 
-    # Loading Load validation set from numpy array
-    #
-    # eimg = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
-    # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
+# Save validation set in a numpy array
+numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
+numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_labels)
 
-    acc+=evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
-print(acc/10)
+# Loading Load validation set from numpy array
+#
+# eimg = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
+# labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
+
+evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
+'''
