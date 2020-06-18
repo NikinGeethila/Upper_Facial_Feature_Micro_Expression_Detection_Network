@@ -61,7 +61,7 @@ for typepath in (negativepath, positivepath, surprisepath):
         videopath = typepath + video
         segment_frames = []
         framelisting = os.listdir(videopath)
-        framerange = [x for x in range(18)]
+        framerange = [x for x in range(100)]
         for frame in framerange:
             imagepath = videopath + "/" + framelisting[frame]
             image = cv2.imread(imagepath)
@@ -116,7 +116,7 @@ segment_traininglabels = np_utils.to_categorical(segment_traininglabels, 3)
 
 segment_training_data = [segment_training_list, segment_traininglabels]
 (segment_trainingframes, segment_traininglabels) = (segment_training_data[0], segment_training_data[1])
-segment_training_set = numpy.zeros((segment_trainingsamples, 1,sizeH, sizeV, 18))
+segment_training_set = numpy.zeros((segment_trainingsamples, 1,sizeH, sizeV, 100))
 for h in range(segment_trainingsamples):
     segment_training_set[h][0][:][:][:] = segment_trainingframes[h, :, :, :]
 
