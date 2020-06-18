@@ -46,8 +46,8 @@ positivepath = '../../../Datasets/SIMC_E_categorical/Positive/'
 surprisepath = '../../../Datasets/SIMC_E_categorical/Surprise/'
 
 segmentName = 'UpperFace'
-sizeH=16
-sizeV=16
+sizeH=32
+sizeV=32
 
 
 
@@ -97,16 +97,20 @@ segment_trainingsamples = len(segment_training_list)
 
 segment_traininglabels = numpy.zeros((segment_trainingsamples,), dtype=int)
 
+count=0
 for typepath in (negativepath, positivepath, surprisepath):
     directorylisting = os.listdir(typepath)
     print(typepath)
     for video in range(len(directorylisting)):
         if typepath == negativepath:
-            segment_traininglabels[video] = 0
+            segment_traininglabels[count] = 0
+            count+=1
         if typepath == positivepath:
-            segment_traininglabels[video] = 1
+            segment_traininglabels[count] = 1
+            count += 1
         if typepath == surprisepath:
-            segment_traininglabels[video] = 2
+            segment_traininglabels[count] = 2
+            count += 1
 
 segment_traininglabels = np_utils.to_categorical(segment_traininglabels, 3)
 
