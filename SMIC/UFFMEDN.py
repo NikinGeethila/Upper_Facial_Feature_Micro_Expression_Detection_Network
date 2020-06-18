@@ -22,8 +22,8 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     model.add( LeakyReLU(alpha=(0.3)))
     model.add(Dropout(0.5))
     model.add(Flatten())
-    model.add(Dense(1024, init='normal'))
-    model.add(Dropout(0.5))
+    # model.add(Dense(1024, init='normal'))
+    # model.add(Dropout(0.5))
     model.add(Dense(128, init='normal'))
     model.add(Dropout(0.5))
     model.add(Dense(3, init='normal'))
@@ -103,19 +103,21 @@ print(tot/count)
 #-----------------------------------------------------------------------------------------------------------------
 #Test train split
 
+acc=0
+for i in range (1,11):
+    # Spliting the dataset into training and validation sets
+    segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels = train_test_split(segment_training_set,
+                                                                                                segment_traininglabels,
+                                                                                                test_size=0.2, random_state=i)
 
-# Spliting the dataset into training and validation sets
-segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels = train_test_split(segment_training_set,
-                                                                                            segment_traininglabels,
-                                                                                            test_size=0.2, random_state=42)
+    # Save validation set in a numpy array
+    numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
+    numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_labels)
 
-# Save validation set in a numpy array
-numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
-numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_labels)
+    # Loading Load validation set from numpy array
+    #
+    # eimg = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
+    # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
-# Loading Load validation set from numpy array
-#
-# eimg = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
-# labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
-
-evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
+    acc+=evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
+print(acc/10)
