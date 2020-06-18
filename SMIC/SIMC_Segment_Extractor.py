@@ -46,8 +46,8 @@ positivepath = '../../../Datasets/SIMC_E_categorical/Positive/'
 surprisepath = '../../../Datasets/SIMC_E_categorical/Surprise/'
 
 segmentName = 'UpperFace'
-sizeH=32
-sizeV=64
+sizeH=16
+sizeV=16
 
 
 
