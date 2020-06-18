@@ -50,7 +50,7 @@ test with 2 reduced layers:
     # model.add(Dense(1024, init='normal'))
     # model.add(Dropout(0.5))
 	-adam -24,25,23,26
-	-SGD -28,27,25,25,24,26,27
+	-SGD -28,27,25,25,24,26,27,26
 
 test with 64x64 (undo previous)
 	-adam -
@@ -67,3 +67,5 @@ test with 6x3x15 conv (undo previous)
 test with 3x6x15 conv (undo previous)
 	-adam -
 	-SGD -24,25,22,23
+
+LOOCV upper face using reduced layers SGD 16x16 4x4x15 conv 16 batch size 100 epoch = 0.681
