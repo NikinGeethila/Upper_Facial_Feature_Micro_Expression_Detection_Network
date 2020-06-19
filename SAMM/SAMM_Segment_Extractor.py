@@ -51,8 +51,8 @@ contemptpath = '../../../Datasets/SAMM_categorical/Contempt/'
 otherpath = '../../../Datasets/SAMM_categorical/Other/'
 
 segmentName = 'UpperFace'
-sizeH=16
-sizeV=16
+sizeH=32
+sizeV=32
 
 paths=[angerpath, sadnesspath, happinesspath,disgustpath,fearpath,surprisepath,contemptpath,otherpath]
 
@@ -105,7 +105,7 @@ segment_traininglabels = numpy.zeros((segment_trainingsamples,), dtype=int)
 count=0
 for pi in range(len(paths)):
     directorylisting = os.listdir(paths[pi])
-    print(typepath)
+    print(pi)
     for video in range(len(directorylisting)):
         segment_traininglabels[count] = pi
         count+=1
