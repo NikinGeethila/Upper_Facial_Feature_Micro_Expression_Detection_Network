@@ -35,8 +35,8 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     filepath="weights_SAMM/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=80, restore_best_weights=True, verbose=1, mode='max')
-    reduce = ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=60, verbose=1,min_delta=0, mode='max')
+    EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=20, restore_best_weights=True, verbose=1, mode='max')
+    reduce = ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=10, verbose=1,min_delta=0, mode='max',min_lr=0.0005)
     callbacks_list = [checkpoint, EarlyStop, reduce]
 
 
@@ -81,7 +81,7 @@ sizeV=32
 segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}v18.npy'.format(segmentName,sizeH, sizeV))
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}v18.npy'.format(segmentName,sizeH, sizeV))
 
-'''
+
 #-----------------------------------------------------------------------------------------------------------------
 #LOOCV
 loo = LeaveOneOut()
@@ -121,3 +121,4 @@ numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName
 # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
 evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
+'''
