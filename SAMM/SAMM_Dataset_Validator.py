@@ -5,7 +5,8 @@ segmentName='UpperFace'
 sizeH=32
 sizeV=32
 
-segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
+segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}v18.npy'.format(segmentName,sizeH, sizeV))
+print(segment_traininglabels)
 cat=[0]*8
 for item in segment_traininglabels:
     for c in range(len(cat)):
