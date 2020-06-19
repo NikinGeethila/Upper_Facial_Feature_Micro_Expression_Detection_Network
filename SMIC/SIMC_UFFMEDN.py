@@ -38,7 +38,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     filepath="weights_late_microexpfusenet/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     EarlyStop=EarlyStopping(monitor='val_acc',min_delta=0,patience=80,restore_best_weights=True,verbose=1)
-    reduce =ReduceLROnPlateau(monitor='val_acc',factor=0.5,patience=20,verbose=1)
+    reduce =ReduceLROnPlateau(monitor='val_acc',factor=0.5,patience=40,verbose=1,min_lr=0.0005)
     callbacks_list = [checkpoint,EarlyStop,reduce]
 
 
