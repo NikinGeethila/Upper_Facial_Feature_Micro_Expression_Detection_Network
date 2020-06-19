@@ -26,7 +26,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     # model.add(Dropout(0.5))
     model.add(Dense(128, init='normal'))
     model.add(Dropout(0.5))
-    model.add(Dense(8, init='normal'))
+    model.add(Dense(7, init='normal'))
     #model.add(Dropout(0.5))
     model.add(Activation('softmax'))
     model.compile(loss = 'categorical_crossentropy', optimizer = 'Adam', metrics = ['accuracy'])
@@ -35,8 +35,8 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     filepath="weights_SAMM/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=20, restore_best_weights=True, verbose=1, mode='max')
-    reduce = ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=10, verbose=1,min_delta=0, mode='max',min_lr=0.0005)
+    EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=100, restore_best_weights=True, verbose=1, mode='max')
+    reduce = ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=20,cooldown=20, verbose=1,min_delta=0, mode='max',min_lr=0.0005)
     callbacks_list = [checkpoint, EarlyStop, reduce]
 
 
@@ -46,7 +46,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     # Training the model
 
-    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 8, nb_epoch = 250, shuffle=True)
+    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 8, nb_epoch = 500, shuffle=True,verbose=1)
 
 
 
@@ -81,7 +81,7 @@ sizeV=32
 segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}v18.npy'.format(segmentName,sizeH, sizeV))
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}v18.npy'.format(segmentName,sizeH, sizeV))
 
-
+'''
 #-----------------------------------------------------------------------------------------------------------------
 #LOOCV
 loo = LeaveOneOut()
@@ -109,7 +109,7 @@ print(tot/count)
 # Spliting the dataset into training and validation sets
 segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels = train_test_split(segment_training_set,
                                                                                             segment_traininglabels,
-                                                                                            test_size=0.2, random_state=42)
+                                                                                            test_size=0.2)
 
 # Save validation set in a numpy array
 numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
@@ -121,4 +121,3 @@ numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName
 # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
 evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
-'''
