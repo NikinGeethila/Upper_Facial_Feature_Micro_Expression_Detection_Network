@@ -1,18 +1,27 @@
 import numpy
+import os
 
 segmentName='UpperFace'
 sizeH=32
 sizeV=32
 
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
-n=0
-p=0
-s=0
+cat = [0] * 3
 for item in segment_traininglabels:
-    if item[0]==1:
-        n+=1
-    if item[1]==1:
-        p+=1
-    if item[2]==1:
-        s+=1
-print(n,p,s)
+    for c in range(len(cat)):
+        if item[c] == 1:
+            cat[c] += 1
+
+print(cat)
+
+negativepath = '../../../Datasets/SIMC_E_categorical/Negative/'
+positivepath = '../../../Datasets/SIMC_E_categorical/Positive/'
+surprisepath = '../../../Datasets/SIMC_E_categorical/Surprise/'
+cat=[0]*3
+dir=0
+for typepath in (negativepath, positivepath, surprisepath):
+    directorylisting = os.listdir(typepath)
+    for video in directorylisting:
+        cat[dir]+=1
+    dir+=1
+print(cat)
