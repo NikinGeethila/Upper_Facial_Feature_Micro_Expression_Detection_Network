@@ -15,28 +15,28 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     model = Sequential()
     #model.add(ZeroPadding3D((2,2,0)))
-    model.add(Convolution3D(32, (8, 8, 20),strides=(2,2,10),input_shape=(1, sizeH, sizeV, 100)))
+    model.add(Convolution3D(32, (8, 8, 20),strides=(4,4,10),input_shape=(1, sizeH, sizeV, 100)))
     model.add(PReLU())
     model.add(Dropout(0.5))
     model.add(MaxPooling3D(pool_size=(3, 3, 3)))
     model.add( PReLU())
     model.add(Dropout(0.5))
     model.add(Flatten())
-    model.add(Dense(1024, init='normal'))
-    model.add(Dropout(0.5))
+    # model.add(Dense(1024, init='normal'))
+    # model.add(Dropout(0.5))
     model.add(Dense(128, init='normal'))
     model.add(Dropout(0.5))
     model.add(Dense(3, init='normal'))
     # model.add(Dropout(0.5))
     model.add(Activation('softmax'))
-    model.compile(loss = 'categorical_crossentropy', optimizer = 'SGD', metrics = ['accuracy'])
+    model.compile(loss = 'categorical_crossentropy', optimizer = 'Adam', metrics = ['accuracy'])
 
     model.summary()
 
     filepath="weights_late_microexpfusenet/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    EarlyStop=EarlyStopping(monitor='val_acc',min_delta=0,patience=40,restore_best_weights=True,verbose=1)
-    reduce =ReduceLROnPlateau(monitor='val_acc',factor=0.5,patience=20)
+    EarlyStop=EarlyStopping(monitor='val_acc',min_delta=0,patience=80,restore_best_weights=True,verbose=1)
+    reduce =ReduceLROnPlateau(monitor='val_acc',factor=0.5,patience=60,verbose=1,min_delta=0)
     callbacks_list = [checkpoint,EarlyStop,reduce]
 
 
