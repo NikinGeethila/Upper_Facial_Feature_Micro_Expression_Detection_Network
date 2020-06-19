@@ -30,15 +30,15 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     model.add(Dense(3, init='normal'))
     # model.add(Dropout(0.5))
     model.add(Activation('softmax'))
-    opt = SGD(lr=0.01)
-    model.compile(loss = 'categorical_crossentropy', optimizer = opt, metrics = ['accuracy'])
+    opt = Adam(lr=0.01)
+    model.compile(loss = 'categorical_crossentropy', optimizer =opt, metrics = ['accuracy'])
 
     model.summary()
 
     filepath="weights_late_microexpfusenet/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    EarlyStop=EarlyStopping(monitor='val_acc',min_delta=0,patience=80,restore_best_weights=True,verbose=1)
-    reduce =ReduceLROnPlateau(monitor='val_acc',factor=0.5,patience=40,verbose=1,min_lr=0.0005)
+    EarlyStop=EarlyStopping(monitor='val_acc',min_delta=0,patience=100,restore_best_weights=True,verbose=1, mode='max')
+    reduce =ReduceLROnPlateau(monitor='val_acc',factor=0.75,patience=20,verbose=1,min_delta=0, mode='max',min_lr=0.0005)
     callbacks_list = [checkpoint,EarlyStop,reduce]
 
 
@@ -48,7 +48,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     # Training the model
 
-    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 8, nb_epoch = 250,  shuffle=True)
+    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 8, nb_epoch = 500,  shuffle=True)
 
 
 
