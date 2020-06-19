@@ -48,13 +48,12 @@ disgustpath = '../../../Datasets/SAMM_categorical/Disgust/'
 fearpath = '../../../Datasets/SAMM_categorical/Fear/'
 surprisepath = '../../../Datasets/SAMM_categorical/Surprise/'
 contemptpath = '../../../Datasets/SAMM_categorical/Contempt/'
-otherpath = '../../../Datasets/SAMM_categorical/Other/'
 
 segmentName = 'UpperFace'
 sizeH=32
 sizeV=32
 
-paths=[angerpath, sadnesspath, happinesspath,disgustpath,fearpath,surprisepath,contemptpath,otherpath]
+paths=[angerpath, sadnesspath, happinesspath,disgustpath,fearpath,surprisepath,contemptpath]
 
 segment_training_list = []
 counting = 0
@@ -66,7 +65,7 @@ for typepath in (paths):
         videopath = typepath + video
         segment_frames = []
         framelisting = os.listdir(videopath)
-        framerange = [x for x in range(30)]
+        framerange = [x for x in range(18)]
         for frame in framerange:
             imagepath = videopath + "/" + framelisting[frame]
             image = cv2.imread(imagepath)
@@ -115,7 +114,7 @@ segment_traininglabels = np_utils.to_categorical(segment_traininglabels, 8)
 
 segment_training_data = [segment_training_list, segment_traininglabels]
 (segment_trainingframes, segment_traininglabels) = (segment_training_data[0], segment_training_data[1])
-segment_training_set = numpy.zeros((segment_trainingsamples, 1,sizeH, sizeV, 30))
+segment_training_set = numpy.zeros((segment_trainingsamples, 1,sizeH, sizeV, 18))
 for h in range(segment_trainingsamples):
     segment_training_set[h][0][:][:][:] = segment_trainingframes[h, :, :, :]
 
@@ -123,8 +122,8 @@ segment_training_set = segment_training_set.astype('float32')
 segment_training_set -= numpy.mean(segment_training_set)
 segment_training_set /= numpy.max(segment_training_set)
 
-numpy.save('numpy_training_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_training_set)
-numpy.save('numpy_training_datasets/{0}_labels_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_traininglabels)
+numpy.save('numpy_training_datasets/{0}_images_{1}x{2}v18.npy'.format(segmentName,sizeH, sizeV), segment_training_set)
+numpy.save('numpy_training_datasets/{0}_labels_{1}x{2}v18.npy'.format(segmentName,sizeH, sizeV), segment_traininglabels)
 
 """
 ----------------------------
