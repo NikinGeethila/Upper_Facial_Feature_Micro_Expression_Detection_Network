@@ -5,7 +5,7 @@ from keras.models import Sequential, Model
 from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Convolution3D, MaxPooling3D, ZeroPadding3D
 from keras.layers import LeakyReLU ,PReLU
-from keras.callbacks import ModelCheckpoint,EarlyStopping
+from keras.callbacks import ModelCheckpoint,EarlyStopping,ReduceLROnPlateau
 from sklearn.model_selection import train_test_split,LeaveOneOut
 from keras import backend as K
 
@@ -15,7 +15,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     model = Sequential()
     #model.add(ZeroPadding3D((2,2,0)))
-    model.add(Convolution3D(32, (3, 3, 28),input_shape=(1, sizeH, sizeV, 30)))
+    model.add(Convolution3D(32, (8, 8, 10),strides=(4,4,5),input_shape=(1, sizeH, sizeV, 30)))
     model.add( PReLU())
     model.add(Dropout(0.5))
     model.add(MaxPooling3D(pool_size=(3, 3, 3)))
@@ -35,8 +35,9 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     filepath="weights_SAMM/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=40)
-    callbacks_list = [checkpoint, EarlyStop]
+    EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=80, restore_best_weights=True, verbose=1)
+    reduce = ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=60, verbose=1,min_delta=0)
+    callbacks_list = [checkpoint, EarlyStop, reduce]
 
 
 
@@ -45,7 +46,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     # Training the model
 
-    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 250, shuffle=True)
+    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 8, nb_epoch = 250, shuffle=True)
 
 
 
@@ -77,8 +78,8 @@ sizeV=32
 
 # Load training images and labels that are stored in numpy array
 
-segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}v19.npy'.format(segmentName,sizeH, sizeV))
-segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}v18.npy'.format(segmentName,sizeH, sizeV))
+segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
+segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
 '''
 #-----------------------------------------------------------------------------------------------------------------
