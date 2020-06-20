@@ -15,8 +15,13 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     model = Sequential()
     #model.add(ZeroPadding3D((2,2,0)))
-    model.add(Convolution3D(32, (20, 20, 20),strides=(10,10,10),input_shape=(1, sizeH, sizeV, sizeD),padding='Same'))
-    model.add( PReLU())
+    model.add(
+        Convolution3D(32, (20, 20, 9), strides=(10, 10, 3), input_shape=(1, sizeH, sizeV, sizeD), padding='Same'))
+    model.add(PReLU())
+    model.add(Dropout(0.5))
+    model.add(
+        Convolution3D(32, (3, 3, 3), strides=1, padding='Same'))
+    model.add(PReLU())
     model.add(Dropout(0.5))
     # model.add(MaxPooling3D(pool_size=(3, 3, 3)))
     # model.add( PReLU())
@@ -26,7 +31,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     # model.add(Dropout(0.5))
     model.add(Dense(128, init='normal'))
     model.add(Dropout(0.5))
-    model.add(Dense(7, init='normal'))
+    model.add(Dense(3, init='normal'))
     #model.add(Dropout(0.5))
     model.add(Activation('softmax'))
     opt = SGD(lr=0.01)
@@ -34,7 +39,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     model.summary()
 
-    filepath="weights_SAMM/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
+    filepath="weights_CAS(ME)2/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=100, restore_best_weights=True, verbose=1, mode='max')
     reduce = ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=20,cooldown=20, verbose=1,min_delta=0, mode='max',min_lr=0.0005)
@@ -75,14 +80,14 @@ K.set_image_dim_ordering('th')
 segmentName='UpperFace'
 sizeH=32
 sizeV=32
-sizeD=30
+sizeD=9
 
 # Load training images and labels that are stored in numpy array
 
 segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 
-'''
+
 #-----------------------------------------------------------------------------------------------------------------
 #LOOCV
 loo = LeaveOneOut()
@@ -122,3 +127,4 @@ numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName
 # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
 evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
+'''
