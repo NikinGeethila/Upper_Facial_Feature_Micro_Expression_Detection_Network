@@ -5,19 +5,17 @@ import shutil
 
 
 
-path='../../../Datasets/CAS(ME)2/selectedpic/selectedpic/'
+path='D:/University/Detecting Forced Emotions through Micro-Expression Recognition using Neural Networks/Datasets/CASMEII/CASME2_RAW_selected/CASME2_RAW_selected/'
 
-catdatafile = pd.read_excel('../../../Datasets/CAS(ME)2/cat.xlsx')
+catdatafile = pd.read_excel('../../../Datasets/CASMEII/cat.xlsx')
 catdata = np.array(catdatafile)
 
-namedatafile = pd.read_excel('../../../Datasets/CAS(ME)2/name.xlsx')
-namedata = np.array(namedatafile)
 
 # print(catdata)
 # print(namedata)
 
 
-targetpath= '../../../Datasets/CAS(ME)2_categorical/'
+targetpath= '../../../Datasets/CASMEII_categorical/'
 
 directorylisting = os.listdir(path)
 
@@ -30,10 +28,11 @@ for subject in directorylisting:
         videopath = path+subject +'/'+ video
         found=False
         for vidid in range(len(catdata)):
-            if catdata[vidid][1]==str(video) and namedata[vidid][0]==subject and catdata[vidid][3]=="micro-expression":
+            if catdata[vidid][1]==str(video) and ("sub"+str(catdata[vidid][0])==subject or "sub0"+str(catdata[vidid][0])==subject):
                 print(video,catdata[vidid][2],catdata[vidid])
-                # print(str(targetpath)+str(catdata[vidid][2])+"/"+str(namedata[vidid][0])+'_'+str(video))
-                shutil.copytree(videopath, str(targetpath)+str(catdata[vidid][2])+"/"+str(namedata[vidid][0])+'_'+str(video))
+                # print(str(targetpath)+str(catdata[vidid][2])+"/"+str(catdata[vidid][0])+'_'+str(video))
+                viddirectorylisting = os.listdir(videopath)
+                shutil.copytree(videopath, str(targetpath)+str(catdata[vidid][2])+"/"+str(catdata[vidid][0])+'_'+str(video))
                 if found==True:
                     print("multiple",video,catdata[vidid])
                 found=True
