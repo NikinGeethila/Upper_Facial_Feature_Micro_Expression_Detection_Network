@@ -41,20 +41,16 @@ def annotate_landmarks(img, landmarks, font_scale=0.4):
     return img
 
 
-angerpath = '../../../Datasets/SAMM_categorical/Anger/'
-sadnesspath = '../../../Datasets/SAMM_categorical/Sadness/'
-happinesspath = '../../../Datasets/SAMM_categorical/Happiness/'
-disgustpath = '../../../Datasets/SAMM_categorical/Disgust/'
-fearpath = '../../../Datasets/SAMM_categorical/Fear/'
-surprisepath = '../../../Datasets/SAMM_categorical/Surprise/'
-contemptpath = '../../../Datasets/SAMM_categorical/Contempt/'
+negativepath = '../../../Datasets/CAS(ME)2_categorical/Negative/'
+positivepath = '../../../Datasets/CAS(ME)2_categorical/Positive/'
+surprisepath = '../../../Datasets/CAS(ME)2_categorical/Surprise/'
 
 segmentName = 'UpperFace'
-sizeH=16
-sizeV=16
-sizeD=30
+sizeH=32
+sizeV=32
+sizeD=9
 
-paths=[angerpath, sadnesspath, happinesspath,disgustpath,fearpath,surprisepath,contemptpath]
+paths=[negativepath, positivepath, surprisepath]
 
 segment_training_list = []
 counting = 0
@@ -112,7 +108,7 @@ for pi in range(len(paths)):
         count+=1
 
 
-segment_traininglabels = np_utils.to_categorical(segment_traininglabels, 7)
+segment_traininglabels = np_utils.to_categorical(segment_traininglabels, len(paths))
 
 segment_training_data = [segment_training_list, segment_traininglabels]
 (segment_trainingframes, segment_traininglabels) = (segment_training_data[0], segment_training_data[1])
