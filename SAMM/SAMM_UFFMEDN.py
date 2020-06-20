@@ -18,6 +18,10 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     model.add(Convolution3D(32, (20, 20, 20),strides=(10,10,10),input_shape=(1, sizeH, sizeV, sizeD),padding='Same'))
     model.add( PReLU())
     model.add(Dropout(0.5))
+    model.add(
+    Convolution3D(32, (3, 3, 3), strides=1, padding='Same'))
+    model.add(PReLU())
+    model.add(Dropout(0.5))
     # model.add(MaxPooling3D(pool_size=(3, 3, 3)))
     # model.add( PReLU())
     # model.add(Dropout(0.5))
