@@ -50,8 +50,8 @@ surprisepath = '../../../Datasets/SAMM_categorical/Surprise/'
 contemptpath = '../../../Datasets/SAMM_categorical/Contempt/'
 
 segmentName = 'UpperFace'
-sizeH=32
-sizeV=32
+sizeH=16
+sizeV=16
 sizeD=30
 
 paths=[angerpath, sadnesspath, happinesspath,disgustpath,fearpath,surprisepath,contemptpath]
@@ -125,7 +125,7 @@ segment_training_set -= numpy.mean(segment_training_set)
 segment_training_set /= numpy.max(segment_training_set)
 
 numpy.save('numpy_training_datasets/{0}_images_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD), segment_training_set)
-numpy.save('numpy_training_datasets/{0}_labels_{1}x{2}x(3).npy'.format(segmentName,sizeH, sizeV,sizeD), segment_traininglabels)
+numpy.save('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD), segment_traininglabels)
 
 """
 ----------------------------
