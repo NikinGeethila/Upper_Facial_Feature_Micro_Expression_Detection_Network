@@ -2,17 +2,17 @@ import os
 
 
 
-path='../../../Datasets/SAMM/SAMM/'
+path='../../../Datasets/CAS(ME)2_categorical/'
 
 
 
 directorylisting = os.listdir(path)
 img_count=[]
-for subject in directorylisting:
+for cat in directorylisting:
     # print(subject)`
-    subjectdirectorylisting=os.listdir(path+subject)
+    subjectdirectorylisting=os.listdir(path+cat)
     for video in subjectdirectorylisting:
-        videopath = path+subject +'/'+ video
+        videopath = path+cat +'/'+ video
         # print(videopath)
         imgs=os.listdir(videopath)
         count=0
@@ -25,3 +25,4 @@ print(img_count)
 print(sum(img_count)/len(img_count))
 print(max(img_count))
 print(min(img_count))
+print(len(img_count))
