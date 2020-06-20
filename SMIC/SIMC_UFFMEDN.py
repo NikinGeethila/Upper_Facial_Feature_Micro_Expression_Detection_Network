@@ -19,31 +19,31 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     model.add(
         Convolution3D(32, (20, 20, 20), strides=(10, 10, 10), input_shape=(1, sizeH, sizeV, sizeD), padding='Same'))
     model.add(PReLU())
-    model.add(Dropout(0.5))
+    # model.add(Dropout(0.5))
     model.add(
-    Convolution3D(32, (3, 3, 3), strides=1, padding='Same'))
+        Convolution3D(32, (3, 3, 3), strides=1, padding='Same'))
     model.add(PReLU())
-    model.add(Dropout(0.5))
+    # model.add(Dropout(0.5))
     # model.add(MaxPooling3D(pool_size=(3, 3, 3)))
     # model.add( PReLU())
     # model.add(Dropout(0.5))
     model.add(Flatten())
     # model.add(Dense(1024, init='normal'))
     # model.add(Dropout(0.5))
-    model.add(Dense(128, init='normal'))
-    model.add(Dropout(0.5))
-    model.add(Dense(3, init='normal'))
+    # model.add(Dense(128, init='normal'))
     # model.add(Dropout(0.5))
+    model.add(Dense(3, init='normal'))
+    model.add(Dropout(0.5))
     model.add(Activation('softmax'))
     opt = SGD(lr=0.01)
-    model.compile(loss = 'categorical_crossentropy', optimizer =opt, metrics = ['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     model.summary()
 
     filepath="weights_late_microexpfusenet/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    EarlyStop=EarlyStopping(monitor='val_acc',min_delta=0,patience=100,restore_best_weights=True,verbose=1, mode='max')
-    reduce =ReduceLROnPlateau(monitor='val_acc',factor=0.5,patience=20,cooldown=20,verbose=1,min_delta=0, mode='max',min_lr=0.0005)
+    EarlyStop=EarlyStopping(monitor='val_acc',min_delta=0,patience=50,restore_best_weights=True,verbose=1, mode='max')
+    reduce =ReduceLROnPlateau(monitor='val_acc',factor=0.5,patience=30,cooldown=10,verbose=1,min_delta=0, mode='max',min_lr=0.0005)
     callbacks_list = [checkpoint,EarlyStop,reduce]
 
 
@@ -116,7 +116,7 @@ print(tot/count)
 # Spliting the dataset into training and validation sets
 segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels = train_test_split(segment_training_set,
                                                                                             segment_traininglabels,
-                                                                                            test_size=0.2, random_state=1)
+                                                                                            test_size=0.2, random_state=42)
 
 # Save validation set in a numpy array
 numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
