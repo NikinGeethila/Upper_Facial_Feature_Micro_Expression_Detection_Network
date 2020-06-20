@@ -18,24 +18,24 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     model.add(
         Convolution3D(32, (20, 20, 9), strides=(10, 10, 3), input_shape=(1, sizeH, sizeV, sizeD), padding='Same'))
     model.add(PReLU())
-    model.add(Dropout(0.5))
+    # model.add(Dropout(0.5))
     model.add(
         Convolution3D(32, (3, 3, 3), strides=1, padding='Same'))
     model.add(PReLU())
-    model.add(Dropout(0.5))
+    # model.add(Dropout(0.5))
     # model.add(MaxPooling3D(pool_size=(3, 3, 3)))
     # model.add( PReLU())
     # model.add(Dropout(0.5))
     model.add(Flatten())
     # model.add(Dense(1024, init='normal'))
     # model.add(Dropout(0.5))
-    model.add(Dense(128, init='normal'))
-    model.add(Dropout(0.5))
+    # model.add(Dense(128, init='normal'))
+    # model.add(Dropout(0.5))
     model.add(Dense(3, init='normal'))
-    #model.add(Dropout(0.5))
+    model.add(Dropout(0.5))
     model.add(Activation('softmax'))
     opt = SGD(lr=0.01)
-    model.compile(loss = 'categorical_crossentropy', optimizer = opt, metrics = ['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     model.summary()
 
@@ -94,6 +94,8 @@ loo = LeaveOneOut()
 loo.get_n_splits(segment_training_set)
 tot=0
 count=0
+accs=[]
+accs2=[]
 for train_index, test_index in loo.split(segment_training_set):
 
     print(segment_traininglabels[train_index])
@@ -101,11 +103,19 @@ for train_index, test_index in loo.split(segment_training_set):
 
     val_acc = evaluate(segment_training_set[train_index], segment_training_set[test_index],segment_traininglabels[train_index], segment_traininglabels[test_index] ,test_index)
     tot+=val_acc
+    accs.append(val_acc)
+    accs2.append(segment_traininglabels[test_index])
     count+=1
     print("------------------------------------------------------------------------")
     print("validation acc:",val_acc)
     print("------------------------------------------------------------------------")
 print(tot/count)
+print(accs)
+
+validation_labels = numpy.argmax(accs2, axis=1)
+cfm = confusion_matrix(validation_labels, accs)
+print(cfm)
+print("accuracy: ", accuracy_score(validation_labels, accs))
 
 '''
 #-----------------------------------------------------------------------------------------------------------------
