@@ -8,14 +8,14 @@ from keras.layers import LeakyReLU ,PReLU
 from keras.callbacks import ModelCheckpoint,EarlyStopping,ReduceLROnPlateau
 from sklearn.model_selection import train_test_split,LeaveOneOut
 from keras import backend as K
-
+from keras.optimizers import Adam,SGD
 
 
 def evaluate(segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels,test_index ):
 
     model = Sequential()
     #model.add(ZeroPadding3D((2,2,0)))
-    model.add(Convolution3D(32, (8, 8, 5),strides=(4,4,5),input_shape=(1, sizeH, sizeV, 18)))
+    model.add(Convolution3D(64, (20, 20, 20),strides=(10,10,10),input_shape=(1, sizeH, sizeV, sizeD),padding='Same'))
     model.add( PReLU())
     model.add(Dropout(0.5))
     model.add(MaxPooling3D(pool_size=(3, 3, 3)))
@@ -29,7 +29,8 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     model.add(Dense(7, init='normal'))
     #model.add(Dropout(0.5))
     model.add(Activation('softmax'))
-    model.compile(loss = 'categorical_crossentropy', optimizer = 'Adam', metrics = ['accuracy'])
+    opt = SGD(lr=0.01)
+    model.compile(loss = 'categorical_crossentropy', optimizer = opt, metrics = ['accuracy'])
 
     model.summary()
 
@@ -46,7 +47,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     # Training the model
 
-    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 8, nb_epoch = 500, shuffle=True,verbose=1)
+    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 500, shuffle=True,verbose=1)
 
 
 
@@ -74,12 +75,12 @@ K.set_image_dim_ordering('th')
 segmentName='UpperFace'
 sizeH=32
 sizeV=32
-
+sizeD=30
 
 # Load training images and labels that are stored in numpy array
 
-segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}v18.npy'.format(segmentName,sizeH, sizeV))
-segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}v18.npy'.format(segmentName,sizeH, sizeV))
+segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
+segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 
 '''
 #-----------------------------------------------------------------------------------------------------------------
@@ -109,7 +110,7 @@ print(tot/count)
 # Spliting the dataset into training and validation sets
 segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels = train_test_split(segment_training_set,
                                                                                             segment_traininglabels,
-                                                                                            test_size=0.2)
+                                                                                            test_size=0.2,random_state=42)
 
 # Save validation set in a numpy array
 numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
