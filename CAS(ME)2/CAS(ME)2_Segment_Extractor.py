@@ -44,6 +44,7 @@ def annotate_landmarks(img, landmarks, font_scale=0.4):
 negativepath = '../../../Datasets/CAS(ME)2_categorical/Negative/'
 positivepath = '../../../Datasets/CAS(ME)2_categorical/Positive/'
 surprisepath = '../../../Datasets/CAS(ME)2_categorical/Surprise/'
+othersepath = '../../../Datasets/CAS(ME)2_categorical/others/'
 
 segmentName = 'UpperFace'
 sizeH=32
