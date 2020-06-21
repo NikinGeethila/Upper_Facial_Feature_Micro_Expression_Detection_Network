@@ -51,7 +51,7 @@ sizeH=32
 sizeV=32
 sizeD=9
 
-paths=[negativepath, positivepath, surprisepath]
+paths=[negativepath, othersepath,positivepath, surprisepath]
 
 segment_training_list = []
 counting = 0
