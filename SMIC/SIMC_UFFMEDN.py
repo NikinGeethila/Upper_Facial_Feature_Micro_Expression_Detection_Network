@@ -5,12 +5,16 @@ from keras.models import Sequential, Model
 from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Convolution3D, MaxPooling3D, ZeroPadding3D
 from keras.layers import LeakyReLU ,PReLU
-from keras.callbacks import ModelCheckpoint,EarlyStopping,ReduceLROnPlateau
+from keras.callbacks import ModelCheckpoint,EarlyStopping,ReduceLROnPlateau,Callback
 from sklearn.model_selection import train_test_split,LeaveOneOut
 from keras import backend as K
 from keras.optimizers import Adam,SGD
 
-
+class myCallback(Callback):
+    def on_epoch_end(self, epoch, logs={}):
+        if(logs.get('val_acc') >= 1.0):
+            print("\nReached %2.2f%% accuracy, so stopping training!!" %(1.0*100))
+            self.model.stop_training = True
 
 def evaluate(segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels,test_index ):
 
@@ -44,7 +48,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     EarlyStop=EarlyStopping(monitor='val_acc',min_delta=0,patience=50,restore_best_weights=True,verbose=1, mode='max')
     reduce =ReduceLROnPlateau(monitor='val_acc',factor=0.5,patience=30,cooldown=10,verbose=1,min_delta=0, mode='max',min_lr=0.0005)
-    callbacks_list = [checkpoint,EarlyStop,reduce]
+    callbacks_list = [checkpoint,EarlyStop,reduce,myCallback()]
 
 
 
@@ -88,7 +92,7 @@ sizeD=30
 segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 
-'''
+
 #-----------------------------------------------------------------------------------------------------------------
 #LOOCV
 loo = LeaveOneOut()
@@ -97,8 +101,9 @@ tot=0
 count=0
 for train_index, test_index in loo.split(segment_training_set):
 
-    print(segment_traininglabels[train_index])
-    print(segment_traininglabels[test_index])
+    # print(segment_traininglabels[train_index])
+    # print(segment_traininglabels[test_index])
+    print(test_index)
 
     val_acc = evaluate(segment_training_set[train_index], segment_training_set[test_index],segment_traininglabels[train_index], segment_traininglabels[test_index] ,test_index)
     tot+=val_acc
@@ -128,3 +133,4 @@ numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName
 # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
 evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
+'''
