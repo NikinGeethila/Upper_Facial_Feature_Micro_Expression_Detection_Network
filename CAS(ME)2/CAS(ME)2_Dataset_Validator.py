@@ -6,10 +6,15 @@ sizeH=32
 sizeV=32
 sizeD=9
 
+negativepath = '../../../Datasets/CAS(ME)2_categorical/Negative/'
+positivepath = '../../../Datasets/CAS(ME)2_categorical/Positive/'
+surprisepath = '../../../Datasets/CAS(ME)2_categorical/Surprise/'
+othersepath = '../../../Datasets/CAS(ME)2_categorical/others/'
+paths=[negativepath, othersepath,positivepath, surprisepath]
 
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 print(segment_traininglabels)
-cat=[0]*3
+cat=[0]*len(paths)
 for item in segment_traininglabels:
     for c in range(len(cat)):
         if item[c]==1:
@@ -18,12 +23,9 @@ for item in segment_traininglabels:
 print(cat)
 
 
-negativepath = '../../../Datasets/CAS(ME)2_categorical/Negative/'
-positivepath = '../../../Datasets/CAS(ME)2_categorical/Positive/'
-surprisepath = '../../../Datasets/CAS(ME)2_categorical/Surprise/'
-paths=[negativepath, positivepath, surprisepath]
 
-cat=[0]*3
+
+cat=[0]*len(paths)
 dir=0
 for typepath in (paths):
     directorylisting = os.listdir(typepath)
