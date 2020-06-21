@@ -42,10 +42,11 @@ def annotate_landmarks(img, landmarks, font_scale=0.4):
 
 
 disgustpath = '../../../Datasets/CASMEII_categorical/disgust/'
-fearpath = '../../../Datasets/CASMEII_categorical/fear/'
+# fearpath = '../../../Datasets/CASMEII_categorical/fear/'
 happinesspath = '../../../Datasets/CASMEII_categorical/happiness/'
+otherspath = '../../../Datasets/CASMEII_categorical/others/'
 repressionpath = '../../../Datasets/CASMEII_categorical/repression/'
-sadnesspath = '../../../Datasets/CASMEII_categorical/sadness/'
+# sadnesspath = '../../../Datasets/CASMEII_categorical/sadness/'
 surprisepath = '../../../Datasets/CASMEII_categorical/surprise/'
 
 segmentName = 'UpperFace'
@@ -53,7 +54,7 @@ sizeH=32
 sizeV=32
 sizeD=24
 
-paths=[disgustpath, fearpath, happinesspath,repressionpath,sadnesspath,surprisepath]
+paths=[disgustpath,  happinesspath,otherspath,repressionpath,surprisepath]
 
 segment_training_list = []
 counting = 0
