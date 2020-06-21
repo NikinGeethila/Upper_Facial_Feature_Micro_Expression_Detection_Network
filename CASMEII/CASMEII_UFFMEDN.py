@@ -5,11 +5,16 @@ from keras.models import Sequential, Model
 from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Convolution3D, MaxPooling3D, ZeroPadding3D
 from keras.layers import LeakyReLU ,PReLU
-from keras.callbacks import ModelCheckpoint,EarlyStopping,ReduceLROnPlateau
+from keras.callbacks import ModelCheckpoint,EarlyStopping,ReduceLROnPlateau,Callback
 from sklearn.model_selection import train_test_split,LeaveOneOut
 from keras import backend as K
 from keras.optimizers import Adam,SGD
 
+class myCallback(Callback):
+    def on_epoch_end(self, epoch, logs={}):
+        if(logs.get('val_acc') >= 1.0):
+            print("\nReached %2.2f%% accuracy, so stopping training!!" %(1.0*100))
+            self.model.stop_training = True
 
 def evaluate(segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels,test_index ):
 
@@ -31,7 +36,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     # model.add(Dropout(0.5))
     # model.add(Dense(128, init='normal'))
     # model.add(Dropout(0.5))
-    model.add(Dense(3, init='normal'))
+    model.add(Dense(6, init='normal'))
     model.add(Dropout(0.5))
     model.add(Activation('softmax'))
     opt = SGD(lr=0.01)
@@ -39,11 +44,11 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     model.summary()
 
-    filepath="weights_CAS(ME)2/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
+    filepath="weights_CASMEII/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=100, restore_best_weights=True, verbose=1, mode='max')
-    reduce = ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=20,cooldown=20, verbose=1,min_delta=0, mode='max',min_lr=0.0005)
-    callbacks_list = [checkpoint, EarlyStop, reduce]
+    EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=50, restore_best_weights=True, verbose=1, mode='max')
+    reduce = ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=30,cooldown=10, verbose=1,min_delta=0, mode='max',min_lr=0.0005)
+    callbacks_list = [checkpoint, EarlyStop, reduce,myCallback()]
 
 
 
@@ -80,7 +85,7 @@ K.set_image_dim_ordering('th')
 segmentName='UpperFace'
 sizeH=32
 sizeV=32
-sizeD=9
+sizeD=24
 
 # Load training images and labels that are stored in numpy array
 
@@ -98,8 +103,9 @@ accs=[]
 accs2=[]
 for train_index, test_index in loo.split(segment_training_set):
 
-    print(segment_traininglabels[train_index])
-    print(segment_traininglabels[test_index])
+    # print(segment_traininglabels[train_index])
+    # print(segment_traininglabels[test_index])
+    print(test_index)
 
     val_acc = evaluate(segment_training_set[train_index], segment_training_set[test_index],segment_traininglabels[train_index], segment_traininglabels[test_index] ,test_index)
     tot+=val_acc
@@ -117,7 +123,7 @@ cfm = confusion_matrix(validation_labels, accs)
 print(cfm)
 print("accuracy: ", accuracy_score(validation_labels, accs))
 
-'''
+
 #-----------------------------------------------------------------------------------------------------------------
 #Test train split
 
@@ -125,7 +131,7 @@ print("accuracy: ", accuracy_score(validation_labels, accs))
 # Spliting the dataset into training and validation sets
 segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels = train_test_split(segment_training_set,
                                                                                             segment_traininglabels,
-                                                                                            test_size=0.2,random_state=42)
+                                                                                            test_size=0.2,random_state=1)
 
 # Save validation set in a numpy array
 numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
