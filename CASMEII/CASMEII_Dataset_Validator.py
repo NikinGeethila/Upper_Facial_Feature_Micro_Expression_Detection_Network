@@ -4,19 +4,19 @@ import os
 segmentName='UpperFace'
 sizeH=32
 sizeV=32
-sizeD=9
+sizeD=24
 
-'''
+
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 print(segment_traininglabels)
-cat=[0]*3
+cat=[0]*7
 for item in segment_traininglabels:
     for c in range(len(cat)):
         if item[c]==1:
             cat[c]+=1
 
 print(cat)
-'''
+
 
 
 
