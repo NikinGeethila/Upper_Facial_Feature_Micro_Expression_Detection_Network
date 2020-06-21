@@ -8,6 +8,20 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -43,8 +57,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.SAMM_Segment_Extractor2">
-    <configuration name="SAMM_Segment_Extractor2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.CASMEII_UFFMEDN">
+    <configuration name="CASMEII_UFFMEDN" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Upper_Facial_Feature_Micro_Expression_Detection_Network" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -52,12 +66,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SAMM" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CASMEII" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SAMM/SAMM_Segment_Extractor2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CASMEII/CASMEII_UFFMEDN.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -66,7 +80,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SAMM_Segment_Extractor3" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="CAS(ME)2_Data_Exploration" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Upper_Facial_Feature_Micro_Expression_Detection_Network" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -74,12 +88,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SAMM" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CAS(ME)2" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SAMM/SAMM_Segment_Extractor3.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CAS(ME)2/CAS(ME)2_Data_Exploration.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -88,7 +102,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SIMC_Segment_Extractor" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="CAS(ME)2_Dataset_Validator" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Upper_Facial_Feature_Micro_Expression_Detection_Network" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -96,12 +110,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SMIC" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CAS(ME)2" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SMIC/SIMC_Segment_Extractor.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CAS(ME)2/CAS(ME)2_Dataset_Validator.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -110,7 +124,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SIMC_Segment_Extractor2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="CAS(ME)2_Segment_Extractor" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Upper_Facial_Feature_Micro_Expression_Detection_Network" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -118,12 +132,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SMIC" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CAS(ME)2" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SMIC/SIMC_Segment_Extractor2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CAS(ME)2/CAS(ME)2_Segment_Extractor.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -132,7 +146,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SIMC_Segment_Extractor3" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="CAS(ME)2_UFFMEDN" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Upper_Facial_Feature_Micro_Expression_Detection_Network" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -140,12 +154,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SMIC" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CAS(ME)2" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SMIC/SIMC_Segment_Extractor3.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CAS(ME)2/CAS(ME)2_UFFMEDN.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -155,19 +169,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.SIMC_Segment_Extractor" />
-      <item itemvalue="Python.SIMC_Segment_Extractor2" />
-      <item itemvalue="Python.SIMC_Segment_Extractor3" />
-      <item itemvalue="Python.SAMM_Segment_Extractor3" />
-      <item itemvalue="Python.SAMM_Segment_Extractor2" />
+      <item itemvalue="Python.CAS(ME)2_Data_Exploration" />
+      <item itemvalue="Python.CAS(ME)2_Segment_Extractor" />
+      <item itemvalue="Python.CAS(ME)2_Dataset_Validator" />
+      <item itemvalue="Python.CAS(ME)2_UFFMEDN" />
+      <item itemvalue="Python.CASMEII_UFFMEDN" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.SAMM_Segment_Extractor2" />
-        <item itemvalue="Python.SAMM_Segment_Extractor3" />
-        <item itemvalue="Python.SIMC_Segment_Extractor3" />
-        <item itemvalue="Python.SIMC_Segment_Extractor2" />
-        <item itemvalue="Python.SIMC_Segment_Extractor" />
+        <item itemvalue="Python.CASMEII_UFFMEDN" />
+        <item itemvalue="Python.CAS(ME)2_UFFMEDN" />
+        <item itemvalue="Python.CAS(ME)2_Segment_Extractor" />
+        <item itemvalue="Python.CAS(ME)2_Dataset_Validator" />
+        <item itemvalue="Python.CAS(ME)2_Data_Exploration" />
       </list>
     </recent_temporary>
   </component>
@@ -204,23 +218,33 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_Data_Exploration.coverage" NAME="SAMM_Data_Exploration Coverage Results" MODIFIED="1592523540398" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
     <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SIMC_Segment_Extractor2.coverage" NAME="SIMC_Segment_Extractor2 Coverage Results" MODIFIED="1592562622472" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
     <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_Segment_Extractor3.coverage" NAME="SAMM_Segment_Extractor3 Coverage Results" MODIFIED="1592562764670" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
-    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_Categorizer.coverage" NAME="SAMM_Categorizer Coverage Results" MODIFIED="1592522969205" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
-    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SIMC_Dataset_Validator.coverage" NAME="SIMC_Dataset_Validator Coverage Results" MODIFIED="1592533597116" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$CASMEII_UFFMEDN.coverage" NAME="CASMEII_UFFMEDN Coverage Results" MODIFIED="1592726875240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CASMEII" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$CASMEII_Segment_Extractor.coverage" NAME="CASMEII_Segment_Extractor Coverage Results" MODIFIED="1592719654874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CASMEII" />
     <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_UFFMEDN___Copy.coverage" NAME="SAMM_UFFMEDN - Copy Coverage Results" MODIFIED="1592548480293" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
-    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$datasetValidator.coverage" NAME="datasetValidator Coverage Results" MODIFIED="1592524755410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
-    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SIMC_UFFMEDN.coverage" NAME="SIMC_UFFMEDN Coverage Results" MODIFIED="1592561911036" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
-    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_Dataset_Validator.coverage" NAME="SAMM_Dataset_Validator Coverage Results" MODIFIED="1592544112028" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
-    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_UFFMEDN.coverage" NAME="SAMM_UFFMEDN Coverage Results" MODIFIED="1592553979102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SIMC_Dataset_Validator.coverage" NAME="SIMC_Dataset_Validator Coverage Results" MODIFIED="1592612449669" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SIMC_UFFMEDN.coverage" NAME="SIMC_UFFMEDN Coverage Results" MODIFIED="1592712992445" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
     <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SIMC_Segment_Extractor.coverage" NAME="SIMC_Segment_Extractor Coverage Results" MODIFIED="1592562412165" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$CASMEII_Categorizer.coverage" NAME="CASMEII_Categorizer Coverage Results" MODIFIED="1592681469670" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CASMEII" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$CAS_ME_2_UFFMEDN.coverage" NAME="CAS(ME)2_UFFMEDN Coverage Results" MODIFIED="1592725715553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CAS(ME)2" />
     <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$UFFMEDN.coverage" NAME="UFFMEDN Coverage Results" MODIFIED="1592477632066" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
-    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_Segment_Extractor.coverage" NAME="SAMM_Segment_Extractor Coverage Results" MODIFIED="1592562260067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
-    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SIMC_Segment_Extractor3.coverage" NAME="SIMC_Segment_Extractor3 Coverage Results" MODIFIED="1592562675818" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
-    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_Segment_Extractor2.coverage" NAME="SAMM_Segment_Extractor2 Coverage Results" MODIFIED="1592562826094" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$CASMEII_Dataset_Validator.coverage" NAME="CASMEII_Dataset_Validator Coverage Results" MODIFIED="1592718811780" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CASMEII" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_Segment_Extractor2.coverage" NAME="SAMM_Segment_Extractor2 Coverage Results" MODIFIED="1592612319262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
     <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SIMC_Data_Exploration.coverage" NAME="SIMC_Data_Exploration Coverage Results" MODIFIED="1592524041299" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$CAS_ME_2_Data_Exploration.coverage" NAME="CAS(ME)2_Data_Exploration Coverage Results" MODIFIED="1592720631500" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CAS(ME)2" />
     <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$Late_MicroFuseNet.coverage" NAME="Late_MicroFuseNet Coverage Results" MODIFIED="1592340243532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
     <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$Segment_Extractor.coverage" NAME="Segment_Extractor Coverage Results" MODIFIED="1592474297864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_Data_Exploration.coverage" NAME="SAMM_Data_Exploration Coverage Results" MODIFIED="1592612058184" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_Categorizer.coverage" NAME="SAMM_Categorizer Coverage Results" MODIFIED="1592522969205" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$CAS_ME_2_Segment_Extractor.coverage" NAME="CAS(ME)2_Segment_Extractor Coverage Results" MODIFIED="1592724319184" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CAS(ME)2" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$datasetValidator.coverage" NAME="datasetValidator Coverage Results" MODIFIED="1592524755410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$CAS_ME_2_Categorizer.coverage" NAME="CAS(ME)2_Categorizer Coverage Results" MODIFIED="1592641275214" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CAS(ME)2" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_Dataset_Validator.coverage" NAME="SAMM_Dataset_Validator Coverage Results" MODIFIED="1592683178932" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_UFFMEDN.coverage" NAME="SAMM_UFFMEDN Coverage Results" MODIFIED="1592712695087" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SAMM_Segment_Extractor.coverage" NAME="SAMM_Segment_Extractor Coverage Results" MODIFIED="1592612248818" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SAMM" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$SIMC_Segment_Extractor3.coverage" NAME="SIMC_Segment_Extractor3 Coverage Results" MODIFIED="1592562675818" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SMIC" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$CASMEII_Data_Exploration.coverage" NAME="CASMEII_Data_Exploration Coverage Results" MODIFIED="1592682590770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CASMEII" />
+    <SUITE FILE_PATH="coverage/Upper_Facial_Feature_Micro_Expression_Detection_Network$CAS_ME_2_Dataset_Validator.coverage" NAME="CAS(ME)2_Dataset_Validator Coverage Results" MODIFIED="1592721989190" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CAS(ME)2" />
   </component>
 </project>
