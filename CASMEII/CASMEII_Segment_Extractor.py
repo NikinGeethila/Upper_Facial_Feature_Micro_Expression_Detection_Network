@@ -49,7 +49,7 @@ repressionpath = '../../../Datasets/CASMEII_categorical/repression/'
 # sadnesspath = '../../../Datasets/CASMEII_categorical/sadness/'
 surprisepath = '../../../Datasets/CASMEII_categorical/surprise/'
 
-segmentName = 'UpperFace'
+segmentName = 'Eyes'
 sizeH=32
 sizeV=32
 sizeD=24
@@ -78,8 +78,8 @@ for typepath in (paths):
                 plt.show()
             numpylandmarks = numpy.asarray(landmarks)
             up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
-            down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
-                       numpylandmarks[35][1]) + 5
+            down = max(numpylandmarks[36][1], numpylandmarks[39][1], numpylandmarks[40][1], numpylandmarks[41][1],
+                       numpylandmarks[42][1], numpylandmarks[47][1], numpylandmarks[46][1], numpylandmarks[45][1]) + 10
             left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
             right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
             segment_image = image[up:down, left:right]
