@@ -26,7 +26,8 @@ fearpath = '../../../Datasets/SAMM_categorical/Fear/'
 surprisepath = '../../../Datasets/SAMM_categorical/Surprise/'
 contemptpath = '../../../Datasets/SAMM_categorical/Contempt/'
 otherpath = '../../../Datasets/SAMM_categorical/Other/'
-paths=[angerpath, sadnesspath, happinesspath,disgustpath,fearpath,surprisepath,contemptpath,otherpath]
+
+paths=[angerpath,  happinesspath,surprisepath,contemptpath,otherpath]
 cat=[0]*8
 dir=0
 for typepath in (paths):
