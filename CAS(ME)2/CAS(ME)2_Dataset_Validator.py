@@ -10,7 +10,7 @@ negativepath = '../../../Datasets/CAS(ME)2_categorical/Negative/'
 positivepath = '../../../Datasets/CAS(ME)2_categorical/Positive/'
 surprisepath = '../../../Datasets/CAS(ME)2_categorical/Surprise/'
 othersepath = '../../../Datasets/CAS(ME)2_categorical/others/'
-paths=[negativepath, othersepath,positivepath, surprisepath]
+paths=[negativepath, positivepath, surprisepath]
 
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 print(segment_traininglabels)

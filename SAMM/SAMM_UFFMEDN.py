@@ -35,7 +35,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     # model.add(Dropout(0.5))
     # model.add(Dense(128, init='normal'))
     # model.add(Dropout(0.5))
-    model.add(Dense(7, init='normal'))
+    model.add(Dense(5, init='normal'))
     model.add(Dropout(0.5))
     model.add(Activation('softmax'))
     opt = SGD(lr=0.01)
