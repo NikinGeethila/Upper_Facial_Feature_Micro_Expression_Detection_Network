@@ -48,13 +48,13 @@ disgustpath = '../../../Datasets/SAMM_categorical/Disgust/'
 fearpath = '../../../Datasets/SAMM_categorical/Fear/'
 surprisepath = '../../../Datasets/SAMM_categorical/Surprise/'
 contemptpath = '../../../Datasets/SAMM_categorical/Contempt/'
-
-segmentName = 'UpperFace'
+otherpath = '../../../Datasets/SAMM_categorical/Other/'
+segmentName = 'Eyes'
 sizeH=16
 sizeV=16
 sizeD=30
 
-paths=[angerpath, sadnesspath, happinesspath,disgustpath,fearpath,surprisepath,contemptpath]
+paths=[angerpath,  happinesspath,surprisepath,contemptpath,otherpath]
 
 segment_training_list = []
 counting = 0
@@ -78,8 +78,8 @@ for typepath in (paths):
                 plt.show()
             numpylandmarks = numpy.asarray(landmarks)
             up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
-            down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
-                       numpylandmarks[35][1]) + 5
+            down = max(numpylandmarks[36][1], numpylandmarks[39][1], numpylandmarks[40][1], numpylandmarks[41][1],
+                       numpylandmarks[42][1], numpylandmarks[47][1], numpylandmarks[46][1], numpylandmarks[45][1]) + 10
             left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
             right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
             segment_image = image[up:down, left:right]
@@ -112,7 +112,7 @@ for pi in range(len(paths)):
         count+=1
 
 
-segment_traininglabels = np_utils.to_categorical(segment_traininglabels, 7)
+segment_traininglabels = np_utils.to_categorical(segment_traininglabels, len(paths))
 
 segment_training_data = [segment_training_list, segment_traininglabels]
 (segment_trainingframes, segment_traininglabels) = (segment_training_data[0], segment_training_data[1])
