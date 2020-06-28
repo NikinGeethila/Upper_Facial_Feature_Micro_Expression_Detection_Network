@@ -50,8 +50,8 @@ surprisepath = '../../../Datasets/SAMM_categorical/Surprise/'
 contemptpath = '../../../Datasets/SAMM_categorical/Contempt/'
 otherpath = '../../../Datasets/SAMM_categorical/Other/'
 segmentName = 'Eyes'
-sizeH=16
-sizeV=16
+sizeH=32
+sizeV=32
 sizeD=30
 
 paths=[angerpath,  happinesspath,surprisepath,contemptpath,otherpath]
