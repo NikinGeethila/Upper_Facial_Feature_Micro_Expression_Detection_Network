@@ -83,7 +83,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
 K.set_image_dim_ordering('th')
 
-segmentName='Eyes'
+segmentName='UpperFace'
 sizeH=32
 sizeV=32
 sizeD=9
