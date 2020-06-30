@@ -86,7 +86,7 @@ K.set_image_dim_ordering('th')
 segmentName='UpperFace'
 sizeH=32
 sizeV=32
-sizeD=9
+sizeD=30
 
 # Load training images and labels that are stored in numpy array
 
