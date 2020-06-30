@@ -40,7 +40,7 @@ NOTE:(20, 20, 9), strides=(10, 10, 3) used for CAS(ME)^2
 --CASMEII (6)=0.8910256410256411, (5) =0.927710843373494 
 
 USING (20, 20, 9), strides=(10, 10, 3)
---CAS(ME)^2 (3)=0.84(with frame add)
+--CAS(ME)^2 (3)= 0.789(without frameadd), 0.895(with frame add)
 --SAMM = 0.867
 --SIMC =0.94
 --CASMEII=0.927(without frameadd)
