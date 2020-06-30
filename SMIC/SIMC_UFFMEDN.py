@@ -54,7 +54,6 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
 
 
-
     # Training the model
 
     history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 500,  shuffle=True)
@@ -82,7 +81,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
 K.set_image_dim_ordering('th')
 
-segmentName='UpperFace'
+segmentName='Eyes'
 sizeH=32
 sizeV=32
 sizeD=30
