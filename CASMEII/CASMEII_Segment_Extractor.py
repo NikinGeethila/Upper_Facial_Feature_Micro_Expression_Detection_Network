@@ -52,7 +52,7 @@ surprisepath = '../../../Datasets/CASMEII_categorical/surprise/'
 segmentName = 'Eyes'
 sizeH=32
 sizeV=32
-sizeD=24
+sizeD=30
 
 paths=[disgustpath,  happinesspath,otherspath,repressionpath,surprisepath]
 
@@ -66,8 +66,16 @@ for typepath in (paths):
         videopath = typepath + video
         segment_frames = []
         framelisting = os.listdir(videopath)
-        val=int((len(framelisting)/2)-(sizeD/2))
-        framerange = [x+val for x in range(sizeD)]
+        if sizeD<len(framelisting):
+            val=int((len(framelisting)/2)-(sizeD/2))
+            framerange = [x+val for x in range(sizeD)]
+        else:
+            tempD1=sizeD//len(framelisting)
+            tempD2 = sizeD%len(framelisting)
+            framerange = []
+            for y in range (tempD1):
+                framerange.extend([x for x in range(len(framelisting))])
+            framerange.extend([y for y in range(tempD2)])
         for frame in framerange:
             imagepath = videopath + "/" + framelisting[frame]
             image = cv2.imread(imagepath)
