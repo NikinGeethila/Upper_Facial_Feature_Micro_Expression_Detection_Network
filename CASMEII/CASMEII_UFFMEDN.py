@@ -82,10 +82,10 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
 K.set_image_dim_ordering('th')
 
-segmentName='Eyes'
+segmentName='UpperFace'
 sizeH=32
 sizeV=32
-sizeD=24
+sizeD=30
 
 # Load training images and labels that are stored in numpy array
 
@@ -116,6 +116,7 @@ for train_index, test_index in loo.split(segment_training_set):
     print("validation acc:",val_acc)
     print("------------------------------------------------------------------------")
 print(tot/count)
+print('depth: ',sizeD)
 print(accs)
 
 validation_labels = numpy.argmax(accs2, axis=1)
