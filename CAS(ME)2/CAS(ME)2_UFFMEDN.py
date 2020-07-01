@@ -117,10 +117,9 @@ for train_index, test_index in loo.split(segment_training_set):
     print("------------------------------------------------------------------------")
 print(tot/count)
 print(accs)
-
+print('9')
 validation_labels = numpy.argmax(accs2, axis=1)
-cfm = confusion_matrix(validation_labels, accs)
-print(cfm)
+
 print("accuracy: ", accuracy_score(validation_labels, accs))
 
 '''
