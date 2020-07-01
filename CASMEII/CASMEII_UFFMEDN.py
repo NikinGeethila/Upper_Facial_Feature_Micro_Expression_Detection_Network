@@ -118,6 +118,7 @@ for train_index, test_index in loo.split(segment_training_set):
 print(tot/count)
 print('depth: ',sizeD)
 print(accs)
+print('9')
 
 validation_labels = numpy.argmax(accs2, axis=1)
 
