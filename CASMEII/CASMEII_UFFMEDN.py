@@ -120,8 +120,7 @@ print('depth: ',sizeD)
 print(accs)
 
 validation_labels = numpy.argmax(accs2, axis=1)
-cfm = confusion_matrix(validation_labels, accs)
-print(cfm)
+
 print("accuracy: ", accuracy_score(validation_labels, accs))
 
 '''
