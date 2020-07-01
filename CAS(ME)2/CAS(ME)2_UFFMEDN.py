@@ -120,7 +120,6 @@ print(accs)
 print('9')
 validation_labels = numpy.argmax(accs2, axis=1)
 
-print("accuracy: ", accuracy_score(validation_labels, accs))
 
 '''
 #-----------------------------------------------------------------------------------------------------------------
