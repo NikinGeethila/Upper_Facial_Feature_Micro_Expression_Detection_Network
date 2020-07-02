@@ -42,7 +42,16 @@ NOTE:(20, 20, 9), strides=(10, 10, 3) used for CAS(ME)^2
 USING (20, 20, 9), strides=(10, 10, 3)
 --CAS(ME)^2 (3)= 0.789(without frameadd), 0.921(with frame add)
 --SAMM (5)= 0.867
---SIMC =0.94
+--SIMC =0.975
 --CASMEII(5)=0.912(without frame add), 0.936(with frame add)
+
+
+USING (20, 20, 9), strides=(10, 10, 3) EYE TEST
+--CAS(ME)^2 (3)= 0.921(with frame add)
+--SAMM (5)= 0.883
+--SIMC = 0.955
+--CASMEII(5)= 0.916(with frame add)
+
+
 
 
