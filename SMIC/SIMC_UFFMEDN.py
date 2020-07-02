@@ -111,6 +111,7 @@ for train_index, test_index in loo.split(segment_training_set):
     print("validation acc:",val_acc)
     print("------------------------------------------------------------------------")
 print(tot/count)
+print(segmentName)
 
 '''
 #-----------------------------------------------------------------------------------------------------------------
