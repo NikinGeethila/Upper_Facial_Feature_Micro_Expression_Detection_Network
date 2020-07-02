@@ -83,7 +83,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
 K.set_image_dim_ordering('th')
 
-segmentName='UpperFace'
+segmentName='Eyes'
 sizeH=32
 sizeV=32
 sizeD=30
@@ -118,6 +118,8 @@ for train_index, test_index in loo.split(segment_training_set):
 print(tot/count)
 print(accs)
 print('9')
+print(segmentName)
+
 validation_labels = numpy.argmax(accs2, axis=1)
 
 
