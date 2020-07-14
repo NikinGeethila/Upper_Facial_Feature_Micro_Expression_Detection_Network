@@ -76,14 +76,14 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     print (cfm)
     print("accuracy: ",accuracy_score(validation_labels, predictions_labels))
 
-    return accuracy_score(validation_labels, predictions_labels)
+    return accuracy_score(validation_labels, predictions_labels),validation_labels,predictions_labels
 
 
 
 
 K.set_image_dim_ordering('th')
 
-segmentName='Eyes'
+segmentName='UpperFace'
 sizeH=32
 sizeV=32
 sizeD=30
@@ -102,13 +102,20 @@ tot=0
 count=0
 accs=[]
 accs2=[]
+
+val_labels=[]
+pred_labels=[]
 for train_index, test_index in loo.split(segment_training_set):
 
     # print(segment_traininglabels[train_index])
     # print(segment_traininglabels[test_index])
     print(test_index)
-    val_acc = evaluate(segment_training_set[train_index], segment_training_set[test_index],segment_traininglabels[train_index], segment_traininglabels[test_index] ,test_index)
-    tot+=val_acc
+    val_acc, val_label, pred_label = evaluate(segment_training_set[train_index], segment_training_set[test_index],
+                                              segment_traininglabels[train_index], segment_traininglabels[test_index],
+                                              test_index)
+    tot += val_acc
+    val_labels.extend(val_label)
+    pred_labels.extend(pred_label)
     accs.append(val_acc)
     accs2.append(segment_traininglabels[test_index])
     count+=1
@@ -116,9 +123,23 @@ for train_index, test_index in loo.split(segment_training_set):
     print("validation acc:",val_acc)
     print("------------------------------------------------------------------------")
 print(tot/count)
-print(accs)
-print('9')
-validation_labels = numpy.argmax(accs2, axis=1)
+cfm = confusion_matrix(val_labels, pred_labels)
+tp_and_fn = sum(cfm.sum(1))
+tp_and_fp = sum(cfm.sum(0))
+tp = sum(cfm.diagonal())
+print("cfm: \n",cfm)
+print("tp_and_fn: ",tp_and_fn)
+print("tp_and_fp: ",tp_and_fp)
+print("tp: ",tp)
+
+precision = tp / tp_and_fp
+recall = tp / tp_and_fn
+print("precision: ",precision)
+print("recall: ",recall)
+print("F1-score: ",f1_score(val_labels,pred_labels,average=None))
+print("F1-score: ",f1_score(val_labels,pred_labels,average="macro"))
+print("F1-score: ",f1_score(val_labels,pred_labels,average="weighted"))
+print("F1-score: ",f1_score(val_labels,pred_labels,average="samples"))
 
 
 '''
