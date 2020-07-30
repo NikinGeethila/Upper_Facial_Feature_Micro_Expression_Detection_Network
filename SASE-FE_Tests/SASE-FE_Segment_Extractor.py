@@ -72,6 +72,7 @@ for typepath in (paths):
         framerange = [x+val for x in range(sizeD)]
         for frame in framerange:
             imagepath = videopath + "/" + framelisting[frame]
+            print(imagepath)
             image = cv2.imread(imagepath)
             landmarks = get_landmark(image)
             if counting < 1:
