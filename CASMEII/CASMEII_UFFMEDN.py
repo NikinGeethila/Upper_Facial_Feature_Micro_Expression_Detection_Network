@@ -76,7 +76,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     print (cfm)
     print("accuracy: ",accuracy_score(validation_labels, predictions_labels))
 
-    return accuracy_score(validation_labels, predictions_labels)
+    return accuracy_score(validation_labels, predictions_labels),validation_labels,predictions_labels
 
 
 
@@ -176,7 +176,7 @@ for train_index, test_index in kf.split(segment_training_set):
     print("------------------------------------------------------------------------")
     print("validation acc:",val_acc)
     print("------------------------------------------------------------------------")
-print("accuracy: ",tot/count)
+print("accuracy: ",accuracy_score(val_labels, pred_labels))
 cfm = confusion_matrix(val_labels, pred_labels)
 # tp_and_fn = sum(cfm.sum(1))
 # tp_and_fp = sum(cfm.sum(0))
@@ -202,5 +202,5 @@ results.write("---------------------------\n")
 full_path = os.path.realpath(__file__)
 results.write(str(os.path.dirname(full_path))+" 10-FOLD\n")
 results.write("---------------------------\n")
-results.write("accuracy: "+str(tot/count)+"\n")
+results.write("accuracy: "+str(accuracy_score(val_labels, pred_labels))+"\n")
 results.write("F1-score: "+str(f1_score(val_labels,pred_labels,average="weighted"))+"\n")
