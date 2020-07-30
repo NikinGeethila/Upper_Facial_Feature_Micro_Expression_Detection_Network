@@ -1,14 +1,15 @@
 import numpy
 from sklearn.metrics import confusion_matrix
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score,f1_score
 from keras.models import Sequential, Model
 from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Convolution3D, MaxPooling3D, ZeroPadding3D
 from keras.layers import LeakyReLU ,PReLU
 from keras.callbacks import ModelCheckpoint,EarlyStopping,ReduceLROnPlateau,Callback
-from sklearn.model_selection import train_test_split,LeaveOneOut
+from sklearn.model_selection import train_test_split,LeaveOneOut,KFold
 from keras import backend as K
 from keras.optimizers import Adam,SGD
+import os
 
 class myCallback(Callback):
     def on_epoch_end(self, epoch, logs={}):
@@ -81,7 +82,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
 K.set_image_dim_ordering('th')
 
-segmentName='Eyes'
+segmentName='UpperFace'
 sizeH=32
 sizeV=32
 sizeD=30
@@ -91,7 +92,7 @@ sizeD=30
 segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 
-
+'''
 #-----------------------------------------------------------------------------------------------------------------
 #LOOCV
 loo = LeaveOneOut()
@@ -113,7 +114,7 @@ for train_index, test_index in loo.split(segment_training_set):
 print(tot/count)
 print(segmentName)
 
-'''
+
 #-----------------------------------------------------------------------------------------------------------------
 #Test train split
 
@@ -134,3 +135,61 @@ numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName
 
 evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
 '''
+
+#-----------------------------------------------------------------------------------------------------------------------------
+#k-fold(10)
+
+kf = KFold(n_splits=10, random_state=42)
+# kf.get_n_splits(segment_training_set)
+tot=0
+count=0
+accs=[]
+accs2=[]
+
+val_labels=[]
+pred_labels=[]
+for train_index, test_index in kf.split(segment_training_set):
+
+    # print(segment_traininglabels[train_index])
+    # print(segment_traininglabels[test_index])
+    print(test_index)
+    val_acc, val_label, pred_label = evaluate(segment_training_set[train_index], segment_training_set[test_index],
+                                              segment_traininglabels[train_index], segment_traininglabels[test_index],
+                                              test_index)
+    tot += val_acc
+    val_labels.extend(val_label)
+    pred_labels.extend(pred_label)
+    accs.append(val_acc)
+    accs2.append(segment_traininglabels[test_index])
+    count+=1
+    print("------------------------------------------------------------------------")
+    print("validation acc:",val_acc)
+    print("------------------------------------------------------------------------")
+print("accuracy: ",tot/count)
+cfm = confusion_matrix(val_labels, pred_labels)
+# tp_and_fn = sum(cfm.sum(1))
+# tp_and_fp = sum(cfm.sum(0))
+# tp = sum(cfm.diagonal())
+print("cfm: \n",cfm)
+# print("tp_and_fn: ",tp_and_fn)
+# print("tp_and_fp: ",tp_and_fp)
+# print("tp: ",tp)
+#
+# precision = tp / tp_and_fp
+# recall = tp / tp_and_fn
+# print("precision: ",precision)
+# print("recall: ",recall)
+# print("F1-score: ",f1_score(val_labels,pred_labels,average="macro"))
+print("F1-score: ",f1_score(val_labels,pred_labels,average="weighted"))
+
+
+#---------------------------------------------------------------------------------------------------
+# write to results
+
+results=open("../TempResults.txt",'a')
+results.write("---------------------------\n")
+full_path = os.path.realpath(__file__)
+results.write(str(os.path.dirname(full_path))+" 10-FOLD\n")
+results.write("---------------------------\n")
+results.write("accuracy: "+str(tot/count)+"\n")
+results.write("F1-score: "+str(f1_score(val_labels,pred_labels,average="weighted"))+"\n")
