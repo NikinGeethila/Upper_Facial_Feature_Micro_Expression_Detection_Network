@@ -139,7 +139,7 @@ evaluate(segment_train_images, segment_validation_images,segment_train_labels, s
 #-----------------------------------------------------------------------------------------------------------------------------
 #k-fold(10)
 
-kf = KFold(n_splits=10, random_state=42)
+kf = KFold(n_splits=10, random_state=42,shuffle=True)
 # kf.get_n_splits(segment_training_set)
 tot=0
 count=0
