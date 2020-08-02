@@ -49,7 +49,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     filepath="weights_CAS(ME)2/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=50, restore_best_weights=True, verbose=1, mode='max')
+    EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=20, restore_best_weights=True, verbose=1, mode='max')
     reduce = ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=30,cooldown=10, verbose=1,min_delta=0, mode='max',min_lr=0.0005)
     callbacks_list = [ EarlyStop, reduce,myCallback()]
 
@@ -89,22 +89,23 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
         print(i, layer.name, layer.output.shape)
 
     # redefine model to output right after the first hidden layer
-    model = Model(inputs=model.inputs, outputs=model.layers[1].output)
+    model = Model(inputs=model.inputs, outputs=model.layers[3].output)
     model.summary()
 
 
     feature_maps = model.predict(segment_validation_images)
+    # print(feature_maps)
+    feature_maps=feature_maps[0]
     # plot all 64 maps in an 8x8 squares
-    square = 8
     ix = 1
-    for _ in range(square):
-        for _ in range(square):
+    for _ in range(3):
+        for _ in range(1):
             # specify subplot and turn of axis
-            ax = pyplot.subplot(square, square, ix)
+            ax = pyplot.subplot(3, 1, ix)
             ax.set_xticks([])
             ax.set_yticks([])
             # plot filter channel in grayscale
-            pyplot.imshow(feature_maps[0, :, :, ix - 1], cmap='gray')
+            pyplot.imshow(feature_maps[0, :, :, ix - 1])
             ix += 1
     # show the figure
     pyplot.show()
@@ -116,10 +117,10 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
 K.set_image_dim_ordering('th')
 
-segmentName='UpperFace'
+segmentName='FullFAce'
 sizeH=32
 sizeV=32
-sizeD=30
+sizeD=9
 
 # Load training images and labels that are stored in numpy array
 
