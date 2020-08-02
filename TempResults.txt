@@ -33,3 +33,8 @@ F1-score: 0.6162228474802363
 ---------------------------
 accuracy: 0.6560509554140127
 F1-score: 0.6487746846027101
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CASMEII 10-FOLD
+---------------------------
+accuracy: 0.6586345381526104
+F1-score: 0.6562003419390752
