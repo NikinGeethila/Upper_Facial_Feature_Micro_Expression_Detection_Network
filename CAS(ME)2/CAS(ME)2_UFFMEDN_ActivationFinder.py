@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split,LeaveOneOut,KFold
 from keras import backend as K
 from keras.optimizers import Adam,SGD
 import os
+from matplotlib import pyplot
 
 class myCallback(Callback):
     def on_epoch_end(self, epoch, logs={}):
@@ -77,6 +78,37 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     print (cfm)
     print("accuracy: ",accuracy_score(validation_labels, predictions_labels))
 
+
+    # summarize feature map shapes
+    for i in range(len(model.layers)):
+        layer = model.layers[i]
+        # check for convolutional layer
+        if 'conv' not in layer.name:
+            continue
+        # summarize output shape
+        print(i, layer.name, layer.output.shape)
+
+    # redefine model to output right after the first hidden layer
+    model = Model(inputs=model.inputs, outputs=model.layers[1].output)
+    model.summary()
+
+
+    feature_maps = model.predict(segment_validation_images)
+    # plot all 64 maps in an 8x8 squares
+    square = 8
+    ix = 1
+    for _ in range(square):
+        for _ in range(square):
+            # specify subplot and turn of axis
+            ax = pyplot.subplot(square, square, ix)
+            ax.set_xticks([])
+            ax.set_yticks([])
+            # plot filter channel in grayscale
+            pyplot.imshow(feature_maps[0, :, :, ix - 1], cmap='gray')
+            ix += 1
+    # show the figure
+    pyplot.show()
+
     return accuracy_score(validation_labels, predictions_labels),validation_labels,predictions_labels
 
 
@@ -95,6 +127,9 @@ segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}x{3
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 
 
+
+
+'''
 #-----------------------------------------------------------------------------------------------------------------
 #LOOCV
 loo = LeaveOneOut()
@@ -141,8 +176,8 @@ print("F1-score: ",f1_score(val_labels,pred_labels,average=None))
 print("F1-score: ",f1_score(val_labels,pred_labels,average="macro"))
 print("F1-score: ",f1_score(val_labels,pred_labels,average="weighted"))
 print("F1-score: ",f1_score(val_labels,pred_labels,average="samples"))
-
 '''
+
 #-----------------------------------------------------------------------------------------------------------------
 #Test train split
 
@@ -162,7 +197,7 @@ segment_train_images, segment_validation_images, segment_train_labels, segment_v
 # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
 evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
-
+'''
 #-----------------------------------------------------------------------------------------------------------------------------
 #k-fold(10)
 
@@ -209,7 +244,6 @@ print("cfm: \n",cfm)
 # print("F1-score: ",f1_score(val_labels,pred_labels,average="macro"))
 print("F1-score: ",f1_score(val_labels,pred_labels,average="weighted"))
 
-'''
 #---------------------------------------------------------------------------------------------------
 # write to results
 
@@ -220,3 +254,4 @@ results.write(str(os.path.dirname(full_path))+" LOOCV\n")
 results.write("---------------------------\n")
 results.write("accuracy: "+str(accuracy_score(val_labels, pred_labels))+"\n")
 results.write("F1-score: "+str(f1_score(val_labels,pred_labels,average="weighted"))+"\n")
+'''
