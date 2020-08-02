@@ -38,3 +38,8 @@ F1-score: 0.6487746846027101
 ---------------------------
 accuracy: 0.6586345381526104
 F1-score: 0.6562003419390752
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CAS(ME)2 LOOCV
+---------------------------
+accuracy: 0.868421052631579
+F1-score: 0.8667256376234705
