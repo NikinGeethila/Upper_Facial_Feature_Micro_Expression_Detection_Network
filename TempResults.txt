@@ -1,45 +1,35 @@
 ---------------------------
 /home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CAS(ME)2 10-FOLD
 ---------------------------
-accuracy: 0.6578947368421053
-F1-score: 0.6033082706766917
+accuracy: 0.7894736842105263
+F1-score: 0.7519736842105263
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/SMIC 10-FOLD
+---------------------------
+accuracy: 0.6305732484076433
+F1-score: 0.6262553233407153
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/SAMM 10-FOLD
+---------------------------
+accuracy: 0.6544117647058824
+F1-score: 0.6302456235790637
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CASMEII 10-FOLD
+---------------------------
+accuracy: 0.6586345381526104
+F1-score: 0.6444093025911528
 ---------------------------
 /home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CAS(ME)2 10-FOLD
 ---------------------------
 accuracy: 0.8421052631578947
-F1-score: 0.8337756155093617
----------------------------
-/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/SMIC 10-FOLD
----------------------------
-accuracy: 0.6942675159235668
-F1-score: 0.6832649856033506
+F1-score: 0.8191998371169703
 ---------------------------
 /home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/SAMM 10-FOLD
 ---------------------------
-accuracy: 0.4117647058823529
-F1-score: 0.3994345281109987
----------------------------
-/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CASMEII 10-FOLD
----------------------------
-accuracy: 0.41365461847389556
-F1-score: 0.3755411339698066
----------------------------
-/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CAS(ME)2 10-FOLD
----------------------------
-accuracy: 0.7631578947368421
-F1-score: 0.7091288269693843
+accuracy: 0.6470588235294118
+F1-score: 0.6162228474802363
 ---------------------------
 /home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/SMIC 10-FOLD
 ---------------------------
-accuracy: 0.6687898089171974
-F1-score: 0.6654395375206151
----------------------------
-/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/SAMM 10-FOLD
----------------------------
-accuracy: 0.6838235294117647
-F1-score: 0.649935406541881
----------------------------
-/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CASMEII 10-FOLD
----------------------------
-accuracy: 0.6626506024096386
-F1-score: 0.6551816808729518
+accuracy: 0.6560509554140127
+F1-score: 0.6487746846027101
