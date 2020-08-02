@@ -43,3 +43,18 @@ F1-score: 0.6562003419390752
 ---------------------------
 accuracy: 0.868421052631579
 F1-score: 0.8667256376234705
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/SAMM LOOCV
+---------------------------
+accuracy: 0.9191176470588235
+F1-score: 0.9143706345351411
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/SMIC LOOCV
+---------------------------
+accuracy: 0.9617834394904459
+F1-score: 0.9617295509063382
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CASMEII LOOCV
+---------------------------
+accuracy: 0.927710843373494
+F1-score: 0.9265488735347659
