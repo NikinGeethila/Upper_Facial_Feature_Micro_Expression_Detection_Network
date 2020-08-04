@@ -41,15 +41,15 @@ def annotate_landmarks(img, landmarks, font_scale=0.4):
     return img
 
 
-disgustpath = '../../../Datasets/CASMEII_categorical/disgust/'
-# fearpath = '../../../Datasets/CASMEII_categorical/fear/'
-happinesspath = '../../../Datasets/CASMEII_categorical/happiness/'
-otherspath = '../../../Datasets/CASMEII_categorical/others/'
-repressionpath = '../../../Datasets/CASMEII_categorical/repression/'
-# sadnesspath = '../../../Datasets/CASMEII_categorical/sadness/'
-surprisepath = '../../../Datasets/CASMEII_categorical/surprise/'
+disgustpath = '../../CASMEII_categorical/disgust/'
+fearpath = '../../CASMEII_categorical/fear/'
+happinesspath = '../../CASMEII_categorical/happiness/'
+otherspath = '../../CASMEII_categorical/others/'
+repressionpath = '../../CASMEII_categorical/repression/'
+sadnesspath = '../../CASMEII_categorical/sadness/'
+surprisepath = '../../CASMEII_categorical/surprise/'
 
-segmentName = 'UpperFace'
+segmentName = 'FullFace'
 sizeH=32
 sizeV=32
 sizeD=30
@@ -86,8 +86,8 @@ for typepath in (paths):
                 plt.show()
             numpylandmarks = numpy.asarray(landmarks)
             up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
-            down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
-                       numpylandmarks[35][1]) + 5
+            down = max(numpylandmarks[7][1], numpylandmarks[8][1], numpylandmarks[9][1], numpylandmarks[10][1],
+                       numpylandmarks[6][1])
             left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
             right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
             segment_image = image[up:down, left:right]
@@ -140,6 +140,13 @@ numpy.save('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentNa
 segments:
 ----------------------------
 
+FullFace
+----------------------------
+up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
+                    down = max(numpylandmarks[7][1], numpylandmarks[8][1], numpylandmarks[9][1], numpylandmarks[10][1],
+                               numpylandmarks[6][1]) 
+left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
+right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
 
 UpperFace
 ----------------------------
