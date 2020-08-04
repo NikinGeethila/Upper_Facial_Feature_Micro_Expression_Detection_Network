@@ -83,7 +83,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
 K.set_image_dim_ordering('th')
 
-segmentName='UpperFace'
+segmentName='FullFace'
 sizeH=32
 sizeV=32
 sizeD=30
@@ -93,7 +93,7 @@ sizeD=30
 segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 
-
+'''
 #-----------------------------------------------------------------------------------------------------------------
 #LOOCV
 loo = LeaveOneOut()
@@ -140,7 +140,7 @@ print("cfm: \n", cfm)
 # print("F1-score: ",f1_score(val_labels,pred_labels,average="macro"))
 print("F1-score: ", f1_score(val_labels, pred_labels, average="weighted"))
 
-'''
+
 
 #-----------------------------------------------------------------------------------------------------------------
 #Test train split
@@ -162,7 +162,7 @@ numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName
 
 evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
 
-
+'''
 #-----------------------------------------------------------------------------------------------------------------------------
 #k-fold(10)
 
@@ -208,7 +208,7 @@ print("cfm: \n",cfm)
 # print("recall: ",recall)
 # print("F1-score: ",f1_score(val_labels,pred_labels,average="macro"))
 print("F1-score: ",f1_score(val_labels,pred_labels,average="weighted"))
-'''
+
 
 #---------------------------------------------------------------------------------------------------
 # write to results
@@ -216,7 +216,7 @@ print("F1-score: ",f1_score(val_labels,pred_labels,average="weighted"))
 results=open("../TempResults.txt",'a')
 results.write("---------------------------\n")
 full_path = os.path.realpath(__file__)
-results.write(str(os.path.dirname(full_path))+" LOOCV\n")
+results.write(str(os.path.dirname(full_path))+" 10Fold-face\n")
 results.write("---------------------------\n")
 results.write("accuracy: "+str(accuracy_score(val_labels, pred_labels))+"\n")
 results.write("F1-score: "+str(f1_score(val_labels,pred_labels,average="weighted"))+"\n")
