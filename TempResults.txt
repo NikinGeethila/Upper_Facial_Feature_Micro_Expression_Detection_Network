@@ -173,3 +173,8 @@ F1-score: 0.5423964126302158
 ---------------------------
 accuracy: 0.7894736842105263
 F1-score: 0.7529411764705882
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CAS(ME)2 kfold_UpperFace_32x32x30
+---------------------------
+accuracy: 0.8421052631578947
+F1-score: 0.8313090418353577
