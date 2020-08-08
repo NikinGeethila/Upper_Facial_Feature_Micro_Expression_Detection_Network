@@ -163,3 +163,13 @@ F1-score: 0.6149034652704268
 ---------------------------
 accuracy: 0.6586345381526104
 F1-score: 0.6529327099600247
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CASMEII UUpperFace_128x128x30
+---------------------------
+accuracy: 0.5461847389558233
+F1-score: 0.5423964126302158
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CAS(ME)2 UpperFace_32x32x30
+---------------------------
+accuracy: 0.7894736842105263
+F1-score: 0.7529411764705882
