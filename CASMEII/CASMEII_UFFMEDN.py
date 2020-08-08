@@ -18,11 +18,9 @@ class myCallback(Callback):
             self.model.stop_training = True
 
 def evaluate(segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels,test_index ):
-
     model = Sequential()
-    #model.add(ZeroPadding3D((2,2,0)))
-    model.add(
-        Convolution3D(32, (20, 20, 9), strides=(10, 10, 3), input_shape=(1, sizeH, sizeV, sizeD), padding='Same'))
+    # model.add(ZeroPadding3D((2,2,0)))
+    model.add(Convolution3D(32, (20, 20, 9), strides=(10, 10, 3), input_shape=(1, sizeH, sizeV, sizeD), padding='Same'))
     model.add(PReLU())
     # model.add(Dropout(0.5))
     model.add(
@@ -49,7 +47,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=50, restore_best_weights=True, verbose=1, mode='max')
     reduce = ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=30,cooldown=10, verbose=1,min_delta=0, mode='max',min_lr=0.0005)
-    callbacks_list = [ EarlyStop, reduce,myCallback()]
+    callbacks_list = [EarlyStop, reduce,myCallback()]
 
 
 
@@ -83,17 +81,17 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
 K.set_image_dim_ordering('th')
 
-segmentName='FullFace'
-sizeH=32
-sizeV=32
+segmentName='UUpperFace'
+sizeH=128
+sizeV=128
 sizeD=30
 
 # Load training images and labels that are stored in numpy array
 
 segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
-
 '''
+
 #-----------------------------------------------------------------------------------------------------------------
 #LOOCV
 loo = LeaveOneOut()
@@ -161,8 +159,8 @@ numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName
 # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
 evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
-
 '''
+
 #-----------------------------------------------------------------------------------------------------------------------------
 #k-fold(10)
 
@@ -210,13 +208,15 @@ print("cfm: \n",cfm)
 print("F1-score: ",f1_score(val_labels,pred_labels,average="weighted"))
 
 
+
+
 #---------------------------------------------------------------------------------------------------
 # write to results
 
 results=open("../TempResults.txt",'a')
 results.write("---------------------------\n")
 full_path = os.path.realpath(__file__)
-results.write(str(os.path.dirname(full_path))+" 10Fold-face\n")
+results.write(str(os.path.dirname(full_path))+" LOOCV_noearltstop-face\n")
 results.write("---------------------------\n")
 results.write("accuracy: "+str(accuracy_score(val_labels, pred_labels))+"\n")
 results.write("F1-score: "+str(f1_score(val_labels,pred_labels,average="weighted"))+"\n")
