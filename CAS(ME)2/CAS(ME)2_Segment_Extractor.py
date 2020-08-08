@@ -41,14 +41,15 @@ def annotate_landmarks(img, landmarks, font_scale=0.4):
     return img
 
 
-negativepath = '../../../Datasets/CAS(ME)2_categorical/Negative/'
-positivepath = '../../../Datasets/CAS(ME)2_categorical/Positive/'
-surprisepath = '../../../Datasets/CAS(ME)2_categorical/Surprise/'
-othersepath = '../../../Datasets/CAS(ME)2_categorical/others/'
+path='../../CAS(ME)2_categorical/'
+negativepath = path+'negative/'
+positivepath = path+'positive/'
+surprisepath = path+'surprise/'
+othersepath = path+'others/'
 
 segmentName = 'UpperFace'
-sizeH=32
-sizeV=32
+sizeH=128
+sizeV=128
 sizeD=30
 
 paths=[negativepath,positivepath, surprisepath]
