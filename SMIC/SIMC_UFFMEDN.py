@@ -234,7 +234,7 @@ else:
 results=open("../TempResults.txt",'a')
 results.write("---------------------------\n")
 full_path = os.path.realpath(__file__)
-results.write(str(os.path.dirname(full_path))+" {1}_{2}x{3}x{4}\n".format(testtype,segmentName,sizeH, sizeV,sizeD))
+results.write(str(os.path.dirname(full_path))+" {0}_{1}_{2}x{3}x{4}\n".format(testtype,segmentName,sizeH, sizeV,sizeD))
 results.write("---------------------------\n")
 results.write("accuracy: "+str(accuracy_score(val_labels, pred_labels))+"\n")
 results.write("F1-score: "+str(f1_score(val_labels,pred_labels,average="weighted"))+"\n")
