@@ -2,7 +2,7 @@ import os
 
 
 
-path='../../../Datasets/CASMEII_categorical/'
+path='../../CASMEII_categorical/'
 
 
 
