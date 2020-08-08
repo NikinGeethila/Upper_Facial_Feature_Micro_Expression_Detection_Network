@@ -49,9 +49,9 @@ repressionpath = '../../CASMEII_categorical/repression/'
 sadnesspath = '../../CASMEII_categorical/sadness/'
 surprisepath = '../../CASMEII_categorical/surprise/'
 
-segmentName = 'UUpperFace'
-sizeH=128
-sizeV=128
+segmentName = 'UpperFace'
+sizeH=64
+sizeV=64
 sizeD=30
 
 paths=[disgustpath,  happinesspath,otherspath,repressionpath,surprisepath]
