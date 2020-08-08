@@ -49,9 +49,9 @@ repressionpath = '../../CASMEII_categorical/repression/'
 sadnesspath = '../../CASMEII_categorical/sadness/'
 surprisepath = '../../CASMEII_categorical/surprise/'
 
-segmentName = 'FullFace'
-sizeH=32
-sizeV=32
+segmentName = 'UUpperFace'
+sizeH=128
+sizeV=128
 sizeD=30
 
 paths=[disgustpath,  happinesspath,otherspath,repressionpath,surprisepath]
@@ -86,8 +86,8 @@ for typepath in (paths):
                 plt.show()
             numpylandmarks = numpy.asarray(landmarks)
             up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
-            down = max(numpylandmarks[7][1], numpylandmarks[8][1], numpylandmarks[9][1], numpylandmarks[10][1],
-                       numpylandmarks[6][1])
+            down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
+                       numpylandmarks[35][1]) + 5
             left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
             right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
             segment_image = image[up:down, left:right]
@@ -95,8 +95,12 @@ for typepath in (paths):
                 img = annotate_landmarks(segment_image, landmarks)
                 imgplot = plt.imshow(img)
                 plt.show()
-                counting += 1
             segment_image = cv2.resize(segment_image, (sizeH, sizeV), interpolation=cv2.INTER_AREA)
+            if counting < 1:
+                img = annotate_landmarks(segment_image, landmarks)
+                imgplot = plt.imshow(img)
+                plt.show()
+                counting += 1
             segment_image = cv2.cvtColor(segment_image, cv2.COLOR_BGR2GRAY)
 
             segment_frames.append(segment_image)
