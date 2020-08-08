@@ -2,7 +2,7 @@ import os
 
 
 
-path='../../../Datasets/CAS(ME)2_categorical/'
+path='../../CAS(ME)2_categorical/'
 
 
 
