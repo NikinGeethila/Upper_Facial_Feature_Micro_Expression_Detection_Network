@@ -82,6 +82,128 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
 
 
+
+
+#-----------------------------------------------------------------------------------------------------------------
+#LOOCV
+def loocv():
+    loo = LeaveOneOut()
+    loo.get_n_splits(segment_training_set)
+    tot=0
+    count=0
+    accs=[]
+    accs2=[]
+
+    val_labels=[]
+    pred_labels=[]
+    for train_index, test_index in loo.split(segment_training_set):
+
+        # print(segment_traininglabels[train_index])
+        # print(segment_traininglabels[test_index])
+        print(test_index)
+
+        val_acc, val_label, pred_label = evaluate(segment_training_set[train_index], segment_training_set[test_index],
+                                                  segment_traininglabels[train_index], segment_traininglabels[test_index],
+                                                  test_index)
+        tot += val_acc
+        val_labels.extend(val_label)
+        pred_labels.extend(pred_label)
+        accs.append(val_acc)
+        accs2.append(segment_traininglabels[test_index])
+        count += 1
+        print("------------------------------------------------------------------------")
+        print("validation acc:", val_acc)
+        print("------------------------------------------------------------------------")
+    print("accuracy: ", accuracy_score(val_labels, pred_labels))
+    cfm = confusion_matrix(val_labels, pred_labels)
+    # tp_and_fn = sum(cfm.sum(1))
+    # tp_and_fp = sum(cfm.sum(0))
+    # tp = sum(cfm.diagonal())
+    print("cfm: \n", cfm)
+    # print("tp_and_fn: ",tp_and_fn)
+    # print("tp_and_fp: ",tp_and_fp)
+    # print("tp: ",tp)
+    #
+    # precision = tp / tp_and_fp
+    # recall = tp / tp_and_fn
+    # print("precision: ",precision)
+    # print("recall: ",recall)
+    # print("F1-score: ",f1_score(val_labels,pred_labels,average="macro"))
+    print("F1-score: ", f1_score(val_labels, pred_labels, average="weighted"))
+    return val_labels, pred_labels
+
+#-----------------------------------------------------------------------------------------------------------------
+#Test train split
+
+def split():
+    # Spliting the dataset into training and validation sets
+    segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels = train_test_split(segment_training_set,
+                                                                                                segment_traininglabels,
+                                                                                                test_size=0.2,random_state=42)
+
+    # Save validation set in a numpy array
+    # numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
+    # numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_labels)
+
+    # Loading Load validation set from numpy array
+    #
+    # eimg = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
+    # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
+
+    _,val_labels, pred_labels=evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
+    return val_labels, pred_labels
+#-----------------------------------------------------------------------------------------------------------------------------
+#k-fold(10)
+
+def kfold():
+    kf = KFold(n_splits=10, random_state=42,shuffle=True)
+    # kf.get_n_splits(segment_training_set)
+    tot=0
+    count=0
+    accs=[]
+    accs2=[]
+
+    val_labels=[]
+    pred_labels=[]
+    for train_index, test_index in kf.split(segment_training_set):
+
+        # print(segment_traininglabels[train_index])
+        # print(segment_traininglabels[test_index])
+        print(test_index)
+        val_acc, val_label, pred_label = evaluate(segment_training_set[train_index], segment_training_set[test_index],
+                                                  segment_traininglabels[train_index], segment_traininglabels[test_index],
+                                                  test_index)
+        tot += val_acc
+        val_labels.extend(val_label)
+        pred_labels.extend(pred_label)
+        accs.append(val_acc)
+        accs2.append(segment_traininglabels[test_index])
+        count+=1
+        print("------------------------------------------------------------------------")
+        print("validation acc:",val_acc)
+        print("------------------------------------------------------------------------")
+    print("accuracy: ",accuracy_score(val_labels, pred_labels))
+    cfm = confusion_matrix(val_labels, pred_labels)
+    # tp_and_fn = sum(cfm.sum(1))
+    # tp_and_fp = sum(cfm.sum(0))
+    # tp = sum(cfm.diagonal())
+    print("cfm: \n",cfm)
+    # print("tp_and_fn: ",tp_and_fn)
+    # print("tp_and_fp: ",tp_and_fp)
+    # print("tp: ",tp)
+    #
+    # precision = tp / tp_and_fp
+    # recall = tp / tp_and_fn
+    # print("precision: ",precision)
+    # print("recall: ",recall)
+    # print("F1-score: ",f1_score(val_labels,pred_labels,average="macro"))
+    print("F1-score: ",f1_score(val_labels,pred_labels,average="weighted"))
+    return val_labels, pred_labels
+
+
+
+
+
 K.set_image_dim_ordering('th')
 
 segmentName='UpperFace'
@@ -95,120 +217,11 @@ segment_training_set = numpy.load('numpy_training_datasets/{0}_images_{1}x{2}x{3
 segment_traininglabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.format(segmentName,sizeH, sizeV,sizeD))
 
 
-#-----------------------------------------------------------------------------------------------------------------
-#LOOCV
-loo = LeaveOneOut()
-loo.get_n_splits(segment_training_set)
-tot=0
-count=0
-accs=[]
-accs2=[]
+####################################
+#function call
+val_labels, pred_labels=loocv()
+####################################
 
-val_labels=[]
-pred_labels=[]
-for train_index, test_index in loo.split(segment_training_set):
-
-    # print(segment_traininglabels[train_index])
-    # print(segment_traininglabels[test_index])
-    print(test_index)
-
-    val_acc, val_label, pred_label = evaluate(segment_training_set[train_index], segment_training_set[test_index],
-                                              segment_traininglabels[train_index], segment_traininglabels[test_index],
-                                              test_index)
-    tot += val_acc
-    val_labels.extend(val_label)
-    pred_labels.extend(pred_label)
-    accs.append(val_acc)
-    accs2.append(segment_traininglabels[test_index])
-    count += 1
-    print("------------------------------------------------------------------------")
-    print("validation acc:", val_acc)
-    print("------------------------------------------------------------------------")
-print("accuracy: ", accuracy_score(val_labels, pred_labels))
-cfm = confusion_matrix(val_labels, pred_labels)
-# tp_and_fn = sum(cfm.sum(1))
-# tp_and_fp = sum(cfm.sum(0))
-# tp = sum(cfm.diagonal())
-print("cfm: \n", cfm)
-# print("tp_and_fn: ",tp_and_fn)
-# print("tp_and_fp: ",tp_and_fp)
-# print("tp: ",tp)
-#
-# precision = tp / tp_and_fp
-# recall = tp / tp_and_fn
-# print("precision: ",precision)
-# print("recall: ",recall)
-# print("F1-score: ",f1_score(val_labels,pred_labels,average="macro"))
-print("F1-score: ", f1_score(val_labels, pred_labels, average="weighted"))
-
-'''
-#-----------------------------------------------------------------------------------------------------------------
-#Test train split
-
-
-# Spliting the dataset into training and validation sets
-segment_train_images, segment_validation_images, segment_train_labels, segment_validation_labels = train_test_split(segment_training_set,
-                                                                                            segment_traininglabels,
-                                                                                            test_size=0.2,random_state=42)
-
-# Save validation set in a numpy array
-# numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
-# numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_labels)
-
-# Loading Load validation set from numpy array
-#
-# eimg = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
-# labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
-
-evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
-
-#-----------------------------------------------------------------------------------------------------------------------------
-#k-fold(10)
-
-kf = KFold(n_splits=10, random_state=42,shuffle=True)
-# kf.get_n_splits(segment_training_set)
-tot=0
-count=0
-accs=[]
-accs2=[]
-
-val_labels=[]
-pred_labels=[]
-for train_index, test_index in kf.split(segment_training_set):
-
-    # print(segment_traininglabels[train_index])
-    # print(segment_traininglabels[test_index])
-    print(test_index)
-    val_acc, val_label, pred_label = evaluate(segment_training_set[train_index], segment_training_set[test_index],
-                                              segment_traininglabels[train_index], segment_traininglabels[test_index],
-                                              test_index)
-    tot += val_acc
-    val_labels.extend(val_label)
-    pred_labels.extend(pred_label)
-    accs.append(val_acc)
-    accs2.append(segment_traininglabels[test_index])
-    count+=1
-    print("------------------------------------------------------------------------")
-    print("validation acc:",val_acc)
-    print("------------------------------------------------------------------------")
-print("accuracy: ",accuracy_score(val_labels, pred_labels))
-cfm = confusion_matrix(val_labels, pred_labels)
-# tp_and_fn = sum(cfm.sum(1))
-# tp_and_fp = sum(cfm.sum(0))
-# tp = sum(cfm.diagonal())
-print("cfm: \n",cfm)
-# print("tp_and_fn: ",tp_and_fn)
-# print("tp_and_fp: ",tp_and_fp)
-# print("tp: ",tp)
-#
-# precision = tp / tp_and_fp
-# recall = tp / tp_and_fn
-# print("precision: ",precision)
-# print("recall: ",recall)
-# print("F1-score: ",f1_score(val_labels,pred_labels,average="macro"))
-print("F1-score: ",f1_score(val_labels,pred_labels,average="weighted"))
-
-'''
 #---------------------------------------------------------------------------------------------------
 # write to results
 
