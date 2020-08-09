@@ -24,14 +24,17 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     model.add(Convolution3D(32, (3, 3, 15), strides=(1, 1, 5), input_shape=(1, sizeH, sizeV, sizeD), padding='Same'))
     model.add(PReLU())
     model.add(Dropout(0.5))
+    model.add(Convolution3D(128, (1,1,1), strides=1, input_shape=(1, sizeH, sizeV, sizeD), padding='Same'))
     model.add(Convolution3D(128, (20, 20, 30), strides=(10, 10, 15), input_shape=(1, sizeH, sizeV, sizeD), padding='Same'))
     model.add(PReLU())
     model.add(Dropout(0.5))
+    model.add(Convolution3D(128, (1,1,1), strides=1, input_shape=(1, sizeH, sizeV, sizeD), padding='Same'))
     model.add(Convolution3D(256, (20, 20, 60), strides=(10, 10, 30), input_shape=(1, sizeH, sizeV, sizeD), padding='Same'))
     model.add(PReLU())
     model.add(Dropout(0.5))
-    model.add(Convolution3D(32, (3, 3, 3), strides=1, padding='Same'))
-    model.add(PReLU())
+    model.add(Convolution3D(128, (1,1,1), strides=1, input_shape=(1, sizeH, sizeV, sizeD), padding='Same'))
+
+
     # model.add(Dropout(0.5))
     # model.add(MaxPooling3D(pool_size=(3, 3, 3)))
     # model.add( PReLU())
@@ -203,14 +206,13 @@ def kfold():
 
 
 
-
 ####################################
 #edit params
 K.set_image_dim_ordering('th')
 
 segmentName='UpperFace'
-sizeH=32
-sizeV=32
+sizeH=128
+sizeV=128
 sizeD=141
 testtype="kfold"
 ####################################
