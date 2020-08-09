@@ -21,16 +21,16 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
 
     input = Input(shape=(1, sizeH, sizeV, sizeD))
-    conv1 = Convolution3D(256, (20, 20, 9), strides=(10, 10, 3), padding='Same')(input)
+    conv1 = Convolution3D(64, (20, 20, 30), strides=(10, 10, 15), padding='Same')(input)
     # bn1=BatchNormalization()(conv1)
     ract_1 = PReLU()(conv1)
-    conv2 = Convolution3D(128, (3, 3, 3), strides=1, padding='Same')(ract_1)
+    conv2 = Convolution3D(32, (3, 3, 3), strides=1, padding='Same')(ract_1)
     # bn2=BatchNormalization()(conv2)
     ract_2 = PReLU()(conv2)
-    conv3 = Convolution3D(256, (3, 3, 3), strides=1, padding='Same')(ract_2)
+    conv3 = Convolution3D(64, (3, 3, 3), strides=1, padding='Same')(ract_2)
     # bn3=BatchNormalization()(conv3)
     add1= Add() ([conv3,ract_1])
-    conv3 = Convolution3D(512, (3, 3, 3), strides=1, padding='Same')(add1)
+    conv3 = Convolution3D(32, (3, 3, 3), strides=1, padding='Same')(add1)
     # bn3 = BatchNormalization()(conv3)
     ract_3 = PReLU()(conv3)
     flatten_1 = Flatten()(ract_3)
@@ -203,9 +203,9 @@ def kfold():
 K.set_image_dim_ordering('th')
 
 segmentName='UpperFace'
-sizeH=64
-sizeV=64
-sizeD=30
+sizeH=32
+sizeV=32
+sizeD=141
 testtype="kfold"
 ####################################
 
