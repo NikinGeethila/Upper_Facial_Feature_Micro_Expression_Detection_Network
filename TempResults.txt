@@ -308,3 +308,23 @@ F1-score: 0.4024486118115472
 ---------------------------
 accuracy: 0.6586345381526104
 F1-score: 0.6554723492512019
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CASMEII kfold_UpperFace_64x64x30
+---------------------------
+accuracy: 0.3614457831325301
+F1-score: 0.3047300154179284
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CASMEII kfold_UpperFace_64x64x30
+---------------------------
+accuracy: 0.3253012048192771
+F1-score: 0.28298941395069366
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CASMEII kfold_UpperFace_64x64x30
+---------------------------
+accuracy: 0.4538152610441767
+F1-score: 0.42790685373741105
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/CASMEII kfold_UpperFace_64x64x141
+---------------------------
+accuracy: 0.26104417670682734
+F1-score: 0.26605271661358076
