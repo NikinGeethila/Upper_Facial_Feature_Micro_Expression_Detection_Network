@@ -2,7 +2,8 @@ import os
 
 
 
-path='../../../Datasets/SAMM/SAMM/'
+path="../../SASE-FE_Categorical_truevsfake/true/"
+
 
 
 
