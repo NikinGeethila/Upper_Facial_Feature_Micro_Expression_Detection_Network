@@ -8,7 +8,7 @@ path="../../sase_fe_database-001/FakeTrue_DB/"
 subjectlisting = os.listdir(path)
 
 
-targetpath="../../SASE-FE_Categorical_truevsfake/"
+targetpath="../../SASE-FE_Categorical_truevsfake_reduced/"
 
 if os.path.exists(targetpath ):
     shutil.rmtree(targetpath )
@@ -42,6 +42,7 @@ for subject in subjectlisting:
     subjectpath=path+subject
     videolisting= os.listdir(subjectpath)
     for video in videolisting:
+        print(subjectpath,video)
         v_name=video[:-4]
         if len(v_name)>3 and v_name[2:].lower()!="sur":
             name="F_"+subject
@@ -69,10 +70,11 @@ for subject in subjectlisting:
             shutil.rmtree(newpath)
         os.mkdir(newpath, mode=0o777)
         vidcap = cv2.VideoCapture(subjectpath+'/'+video)
+        vidcap.set(cv2.CAP_PROP_POS_MSEC, 1000)
         success, image = vidcap.read()
         count = 0
         while success:
             cv2.imwrite(newpath+'/'+"frame%d.jpg" % count, image)  # save frame as JPEG file
             success, image = vidcap.read()
-            print('Read a new frame: ', success)
+            # print('Read a new frame: ', success)
             count += 1
