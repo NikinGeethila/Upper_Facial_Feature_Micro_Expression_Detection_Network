@@ -41,7 +41,7 @@ def annotate_landmarks(img, landmarks, font_scale=0.4):
     return img
 
 
-targetpath="../../SASE-FE_Categorical/"
+targetpath="../../SASE-FE_Categorical_truevsfake/true/"
 
 
 angerpath=targetpath+'anger/'
@@ -51,7 +51,7 @@ sadpath=targetpath+'sad/'
 happypath=targetpath+'happy/'
 contemptpath=targetpath+'contempt/'
 
-segmentName = 'UpperFace'
+segmentName = 'FullFace-True'
 sizeH=32
 sizeV=32
 sizeD=30
@@ -67,6 +67,7 @@ for typepath in (paths):
     for video in directorylisting:
         videopath = typepath + video
         segment_frames = []
+        print(videopath)
         framelisting = os.listdir(videopath)
         if sizeD <= len(framelisting):
             val = int((len(framelisting) / 2) - (sizeD / 2))
@@ -84,7 +85,7 @@ for typepath in (paths):
             framerange.extend([-1 for _ in range(sizeD - len(framelisting))])
         for frame in framerange:
             imagepath = videopath + "/" + framelisting[frame]
-            print(imagepath)
+            # print(imagepath)
             image = cv2.imread(imagepath)
             landmarks = get_landmark(image)
             if counting < 1:
@@ -93,8 +94,8 @@ for typepath in (paths):
                 plt.show()
             numpylandmarks = numpy.asarray(landmarks)
             up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
-            down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
-                       numpylandmarks[35][1]) + 5
+            down = max(numpylandmarks[7][1], numpylandmarks[8][1], numpylandmarks[9][1], numpylandmarks[10][1],
+                       numpylandmarks[6][1])
             left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
             right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
             segment_image = image[up:down, left:right]
