@@ -41,7 +41,7 @@ def annotate_landmarks(img, landmarks, font_scale=0.4):
     return img
 
 
-targetpath="../../SASE-FE_Categorical_truevsfake/true/"
+targetpath="../../SASE-FE_Categorical_truevsfake_reduced/fake/"
 
 
 angerpath=targetpath+'anger/'
@@ -51,7 +51,7 @@ sadpath=targetpath+'sad/'
 happypath=targetpath+'happy/'
 contemptpath=targetpath+'contempt/'
 
-segmentName = 'FullFace-True'
+segmentName = 'FullFace-Fake'
 sizeH=32
 sizeV=32
 sizeD=30
@@ -87,7 +87,17 @@ for typepath in (paths):
             imagepath = videopath + "/" + framelisting[frame]
             # print(imagepath)
             image = cv2.imread(imagepath)
-            landmarks = get_landmark(image)
+            indt=1
+            while True:
+                try:
+                    landmarks = get_landmark(image)
+                    break
+                except:
+                    imagepath = videopath + "/" + framelisting[frame+indt]
+                    # print(imagepath)
+                    image = cv2.imread(imagepath)
+                    indt+=1
+
             if counting < 1:
                 img = annotate_landmarks(image, landmarks)
                 imgplot = plt.imshow(img)
