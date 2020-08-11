@@ -41,7 +41,7 @@ def annotate_landmarks(img, landmarks, font_scale=0.4):
     return img
 
 
-targetpath="../../SASE-FE_Categorical_truevsfake_reduced/fake/"
+targetpath="../../SASE-FE_Categorical_truevsfake_reduced/true/"
 
 
 angerpath=targetpath+'anger/'
@@ -51,7 +51,7 @@ sadpath=targetpath+'sad/'
 happypath=targetpath+'happy/'
 contemptpath=targetpath+'contempt/'
 
-segmentName = 'FullFace-Fake'
+segmentName = 'FullFace-True'
 sizeH=32
 sizeV=32
 sizeD=30
@@ -65,6 +65,7 @@ for typepath in (paths):
     print(typepath)
 
     for video in directorylisting:
+        errorvid = False
         videopath = typepath + video
         segment_frames = []
         print(videopath)
@@ -88,16 +89,22 @@ for typepath in (paths):
             # print(imagepath)
             image = cv2.imread(imagepath)
             indt=1
+
             while True:
                 try:
                     landmarks = get_landmark(image)
                     break
                 except:
-                    imagepath = videopath + "/" + framelisting[frame+indt]
-                    # print(imagepath)
-                    image = cv2.imread(imagepath)
-                    indt+=1
-
+                    try:
+                        imagepath = videopath + "/" + framelisting[frame+indt]
+                        # print(imagepath)
+                        image = cv2.imread(imagepath)
+                        indt+=1
+                    except:
+                        errorvid=True
+                        break
+            if errorvid==True:
+                break
             if counting < 1:
                 img = annotate_landmarks(image, landmarks)
                 imgplot = plt.imshow(img)
@@ -118,10 +125,12 @@ for typepath in (paths):
             segment_image = cv2.cvtColor(segment_image, cv2.COLOR_BGR2GRAY)
 
             segment_frames.append(segment_image)
-
-        segment_frames = numpy.asarray(segment_frames)
-        segment_videoarray = numpy.rollaxis(numpy.rollaxis(segment_frames, 2, 0), 2, 0)
-        segment_training_list.append(segment_videoarray)
+        if errorvid!= True:
+            segment_frames = numpy.asarray(segment_frames)
+            segment_videoarray = numpy.rollaxis(numpy.rollaxis(segment_frames, 2, 0), 2, 0)
+            segment_training_list.append(segment_videoarray)
+        else:
+            os.rmdir(videopath)
 
 segment_training_list = numpy.asarray(segment_training_list)
 
