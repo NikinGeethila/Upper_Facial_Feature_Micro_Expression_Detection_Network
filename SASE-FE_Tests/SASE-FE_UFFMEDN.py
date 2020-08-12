@@ -75,7 +75,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     print (cfm)
     print("accuracy: ",accuracy_score(validation_labels, predictions_labels))
 
-    return accuracy_score(validation_labels, predictions_labels),validation_labels,predictions_labels
+    return accuracy_score(validation_labels, predictions_labels),validation_labels,predictions_labels,model
 
 
 
@@ -140,6 +140,11 @@ def split():
     segment_train_images=numpy.concatenate([segment_training_set,temp_train_images])
     segment_train_labels=numpy.concatenate([segment_traininglabels,temp_train_labels])
 
+    test_images, segment_validation_images, test_labels, segment_validation_labels = train_test_split(
+        segment_validation_images,
+        segment_validation_labels,
+        test_size=0.6, random_state=42)
+
     # Save validation set in a numpy array
     # numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
     # numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_labels)
@@ -149,7 +154,15 @@ def split():
     # eimg = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
     # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
-    _,val_labels, pred_labels=evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
+    _,val_labels, pred_labels,model=evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
+
+    print("--------------Test---------------")
+    predictions = model.predict([test_images])
+    predictions_labels = numpy.argmax(predictions, axis=1)
+    validation_labels = numpy.argmax(test_labels, axis=1)
+    cfm = confusion_matrix(validation_labels, predictions_labels)
+    print(cfm)
+    print("accuracy: ", accuracy_score(validation_labels, predictions_labels))
     return val_labels, pred_labels
 #-----------------------------------------------------------------------------------------------------------------------------
 #k-fold(10)
