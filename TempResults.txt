@@ -374,3 +374,8 @@ F1-score: 0.9185240848078029
 ---------------------------
 accuracy: 0.678714859437751
 F1-score: 0.6728114729299033
+---------------------------
+/home/student/Nikin/Upper_Facial_Feature_Micro_Expression_Detection_Network/SASE-FE_Tests split_FullFace-True_32x32x30
+---------------------------
+accuracy: 0.441340782122905
+F1-score: 0.4330920668100901
