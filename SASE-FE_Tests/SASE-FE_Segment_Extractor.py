@@ -5,6 +5,7 @@ import numpy
 from keras.utils import np_utils
 from keras import backend as K
 import matplotlib.pyplot as plt
+import shutil
 
 K.set_image_dim_ordering('th')
 
@@ -51,7 +52,7 @@ sadpath=targetpath+'sad/'
 happypath=targetpath+'happy/'
 contemptpath=targetpath+'contempt/'
 
-segmentName = 'FullFace-True'
+segmentName = 'UpperFace-True'
 sizeH=32
 sizeV=32
 sizeD=30
@@ -111,8 +112,8 @@ for typepath in (paths):
                 plt.show()
             numpylandmarks = numpy.asarray(landmarks)
             up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
-            down = max(numpylandmarks[7][1], numpylandmarks[8][1], numpylandmarks[9][1], numpylandmarks[10][1],
-                       numpylandmarks[6][1])
+            down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
+                       numpylandmarks[35][1]) + 5
             left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
             right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
             segment_image = image[up:down, left:right]
@@ -130,8 +131,10 @@ for typepath in (paths):
             segment_videoarray = numpy.rollaxis(numpy.rollaxis(segment_frames, 2, 0), 2, 0)
             segment_training_list.append(segment_videoarray)
         else:
-            os.rmdir(videopath)
-
+            shutil.rmtree(videopath, ignore_errors=True)
+            if os.path.exists(videopath):
+                os.rmdir(videopath)
+            print("ERROR AT: ",videopath)
 segment_training_list = numpy.asarray(segment_training_list)
 
 segment_trainingsamples = len(segment_training_list)
