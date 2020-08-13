@@ -57,7 +57,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     # Training the model
 
-    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 500, shuffle=True,verbose=0)
+    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 500, shuffle=False,verbose=1)
 
 
 
@@ -141,7 +141,7 @@ def split():
         # Spliting the dataset into training and validation sets
         temp_train_images, segment_validation_images, temp_train_labels, segment_validation_labels = train_test_split(tester_set,
                                                                                                     testerlabels,
-                                                                                                    test_size=0.4,random_state=int(random.randrange(1,100)),shuffle=True)
+                                                                                                    test_size=0.5,random_state=i)
 
         segment_train_images=numpy.concatenate([segment_training_set,temp_train_images])
         segment_train_labels=numpy.concatenate([segment_traininglabels,temp_train_labels])
@@ -149,7 +149,7 @@ def split():
         test_images, segment_validation_images, test_labels, segment_validation_labels = train_test_split(
             segment_validation_images,
             segment_validation_labels,
-            test_size=0.5,random_state=int(random.randrange(1,100)),shuffle=True)
+            test_size=0.5,random_state=i)
 
         # Save validation set in a numpy array
         # numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
@@ -159,7 +159,7 @@ def split():
         #
         # eimg = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
         # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
-
+        print(segment_validation_images)
         _,val_labels, pred_labels,model=evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
 
         print("--------------Test---------------")
@@ -193,19 +193,19 @@ def kfold():
 
     val_labels=[]
     pred_labels=[]
-    for train_index, test_index in kf.split(segment_training_set):
+    for train_index, test_index in kf.split(tester_set):
 
         # print(segment_traininglabels[train_index])
         # print(segment_traininglabels[test_index])
         print(test_index)
-        val_acc, val_label, pred_label = evaluate(segment_training_set[train_index], segment_training_set[test_index],
-                                                  segment_traininglabels[train_index], segment_traininglabels[test_index],
+        val_acc, val_label, pred_label,_ = evaluate(numpy.concatenate([segment_training_set,tester_set[train_index]]), tester_set[test_index],
+                                                  numpy.concatenate([segment_traininglabels,testerlabels[train_index]]), testerlabels[test_index],
                                                   test_index)
         tot += val_acc
         val_labels.extend(val_label)
         pred_labels.extend(pred_label)
         accs.append(val_acc)
-        accs2.append(segment_traininglabels[test_index])
+        accs2.append(tester_set[test_index])
         count+=1
         print("------------------------------------------------------------------------")
         print("validation acc:",val_acc)
@@ -242,7 +242,7 @@ tester=segment+'-Fake'
 sizeH=32
 sizeV=32
 sizeD=30
-testtype="split"
+testtype="kfold"
 ####################################
 
 # Load training images and labels that are stored in numpy array
@@ -259,23 +259,47 @@ testerlabels = numpy.load('numpy_training_datasets/{0}_labels_{1}x{2}x{3}.npy'.f
 
 if testtype=="kfold":
     val_labels, pred_labels=kfold()
+    # ---------------------------------------------------------------------------------------------------
+    # write to results
+
+    results = open("../TempResults.txt", 'a')
+    results.write("---------------------------\n")
+    full_path = os.path.realpath(__file__)
+    results.write(
+        str(os.path.dirname(full_path)) + " {0}_{1}_{2}x{3}x{4}\n".format(testtype, segmentName, sizeH, sizeV, sizeD))
+    results.write("---------------------------\n")
+    results.write("accuracy: " + str(accuracy_score(val_labels, pred_labels)) + "\n")
+    results.write("F1-score: " + str(f1_score(val_labels, pred_labels, average="weighted")) + "\n")
 elif testtype=="loocv":
     val_labels, pred_labels=loocv()
+    # ---------------------------------------------------------------------------------------------------
+    # write to results
+
+    results = open("../TempResults.txt", 'a')
+    results.write("---------------------------\n")
+    full_path = os.path.realpath(__file__)
+    results.write(
+        str(os.path.dirname(full_path)) + " {0}_{1}_{2}x{3}x{4}\n".format(testtype, segmentName, sizeH, sizeV, sizeD))
+    results.write("---------------------------\n")
+    results.write("accuracy: " + str(accuracy_score(val_labels, pred_labels)) + "\n")
+    results.write("F1-score: " + str(f1_score(val_labels, pred_labels, average="weighted")) + "\n")
 elif testtype=="split":
     ascavg,tascavg,fscavg,tfscavg=split()
+    # ---------------------------------------------------------------------------------------------------
+    # write to results
+
+    results = open("../TempResults.txt", 'a')
+    results.write("---------------------------\n")
+    full_path = os.path.realpath(__file__)
+    results.write(
+        str(os.path.dirname(full_path)) + " {0}_{1}_{2}x{3}x{4}-10\n".format(testtype, segmentName, sizeH, sizeV,
+                                                                             sizeD))
+    results.write("---------------------------\n")
+    results.write("accuracy: " + str(ascavg) + "\n")
+    results.write("F1-score: " + str(fscavg) + "\n")
+    results.write("test accuracy: " + str(tascavg) + "\n")
+    results.write("test F1-score: " + str(tfscavg) + "\n")
 else:
     print("error")
 
 
-#---------------------------------------------------------------------------------------------------
-# write to results
-
-results=open("../TempResults.txt",'a')
-results.write("---------------------------\n")
-full_path = os.path.realpath(__file__)
-results.write(str(os.path.dirname(full_path))+" {0}_{1}_{2}x{3}x{4}-10\n".format(testtype,segmentName,sizeH, sizeV,sizeD))
-results.write("---------------------------\n")
-results.write("accuracy: "+str(ascavg)+"\n")
-results.write("F1-score: "+str(fscavg)+"\n")
-results.write("test accuracy: "+str(tascavg)+"\n")
-results.write("test F1-score: "+str(tfscavg)+"\n")
