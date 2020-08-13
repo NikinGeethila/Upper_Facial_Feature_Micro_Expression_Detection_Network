@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split,LeaveOneOut,KFold
 from keras import backend as K
 from keras.optimizers import Adam,SGD
 import os
-
+import random
 class myCallback(Callback):
     def on_epoch_end(self, epoch, logs={}):
         if(logs.get('val_acc') >= 1.0):
@@ -47,7 +47,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
     filepath="weights_SAMM/weights-improvement"+str(test_index)+"-{epoch:02d}-{val_acc:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     EarlyStop = EarlyStopping(monitor='val_acc', min_delta=0, patience=50, restore_best_weights=True, verbose=1, mode='max')
-    reduce = ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=30,cooldown=10, verbose=1,min_delta=0, mode='max',min_lr=0.0005)
+    reduce = ReduceLROnPlateau(monitor='val_acc', factor=0.5, patience=30,cooldown=10, verbose=0,min_delta=0, mode='max',min_lr=0.0005)
     callbacks_list = [ EarlyStop, reduce,myCallback()]
 
 
@@ -57,7 +57,7 @@ def evaluate(segment_train_images, segment_validation_images, segment_train_labe
 
     # Training the model
 
-    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 500, shuffle=True,verbose=1)
+    history = model.fit(segment_train_images, segment_train_labels, validation_data = (segment_validation_images, segment_validation_labels), callbacks=callbacks_list, batch_size = 16, nb_epoch = 500, shuffle=True,verbose=0)
 
 
 
@@ -132,38 +132,54 @@ def loocv():
 #Test train split
 
 def split():
-    # Spliting the dataset into training and validation sets
-    temp_train_images, segment_validation_images, temp_train_labels, segment_validation_labels = train_test_split(tester_set,
-                                                                                                testerlabels,
-                                                                                                test_size=0.6,random_state=42)
 
-    segment_train_images=numpy.concatenate([segment_training_set,temp_train_images])
-    segment_train_labels=numpy.concatenate([segment_traininglabels,temp_train_labels])
+    acc=[]
+    tacc=[]
+    fsc=[]
+    tfsc=[]
+    for i in range(10):
+        # Spliting the dataset into training and validation sets
+        temp_train_images, segment_validation_images, temp_train_labels, segment_validation_labels = train_test_split(tester_set,
+                                                                                                    testerlabels,
+                                                                                                    test_size=0.4,random_state=int(random.randrange(1,100)),shuffle=True)
 
-    test_images, segment_validation_images, test_labels, segment_validation_labels = train_test_split(
-        segment_validation_images,
-        segment_validation_labels,
-        test_size=0.6, random_state=42)
+        segment_train_images=numpy.concatenate([segment_training_set,temp_train_images])
+        segment_train_labels=numpy.concatenate([segment_traininglabels,temp_train_labels])
 
-    # Save validation set in a numpy array
-    # numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
-    # numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_labels)
+        test_images, segment_validation_images, test_labels, segment_validation_labels = train_test_split(
+            segment_validation_images,
+            segment_validation_labels,
+            test_size=0.5,random_state=int(random.randrange(1,100)),shuffle=True)
 
-    # Loading Load validation set from numpy array
-    #
-    # eimg = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
-    # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
+        # Save validation set in a numpy array
+        # numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_images)
+        # numpy.save('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV), segment_validation_labels)
 
-    _,val_labels, pred_labels,model=evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
+        # Loading Load validation set from numpy array
+        #
+        # eimg = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
+        # labels = numpy.load('numpy_validation_datasets/{0}_images_{1}x{2}.npy'.format(segmentName,sizeH, sizeV))
 
-    print("--------------Test---------------")
-    predictions = model.predict([test_images])
-    predictions_labels = numpy.argmax(predictions, axis=1)
-    validation_labels = numpy.argmax(test_labels, axis=1)
-    cfm = confusion_matrix(validation_labels, predictions_labels)
-    print(cfm)
-    print("accuracy: ", accuracy_score(validation_labels, predictions_labels))
-    return val_labels, pred_labels
+        _,val_labels, pred_labels,model=evaluate(segment_train_images, segment_validation_images,segment_train_labels, segment_validation_labels ,0)
+
+        print("--------------Test---------------")
+        predictions = model.predict([test_images])
+        predictions_labels = numpy.argmax(predictions, axis=1)
+        validation_labels = numpy.argmax(test_labels, axis=1)
+        cfm = confusion_matrix(validation_labels, predictions_labels)
+        print(cfm)
+        print("accuracy: ", accuracy_score(validation_labels, predictions_labels))
+        print("F1-score: ", f1_score(validation_labels, predictions_labels, average="weighted"))
+        acc.append(accuracy_score(val_labels, pred_labels))
+        fsc.append(f1_score(val_labels, pred_labels, average="weighted"))
+        tacc.append(accuracy_score(validation_labels, predictions_labels))
+        tfsc.append(f1_score(validation_labels, predictions_labels, average="weighted"))
+    ascavg=sum(acc)/len(acc)
+    tascavg = sum(tacc) / len(tacc)
+    fscavg = sum(fsc) / len(fsc)
+    tfscavg = sum(tfsc) / len(tfsc)
+
+    return ascavg,tascavg,fscavg,tfscavg
 #-----------------------------------------------------------------------------------------------------------------------------
 #k-fold(10)
 
@@ -220,9 +236,9 @@ def kfold():
 ####################################
 #edit params
 K.set_image_dim_ordering('th')
-
-segmentName='FullFace-True'
-tester='FullFace-Fake'
+segment="FullFace"
+segmentName=segment+'-True'
+tester=segment+'-Fake'
 sizeH=32
 sizeV=32
 sizeD=30
@@ -246,7 +262,7 @@ if testtype=="kfold":
 elif testtype=="loocv":
     val_labels, pred_labels=loocv()
 elif testtype=="split":
-    val_labels, pred_labels=split()
+    ascavg,tascavg,fscavg,tfscavg=split()
 else:
     print("error")
 
@@ -257,7 +273,9 @@ else:
 results=open("../TempResults.txt",'a')
 results.write("---------------------------\n")
 full_path = os.path.realpath(__file__)
-results.write(str(os.path.dirname(full_path))+" {0}_{1}_{2}x{3}x{4}\n".format(testtype,segmentName,sizeH, sizeV,sizeD))
+results.write(str(os.path.dirname(full_path))+" {0}_{1}_{2}x{3}x{4}-10\n".format(testtype,segmentName,sizeH, sizeV,sizeD))
 results.write("---------------------------\n")
-results.write("accuracy: "+str(accuracy_score(val_labels, pred_labels))+"\n")
-results.write("F1-score: "+str(f1_score(val_labels,pred_labels,average="weighted"))+"\n")
+results.write("accuracy: "+str(ascavg)+"\n")
+results.write("F1-score: "+str(fscavg)+"\n")
+results.write("test accuracy: "+str(tascavg)+"\n")
+results.write("test F1-score: "+str(tfscavg)+"\n")
