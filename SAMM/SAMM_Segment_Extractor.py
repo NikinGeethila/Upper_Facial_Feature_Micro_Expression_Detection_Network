@@ -41,15 +41,15 @@ def annotate_landmarks(img, landmarks, font_scale=0.4):
     return img
 
 
-angerpath = '../../../Datasets/SAMM_categorical/Anger/'
-sadnesspath = '../../../Datasets/SAMM_categorical/Sadness/'
-happinesspath = '../../../Datasets/SAMM_categorical/Happiness/'
-disgustpath = '../../../Datasets/SAMM_categorical/Disgust/'
-fearpath = '../../../Datasets/SAMM_categorical/Fear/'
-surprisepath = '../../../Datasets/SAMM_categorical/Surprise/'
-contemptpath = '../../../Datasets/SAMM_categorical/Contempt/'
-otherpath = '../../../Datasets/SAMM_categorical/Other/'
-segmentName = 'Eyes'
+angerpath = '../../SAMM_categorical/Anger/'
+sadnesspath = '../../SAMM_categorical/Sadness/'
+happinesspath = '../../SAMM_categorical/Happiness/'
+disgustpath = '../../SAMM_categorical/Disgust/'
+fearpath = '../../SAMM_categorical/Fear/'
+surprisepath = '../../SAMM_categorical/Surprise/'
+contemptpath = '../../SAMM_categorical/Contempt/'
+otherpath = '../../SAMM_categorical/Other/'
+segmentName = 'FullFace'
 sizeH=32
 sizeV=32
 sizeD=30
@@ -90,8 +90,8 @@ for typepath in (paths):
                 plt.show()
             numpylandmarks = numpy.asarray(landmarks)
             up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
-            down = max(numpylandmarks[36][1], numpylandmarks[39][1], numpylandmarks[40][1], numpylandmarks[41][1],
-                       numpylandmarks[42][1], numpylandmarks[47][1], numpylandmarks[46][1], numpylandmarks[45][1]) + 10
+            down = max(numpylandmarks[7][1], numpylandmarks[8][1], numpylandmarks[9][1], numpylandmarks[10][1],
+                       numpylandmarks[6][1])
             left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
             right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
             segment_image = image[up:down, left:right]
