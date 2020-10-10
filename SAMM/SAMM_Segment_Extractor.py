@@ -49,12 +49,12 @@ fearpath = '../../SAMM_categorical/Fear/'
 surprisepath = '../../SAMM_categorical/Surprise/'
 contemptpath = '../../SAMM_categorical/Contempt/'
 otherpath = '../../SAMM_categorical/Other/'
-segmentName = 'FullFace'
+segmentName = 'UpperFace_full'
 sizeH=32
 sizeV=32
 sizeD=30
 
-paths=[angerpath,  happinesspath,surprisepath,contemptpath,otherpath]
+paths=[angerpath,sadnesspath,  happinesspath,disgustpath,fearpath,surprisepath,contemptpath,otherpath]
 
 segment_training_list = []
 counting = 0
@@ -90,8 +90,8 @@ for typepath in (paths):
                 plt.show()
             numpylandmarks = numpy.asarray(landmarks)
             up = min(numpylandmarks[18][1], numpylandmarks[19][1], numpylandmarks[23][1], numpylandmarks[24][1]) - 20
-            down = max(numpylandmarks[7][1], numpylandmarks[8][1], numpylandmarks[9][1], numpylandmarks[10][1],
-                       numpylandmarks[6][1])
+            down = max(numpylandmarks[31][1], numpylandmarks[32][1], numpylandmarks[33][1], numpylandmarks[34][1],
+                       numpylandmarks[35][1]) + 5
             left = min(numpylandmarks[17][0], numpylandmarks[18][0], numpylandmarks[36][0])
             right = max(numpylandmarks[26][0], numpylandmarks[25][0], numpylandmarks[45][0])
             segment_image = image[up:down, left:right]
