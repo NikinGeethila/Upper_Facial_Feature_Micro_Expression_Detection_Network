@@ -48,8 +48,8 @@ surprisepath = path+'surprise/'
 othersepath = path+'others/'
 
 segmentName = 'UpperFace'
-sizeH=128
-sizeV=128
+sizeH=64
+sizeV=64
 sizeD=30
 
 paths=[negativepath,positivepath, surprisepath]
