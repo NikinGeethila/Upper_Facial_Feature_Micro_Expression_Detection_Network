@@ -2,7 +2,7 @@ import os
 
 
 
-path='../../../Datasets/SIMC_E_categorical/'
+path='../../SIMC_E_categorical/'
 
 
 
