@@ -212,7 +212,7 @@ segmentName='UpperFace'
 sizeH=32
 sizeV=32
 sizeD=30
-testtype='kfold'
+testtype='loocv'
 ####################################
 
 # Load training images and labels that are stored in numpy array
