@@ -2,7 +2,7 @@ import os
 
 
 
-path='../../../Datasets/SAMM/SAMM/'
+path='../../SAMM_categorical/'
 
 
 
